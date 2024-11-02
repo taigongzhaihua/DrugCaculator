@@ -27,7 +27,7 @@ namespace DrugCaculator.View
         public ApiKeySetter()
         {
             InitializeComponent();
-            ApiKey = DeepSeekService.GetApiKeyFromSettings() ?? string.Empty;
+            ApiKey = DeepSeekService.GetApiKeyFromSettings();
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

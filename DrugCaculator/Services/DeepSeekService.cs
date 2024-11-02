@@ -1,4 +1,5 @@
 ﻿using DrugCaculator.Models;
+using DrugCaculator.Properties;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -27,12 +28,11 @@ namespace DrugCaculator.Services
         public static string GetApiKeyFromSettings()
         {
             // 获取用户设置中的 API Key，并进行解密
-            var encryptedApiKey = Properties.Settings.Default.DeepSeekApiKey;
-            if (string.IsNullOrEmpty(encryptedApiKey))
-            {
-                throw new InvalidOperationException("API密钥未在应用程序设置中配置。");
-            }
-            return EncryptionService.Decrypt(encryptedApiKey, "DeepSeekApiKey");
+            var encryptedApiKey = Settings.Default.DeepSeekApiKey;
+            if (!string.IsNullOrEmpty(encryptedApiKey))
+                return EncryptionService.Decrypt(encryptedApiKey, "DeepSeekApiKey");
+            Console.WriteLine(@"API密钥未在应用程序设置中配置。");
+            return null;
         }
 
         public static async Task<List<DrugCalculationRule>> GenerateDrugCalculationRulesAsync(Drug drug)

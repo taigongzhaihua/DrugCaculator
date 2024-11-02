@@ -239,7 +239,7 @@ public class DrugViewModel : INotifyPropertyChanged
     }
     private void DeleteDrug(object parameter)
     {
-        var result = System.Windows.Forms.MessageBox.Show(@"是否删除该药物？",
+        var result = System.Windows.Forms.MessageBox.Show($@"是否删除该药物？",
             @"Confirmation",
             MessageBoxButtons.OK,
             MessageBoxIcon.Question);

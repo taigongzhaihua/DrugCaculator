@@ -8,16 +8,21 @@
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True">
-    <Border Background="White" CornerRadius="5" Padding="5"
+    <Border Background="White" CornerRadius="5" Padding="15,5"
             Height="60" Width="489"
             MouseLeftButtonDown="Window_MouseLeftButtonDown">
         <Border.Effect>
             <DropShadowEffect Color="Black" BlurRadius="15" ShadowDepth="5" Opacity="0.5" />
         </Border.Effect>
-        <StackPanel Orientation="Horizontal" Margin="10">
-            <TextBlock Text="ApiKey: " VerticalAlignment="Center" />
-            <Border BorderBrush="DodgerBlue" BorderThickness="1.2" Background="White"
-                    Height="27.8" CornerRadius="5" Padding="3,0,0,0">
+        <StackPanel Orientation="Horizontal" Height="37.8">
+            <TextBlock Text="ApiKey：" VerticalAlignment="Center" />
+            <Border Background="White"
+                    Height="26" CornerRadius="0" Padding="0,0,0,0">
+                <Border.Effect>
+                    
+                    <DropShadowEffect Color="SteelBlue" BlurRadius="12" ShadowDepth="3" Opacity="0.5" />
+                    
+                </Border.Effect>
                 <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -25,20 +30,20 @@
                     </Grid.ColumnDefinitions>
                     <PasswordBox Grid.Column="0" x:Name="PasswordBox" 
                                  Width="259" Margin="0" BorderThickness="0" 
-                                 Background="White"
+                                 Background="Transparent"
                                  PasswordChar="*" FontFamily="宋体" FontSize="14"
                                  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     <TextBox Grid.Column="0" x:Name="TextBox" 
                              Width="259" Margin="0" BorderThickness="0" 
-                             Background="White"
+                             Background="Transparent"
                              FontFamily="宋体" FontSize="14" 
                              VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                              Visibility="Collapsed" 
                              Text="{Binding ApiKey}"/>
                     <ToggleButton Grid.Column="1" x:Name="ToggleVisibilityButton" Style="{DynamicResource ToggleVisibilityButton}"
-                                  Width="26" Height="26"
+                                  Width="26" Height="26" 
                                   VerticalAlignment="Center" 
-                                  Background="White" BorderBrush="Transparent" 
+                                  Background="Transparent" BorderBrush="Transparent" 
                                   Checked="ToggleVisibilityButton_Checked" Unchecked="ToggleVisibilityButton_Unchecked">
                         <Path x:Name="EyeClosedIcon" 
                               Data="M1 8 A 10 10 0 0 1 19 8 M 10 10 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0 M 10 10 m -3 3 l 6 -6" 
@@ -47,8 +52,10 @@
                     
                 </Grid>
             </Border>
-            <Button Content="确认" Width="50" Height="26" Margin="10,0,0,0" Click="ConfirmButton_Click" />
-            <Button Content="取消" Width="50" Height="26" Margin="10,0,0,0" Click="CancelButton_Click" />
+            <Button Content="确认" Width="50" Height="26" Margin="10,0,0,0" Click="ConfirmButton_Click" 
+                    Style="{DynamicResource AzureButton}"/>
+            <Button Content="取消" Width="50" Height="26" Margin="10,0,0,0" Click="CancelButton_Click" 
+                    Style="{DynamicResource AzureButton}"/>
         </StackPanel>
     </Border>
 </Window>
