@@ -13,7 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace DrugCaculator.View
+namespace DrugCaculator.View.Components
 {
 
 
