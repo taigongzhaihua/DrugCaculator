@@ -53,9 +53,9 @@
                 </Grid>
             </Border>
             <Button Content="确认" Width="50" Height="26" Margin="10,0,0,0" Click="ConfirmButton_Click" 
-                    Style="{DynamicResource AzureButton}"/>
+                    Style="{DynamicResource DarkButton}"/>
             <Button Content="取消" Width="50" Height="26" Margin="10,0,0,0" Click="CancelButton_Click" 
-                    Style="{DynamicResource AzureButton}"/>
+                    Style="{DynamicResource LightButton}"/>
         </StackPanel>
     </Border>
 </Window>
