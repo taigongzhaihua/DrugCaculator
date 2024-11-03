@@ -100,7 +100,7 @@
         <Setter Property="Padding" Value="4"/>
         <Setter Property="Background" Value="Transparent"/>
     </Style>
-    <!-- 自定义无边框的 TextBox 样式 -->
+    <!-- 自定义下划线的 TextBox 样式 -->
     <Style x:Key="FlatTextBox" TargetType="TextBox">
         <Setter Property="Template">
             <Setter.Value>
@@ -180,8 +180,7 @@
                         <Border x:Name="border"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
-                                CornerRadius="0"
-                                BorderThickness="0"
+                                CornerRadius="2"
                                 >
                             <ContentPresenter HorizontalAlignment="Center" 
                                               VerticalAlignment="Center"/>
@@ -307,7 +306,15 @@
                                                         To="Azure"/>
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Disabled"/>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <!-- 这里直接将背景设为更深的颜色 -->
+                                        <ColorAnimation Storyboard.TargetName="border" 
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                        Duration="0:0:0.1" 
+                                                        To="LightGray"/>
+                                    </Storyboard>
+                                </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
@@ -330,7 +337,8 @@
                         Background="{TemplateBinding Background}"
                         CornerRadius="2">
                             <Border.Effect>
-                                <DropShadowEffect Color="SteelBlue" BlurRadius="12" ShadowDepth="3" Opacity="0.5" />
+                                <DropShadowEffect x:Name="Effect"
+                                    Color="SteelBlue" BlurRadius="12" ShadowDepth="3" Opacity="0.5" />
                             </Border.Effect>
                             <ContentPresenter HorizontalAlignment="Center" 
                                       VerticalAlignment="Center" 
@@ -339,14 +347,38 @@
                         <!-- 定义视觉状态 -->
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Normal" >
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="border" 
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                        Duration="0:0:0.3" 
+                                                        To="DodgerBlue"/>
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
+                                                         Storyboard.TargetProperty="BlurRadius"
+                                                         Duration="0:0:0.3"
+                                                         To="12"/>
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
+                                                         Storyboard.TargetProperty="ShadowDepth"
+                                                         Duration="0:0:0.3"
+                                                         To="3"/>
+                                    </Storyboard>
+                                </VisualState>
+
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
                                         <ColorAnimation Storyboard.TargetName="border" 
                                                 Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                Duration="0:0:0.1" 
+                                                Duration="0:0:0.3" 
                                                 To="RoyalBlue"/>
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
+                                                         Storyboard.TargetProperty="BlurRadius"
+                                                         Duration="0:0:0.3"
+                                                         To="12"/>
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
+                                                         Storyboard.TargetProperty="ShadowDepth"
+                                                         Duration="0:0:0.3"
+                                                         To="3"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
@@ -354,11 +386,35 @@
                                         <!-- 这里直接将背景设为更深的颜色 -->
                                         <ColorAnimation Storyboard.TargetName="border" 
                                                 Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                Duration="0:0:0.1" 
+                                                Duration="0:0:0.3" 
                                                 To="SteelBlue"/>
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
+                                                         Storyboard.TargetProperty="BlurRadius"
+                                                         Duration="0:0:0.3"
+                                                         To="12"/>
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
+                                                         Storyboard.TargetProperty="ShadowDepth"
+                                                         Duration="0:0:0.3"
+                                                         To="3"/>
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Disabled"/>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <!-- 这里直接将背景设为更深的颜色 -->
+                                        <ColorAnimation Storyboard.TargetName="border" 
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                        Duration="0:0:0.3" 
+                                                        To="DarkGray"/>
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
+                                                         Storyboard.TargetProperty="BlurRadius"
+                                                         Duration="0:0:0.3"
+                                                         To="0"/>
+                                        <DoubleAnimation Storyboard.TargetName="Effect"
+                                                         Storyboard.TargetProperty="ShadowDepth"
+                                                         Duration="0:0:0.3"
+                                                         To="0"/>
+                                    </Storyboard>
+                                </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>

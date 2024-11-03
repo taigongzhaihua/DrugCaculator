@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         Title="Drug Management" 
         Height="700" 
-        Width="1100">
+        Width="1100"
+        Background="GhostWhite">
 
     <Window.DataContext>
         <viewModels1:DrugViewModel />
@@ -37,25 +38,42 @@
                      DisplayMemberPath="Name" 
                      Height="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualHeight, Converter={StaticResource HeightMinusConverter}}" />
             <StackPanel Orientation="Horizontal" Margin="0" HorizontalAlignment="Center">
-                <Button Content="新增" Width="69" Height="30"
+                <Button Content="新增" Width="49" Height="26" 
+                        Margin="10"
+                        Style="{DynamicResource DarkButton}"
                         Command="{Binding AddDrugCommand}"/>
-                <Button Content="修改" Width="69" Height="30"
+                <Button Content="修改" Width="49" Height="26" 
+                        Margin="10"
+                        Style="{DynamicResource DarkButton}"
                         Command="{Binding EditDrugCommand}" 
                         IsEnabled="{Binding IsDrugSelected}"/>
-                <Button Content="删除" Width="69" Height="30"
+                <Button Content="删除" Width="49" Height="26" 
+                        Margin="10"
+                        Style="{DynamicResource DarkButton}"
                         Command="{Binding DeleteDrugCommand}" 
                         IsEnabled="{Binding IsDrugSelected}"/>
-                <Button Content="导入" Width="69" Height="30"
+                <Button Content="导入" Width="49" Height="26" 
+                        Margin="10"
+                        Style="{DynamicResource DarkButton}"
                         Command="{Binding AddDrugsFromExcelCommand}" />
                 
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="设置ApiKey" Width="92" Height="30"
+                <Button Content="设置ApiKey" Width="72" Height="26"
+                        Margin="10,0,5,0"
+                        FontSize="12"
+                        Style="{DynamicResource DarkButton}"
                         Command="{Binding SetApiKeyCommand}"/>
-                <Button Content="AI生成规则" Width="92" Height="30"
+                <Button Content="AI生成规则" Width="72" Height="26"
+                        Margin="5,0"
+                        FontSize="12"
+                        Style="{DynamicResource DarkButton}"
                         Command="{Binding AiGenerateRuleCommand}"
                         IsEnabled="{Binding IsDrugSelected}"/>
-                <Button Content="AI生成所有规则" Width="92" Height="30"
+                <Button Content="AI生成所有规则" Width="92" Height="26"
+                        Margin="5,0,10,0"
+                        FontSize="12"
+                        Style="{DynamicResource DarkButton}"
                         Command="{Binding AiGenerateAllRulesCommand}"/>
             </StackPanel>
         </StackPanel>
@@ -115,12 +133,15 @@
                 </StackPanel>
             </Grid>
             <!-- 结果显示 -->
-            <Border BorderBrush="SlateGray" 
+            <Border Background="White"
                     MaxWidth="600"
-                    BorderThickness="2" 
-                    CornerRadius="5" 
+                    CornerRadius="10" 
                     Padding="3" 
-                    Margin="30,20,30,40">
+                    Margin="30,20,30,40"
+                    x:Name="ResultBorder">
+                <Border.Effect>
+                    <DropShadowEffect Color="SteelBlue" BlurRadius="15" ShadowDepth="5" Opacity="0.5" />
+                </Border.Effect>
                 <StackPanel Orientation="Vertical">
                 <Grid >
                     <Grid.ColumnDefinitions>
@@ -198,7 +219,8 @@
                     </Grid>
                 </StackPanel>
             </Border>
-            <StackPanel MaxWidth="650" HorizontalAlignment="Center" MinWidth="440"
+            <StackPanel MaxWidth="650" HorizontalAlignment="Center"
+                        Width="{Binding Path=ActualWidth,ElementName=ResultBorder}"
                         Margin="30,20,30,40">
                 <!-- 下方的用法描述 -->
                 <TextBlock Text="用法用量（说明书）:" FontWeight="Black"

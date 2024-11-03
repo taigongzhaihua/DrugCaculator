@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:DrugCaculator.View"
         xmlns:viewModels="clr-namespace:DrugCaculator.ViewModels"
+        xmlns:components="clr-namespace:DrugCaculator.View.Components"
         mc:Ignorable="d"
         Title="药物编辑器" Height="800" Width="1000" >
     <Window.Resources>
@@ -79,7 +80,7 @@
                     <!-- 使用 RuleEditorRowComponent 作为 ListBox 项的 DataTemplate -->
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <view:RuleEditorRowComponent CalculationRule="{Binding }" />
+                            <components:RuleEditorRowComponent CalculationRule="{Binding }" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

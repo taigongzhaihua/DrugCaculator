@@ -8,7 +8,7 @@
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True">
-    <Border Background="White" CornerRadius="5" Padding="15,5"
+    <Border Background="FloralWhite" CornerRadius="5" Padding="15,5"
             Height="60" Width="489"
             MouseLeftButtonDown="Window_MouseLeftButtonDown">
         <Border.Effect>
