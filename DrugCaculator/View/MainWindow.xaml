@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:DrugCaculator.View"
         xmlns:viewModels1="clr-namespace:DrugCaculator.ViewModels"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         Title="Drug Management" 
         Height="700" 
@@ -28,15 +29,36 @@
 
         <!-- 左侧：药物列表 -->
         <StackPanel Grid.Column="0" Margin="10">
-            <TextBox Name="SearchTextBox" HorizontalAlignment="Center"
-                     Height="30" Margin="0,0,0,10" Width="276"
+            <Border Background="White"
+                    CornerRadius="15"
+                    Padding="15,5"
+                    Margin="5,5,5,10"
+                    VerticalAlignment="Center">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="5" Opacity="0.5" Color="SteelBlue"/>
+                </Border.Effect>
+                <TextBox Name="SearchTextBox" HorizontalAlignment="Center"
+                     Height="20" Margin="0" Width="238"
                      VerticalContentAlignment="Center"
-                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
+                     BorderThickness="0"/>
+            </Border>
+            
             <ListBox Name="DrugList" HorizontalAlignment="Center" Width="276"
+                     Style="{DynamicResource CustomListBoxStyle}"
+                     ItemContainerStyle="{StaticResource CustomListBoxItemStyle}"
                      ItemsSource="{Binding Drugs}" 
                      SelectedItem="{Binding SelectedDrug}" 
-                     DisplayMemberPath="Name" 
-                     Height="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualHeight, Converter={StaticResource HeightMinusConverter}}" />
+                     Height="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualHeight, Converter={StaticResource HeightMinusConverter}}" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <ContentPresenter Content="{Binding Name}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.Resources>
+                    <Style TargetType="ScrollBar" BasedOn="{StaticResource CustomScrollBarStyle}"/>
+                </ListBox.Resources>
+            </ListBox>
             <StackPanel Orientation="Horizontal" Margin="0" HorizontalAlignment="Center">
                 <Button Content="新增" Width="49" Height="26" 
                         Margin="10"
@@ -79,7 +101,7 @@
         </StackPanel>
 
         <!-- 右侧：药物详细信息 -->
-        <StackPanel Grid.Column="1" Margin="10">
+        <StackPanel Grid.Column="1">
 
             <!-- 上方计算部分 -->
             <Grid>
@@ -219,23 +241,33 @@
                     </Grid>
                 </StackPanel>
             </Border>
-            <StackPanel MaxWidth="650" HorizontalAlignment="Center"
-                        Width="{Binding Path=ActualWidth,ElementName=ResultBorder}"
-                        Margin="30,20,30,40">
-                <!-- 下方的用法描述 -->
-                <TextBlock Text="用法用量（说明书）:" FontWeight="Black"
-                           VerticalAlignment="Center" FontSize="16"/>
-                <TextBlock Name="UsageTextBlock" FontSize="14"
-                           Text="{Binding SelectedDrug.Usage}"
-                           Margin="0,10,0,20" TextWrapping="Wrap" />
-
-                <TextBlock Text="备注:"  FontSize="16" FontWeight="Black"
-                           VerticalAlignment="Center" />
-                <TextBlock Name="DescriptionTextBlock"  FontSize="14"
-                           Text="{Binding SelectedDrug.Description}"
-                           Margin="0,10,0,0" TextWrapping="Wrap" />
+            <Border Width="{Binding Path=ActualWidth,ElementName=ResultBorder}"
+                    Background="White"
+                    CornerRadius="15"
+                    Padding="15"
+                    Margin="10"
+                    VerticalAlignment="Center">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="5" Opacity="0.5" Color="SteelBlue"/>
+                </Border.Effect>
+                <StackPanel MaxWidth="650" HorizontalAlignment="Left"
+                            Margin="30,20,30,40"
+                >
+                    <!-- 下方的用法描述 -->
+                    <TextBlock Text="用法用量（说明书）:" FontWeight="Black"
+                               VerticalAlignment="Center" FontSize="16"/>
+                    <TextBlock Name="UsageTextBlock" FontSize="14"
+                               Text="{Binding SelectedDrug.Usage}"
+                               Margin="0,10,0,20" TextWrapping="Wrap" />
+                    <TextBlock Text="备注:"  FontSize="16" FontWeight="Black"
+                               VerticalAlignment="Center" />
+                    <TextBlock Name="DescriptionTextBlock"  FontSize="14"
+                               Text="{Binding SelectedDrug.Description}"
+                               Margin="0,10,0,0" TextWrapping="Wrap" />
             </StackPanel>
-        </StackPanel>
+        
+            </Border>
+        </StackPanel>    
     </Grid>
 </Window>
 

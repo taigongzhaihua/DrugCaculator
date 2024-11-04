@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!-- 自定义无边框的 ComboBox 样式 -->
     <Style x:Key="FlatComboBox" TargetType="ComboBox">
@@ -422,4 +423,184 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!--  1.确定参数  -->
+    <!--纵向滚动条宽度-->
+    <system:Double   x:Key="VerticalScrollBarThickness">4</system:Double>
+    <!--纵向滑块颜色-->
+    <SolidColorBrush x:Key="VerticalTrackThumbBackgroundBrush" Color="DeepSkyBlue" />
+    <!--横向滚动条宽度-->
+    <system:Double x:Key="HorizontalScrollBarThickness">4</system:Double>
+    <!--横向滑块颜色-->
+    <SolidColorBrush x:Key="HorizontalTrackThumbBackgroundBrush" Color="DeepSkyBlue" />
+    <!-- 自定义垂直滚动条的样式 -->
+    <Style TargetType="ScrollBar" x:Key="CustomScrollBarStyle">
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="Height" Value="{DynamicResource HorizontalScrollBarThickness}" />
+                <Setter Property="Template" Value="{DynamicResource HorizontalScrollBar}" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Width" Value="{DynamicResource VerticalScrollBarThickness}" />
+                <Setter Property="Height" Value="Auto" />
+                <Setter Property="Template" Value="{DynamicResource VerticalScrollBar}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!-- 3.定义template  -->
+    <!-- 纵向滚动条template  -->
+    <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type RangeBase}">
+        <Grid Background="Transparent">
+            <!--轨道-->
+            <Track Name="PART_Track"
+                   IsDirectionReversed="True">
+                <!-- 减少按钮 -->
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="ScrollBar.PageUpCommand" Background="Azure" BorderThickness="0"/>
+                </Track.DecreaseRepeatButton>
+
+                <!-- 增加按钮 -->
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="ScrollBar.PageDownCommand" Background="Azure" BorderThickness="0" />
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <!--滑块-->
+                    <Thumb Background="{DynamicResource VerticalTrackThumbBackgroundBrush}" BorderThickness="0">
+                        <Thumb.Template>
+                            <ControlTemplate>
+                                <Grid Background="{TemplateBinding Background}"/>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                </Track.Thumb>
+                
+            </Track>
+        </Grid>
+    </ControlTemplate>
+    <!-- 横向滚动条template  -->
+    <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type RangeBase}">
+        <Grid>
+            <Track Name="PART_Track" FlowDirection="LeftToRight">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="ScrollBar.PageLeftCommand" />
+                </Track.DecreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Background="{DynamicResource HorizontalTrackThumbBackgroundBrush}" BorderThickness="0">
+                        <Thumb.Template>
+                            <ControlTemplate>
+                                <Grid Background="{TemplateBinding Background}"/>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                </Track.Thumb>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="ScrollBar.PageRightCommand" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+    <!-- 自定义listbox样式 -->
+    <Style TargetType="ListBox" x:Key="CustomListBoxStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBox">
+                    <Border CornerRadius="4"
+                            Padding="4"
+                            Margin="5"
+                            Background="White">
+                        <Border.Effect>
+                            <DropShadowEffect x:Name="Effect"
+                                              Color="SteelBlue" BlurRadius="15" ShadowDepth="5" Opacity="0.5" />
+                        </Border.Effect>
+                        <ScrollViewer >
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 自定义 ListBoxItem 的样式 -->
+    <Style TargetType="ListBoxItem" x:Key="CustomListBoxItemStyle">
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Foreground" Value="MidnightBlue"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Grid>
+                    <Border Name="ItemBorder" Padding="10,4,5,4" Margin="7,4"
+                            CornerRadius="5"
+                            Background="{TemplateBinding Background}">
+                        <ContentControl x:Name="contentControl"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        VerticalAlignment="Center"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        
+                                        />
+                        </Border>
+                    <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" >
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ItemBorder" 
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                        Duration="0:0:0.5" 
+                                                        To="Transparent"/>
+                                        <ColorAnimation Storyboard.TargetName="contentControl"
+                                                        Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.5" 
+                                                        To="MidnightBlue"/>
+                                    </Storyboard>
+                                </VisualState>
+
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <!-- 这里直接将背景设为更深的颜色 -->
+                                        <ColorAnimation Storyboard.TargetName="ItemBorder" 
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                Duration="0:0:0.5" 
+                                                To="PowderBlue"/>
+                                        <ColorAnimation Storyboard.TargetName="contentControl"
+                                                        Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.5" 
+                                                        To="Teal"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <!-- 这里直接将背景设为更深的颜色 -->
+                                        <ColorAnimation Storyboard.TargetName="ItemBorder" 
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                Duration="0:0:0.5" 
+                                                To="DodgerBlue"/>
+                                        <ColorAnimation Storyboard.TargetName="contentControl"
+                                                        Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.5" 
+                                                        To="Azure"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <!-- 这里直接将背景设为更深的颜色 -->
+                                        <ColorAnimation Storyboard.TargetName="ItemBorder" 
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                        Duration="0:0:0.5"  
+                                                        To="DarkGray"/>
+                                        <ColorAnimation Storyboard.TargetName="contentControl"
+                                                        Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.5" 
+                                                        To="White"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
