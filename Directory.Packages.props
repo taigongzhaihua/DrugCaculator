@@ -1,0 +1,42 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+    <NoWarn>$(NoWarn);NU1507</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="CoreCLR-NCalc" Version="3.1.253" />
+    <PackageVersion Include="Dapper" Version="2.1.35" />
+    <PackageVersion Include="EntityFramework" Version="6.5.1" />
+    <PackageVersion Include="EPPlus" Version="7.4.2" />
+    <PackageVersion Include="EPPlus.Interfaces" Version="6.1.1" />
+    <PackageVersion Include="EPPlus.System.Drawing" Version="6.1.1" />
+    <PackageVersion Include="ExcelDataReader" Version="3.7.0" />
+    <PackageVersion Include="ExcelDataReader.DataSet" Version="3.7.0" />
+    <PackageVersion Include="Microsoft.Azure.Amqp" Version="2.6.9" />
+    <PackageVersion Include="Microsoft.Bcl.AsyncInterfaces" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageVersion Include="Microsoft.Data.Sqlite.Core" Version="8.0.10" />
+    <PackageVersion Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />
+    <PackageVersion Include="ncalc" Version="1.3.8" />
+    <PackageVersion Include="NCalc.Core" Version="5.2.11" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageVersion Include="NPinyin.Core" Version="3.0.0" />
+    <PackageVersion Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.10" />
+    <PackageVersion Include="SQLitePCLRaw.core" Version="2.1.10" />
+    <PackageVersion Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.10" />
+    <PackageVersion Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.10" />
+    <PackageVersion Include="Stub.System.Data.SQLite.Core.NetFramework" Version="1.0.119.0" />
+    <PackageVersion Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
+    <PackageVersion Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageVersion Include="System.Data.SQLite" Version="1.0.119.0" />
+    <PackageVersion Include="System.Data.SQLite.Core" Version="1.0.119.0" />
+    <PackageVersion Include="System.Data.SQLite.EF6" Version="1.0.119.0" />
+    <PackageVersion Include="System.Reactive" Version="6.0.1" />
+    <PackageVersion Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+    <PackageVersion Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
+    <PackageVersion Include="System.Text.Encoding.CodePages" Version="8.0.0" />
+    <PackageVersion Include="System.Text.Encodings.Web" Version="8.0.0" />
+    <PackageVersion Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+</Project>

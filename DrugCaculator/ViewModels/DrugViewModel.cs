@@ -12,7 +12,6 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
-using WpfApp2.Services;
 using MessageBox = System.Windows.MessageBox;
 
 namespace DrugCaculator.ViewModels;
@@ -123,7 +122,13 @@ public class DrugViewModel : INotifyPropertyChanged
         {
             _result = value;
             OnPropertyChanged();
-            Dosage = Result.Dosage + Result.Unit;
+            Dosage = Result.Dosage switch
+            {
+                0 => "不可使用",
+                -1 => "遵医嘱",
+                _ => Result.Dosage + Result.Unit
+            };
+
             OnPropertyChanged(nameof(Dosage));
         }
     }
@@ -313,14 +318,13 @@ public class DrugViewModel : INotifyPropertyChanged
         var drug = SelectedDrug;
         if (drug == null) return;
         var rules = drug.CalculationRules;
-        var s = new CalculateService();
         var unit = AgeUnit switch
         {
             "岁" => "year",
             "月" => "month",
             _ => "year"
         };
-        var jsonResult = s.CalculateRules(rules, Age, unit, Weight);
+        var jsonResult = CalculateService.CalculateRules(rules, Age, unit, Weight);
 
         // 反序列化 JSON 字符串
         Result = JsonConvert.DeserializeObject<CalculationResult>(jsonResult);

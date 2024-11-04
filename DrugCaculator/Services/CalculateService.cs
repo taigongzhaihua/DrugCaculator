@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
-namespace WpfApp2.Services
+namespace DrugCaculator.Services
 {
     public class CalculateService
     {
         // 计算并返回符合条件的第一个规则的结果，结果为JSON对象
-        public string CalculateRules(IEnumerable<DrugCalculationRule> rules, int age, string ageUnit, double weight)
+        public static string CalculateRules(IEnumerable<DrugCalculationRule> rules, int age, string ageUnit, double weight)
         {
             Console.WriteLine(@"开始执行 CalculateRules 方法");
             // 遍历每个规则，找到符合条件的第一个规则并返回计算结果
