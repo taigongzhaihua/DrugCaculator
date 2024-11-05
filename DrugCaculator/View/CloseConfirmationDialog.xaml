@@ -1,0 +1,20 @@
+﻿<Window x:Class="DrugCaculator.View.CloseConfirmationDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="确认关闭" Height="200" Width="400" WindowStartupLocation="CenterOwner">
+    <StackPanel Margin="10">
+        <TextBlock Text="您希望退出程序还是最小化到托盘？" Margin="0,0,0,10"/>
+
+        <StackPanel Orientation="Vertical" Margin="10,0">
+            <RadioButton x:Name="rbClose" Content="关闭程序" Margin="0,5"/>
+            <RadioButton x:Name="rbMinimizeToTray" Content="最小化到托盘" Margin="0,5"/>
+        </StackPanel>
+
+        <CheckBox x:Name="cbRememberChoice" Content="记住我的选择" Margin="10,10,0,10"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnOk" Content="确定" Width="75" Margin="5" Click="btnOk_Click"/>
+            <Button x:Name="btnCancel" Content="取消" Width="75" Margin="5" Click="btnCancel_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

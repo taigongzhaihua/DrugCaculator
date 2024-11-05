@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:DrugCaculator.View"
         xmlns:viewModels1="clr-namespace:DrugCaculator.ViewModels"
+        ResizeMode="CanMinimize"
+        WindowStyle="SingleBorderWindow"
         mc:Ignorable="d"
         Title="Drug Management" 
         Height="606" 
@@ -40,7 +42,8 @@
                      Height="20" Margin="0" Width="238"
                      VerticalContentAlignment="Center"
                      Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
-                     BorderThickness="0"/>
+                     BorderThickness="0"
+                     Loaded="SearchTextBox_Loaded"/>
             </Border>
             
             <ListBox Name="DrugList" HorizontalAlignment="Center" Width="276"

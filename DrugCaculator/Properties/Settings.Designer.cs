@@ -34,5 +34,17 @@ namespace DrugCaculator.Properties {
                 this["DeepSeekApiKey"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string IsClose {
+            get {
+                return ((string)(this["IsClose"]));
+            }
+            set {
+                this["IsClose"] = value;
+            }
+        }
     }
 }
