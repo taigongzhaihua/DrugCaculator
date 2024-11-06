@@ -10,6 +10,9 @@
     <ApplicationIcon>AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Fonts\iconfont.ttf" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="AppIcon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -21,6 +24,9 @@
     <EmbeddedResource Include="AppOptions.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Resource Include="Fonts\iconfont.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
