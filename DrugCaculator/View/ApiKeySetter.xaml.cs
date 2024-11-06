@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -28,6 +29,19 @@ namespace DrugCaculator.View
         {
             InitializeComponent();
             ApiKey = DeepSeekService.GetApiKeyFromSettings();
+
+        }
+        private void RoundedBorder_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (sender is not Border border) return;
+
+            // 更新裁剪区域，以匹配控件的当前大小和圆角
+            border.Clip = new RectangleGeometry
+            {
+                Rect = new Rect(0, 0, border.ActualWidth, border.ActualHeight),
+                RadiusX = border.CornerRadius.TopLeft,
+                RadiusY = border.CornerRadius.TopLeft
+            };
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

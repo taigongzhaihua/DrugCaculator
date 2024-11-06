@@ -173,7 +173,6 @@
     </Style>
     <!-- 密码输入框是否显示明文按钮 -->
     <Style TargetType="ToggleButton" x:Key="ToggleVisibilityButton">
-        
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
@@ -181,7 +180,7 @@
                         <Border x:Name="border"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
-                                CornerRadius="2"
+                                CornerRadius="0"
                                 >
                             <ContentPresenter HorizontalAlignment="Center" 
                                               VerticalAlignment="Center"/>

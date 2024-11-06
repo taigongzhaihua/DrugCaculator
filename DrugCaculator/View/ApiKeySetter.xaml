@@ -16,14 +16,15 @@
         </Border.Effect>
         <StackPanel Orientation="Horizontal" Height="37.8">
             <TextBlock Text="ApiKey：" VerticalAlignment="Center" />
-            <Border Background="White"
-                    Height="26" CornerRadius="0" Padding="0,0,0,0">
-                <Border.Effect>
-                    
+            <Grid>
+                <Grid.Effect>
                     <DropShadowEffect Color="SteelBlue" BlurRadius="12" ShadowDepth="3" Opacity="0.5" />
-                    
-                </Border.Effect>
-                <Grid >
+                </Grid.Effect>
+                <Border Background="White" x:Name="InputBox"
+                        Height="26" CornerRadius="5" Padding="0,0,0,0"
+                        ClipToBounds="False"
+                        SizeChanged="RoundedBorder_SizeChanged" >
+                <Grid  ClipToBounds="false">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
@@ -44,7 +45,8 @@
                                   Width="26" Height="26" 
                                   VerticalAlignment="Center" 
                                   Background="Transparent" BorderBrush="Transparent" 
-                                  Checked="ToggleVisibilityButton_Checked" Unchecked="ToggleVisibilityButton_Unchecked">
+                                  Checked="ToggleVisibilityButton_Checked" Unchecked="ToggleVisibilityButton_Unchecked"
+                                  ClipToBounds="True">
                         <Path x:Name="EyeClosedIcon" 
                               Data="M1 8 A 10 10 0 0 1 19 8 M 10 10 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0 M 10 10 m -3 3 l 6 -6" 
                               Stroke="CornflowerBlue" StrokeThickness="1.7" />
@@ -52,6 +54,8 @@
                     
                 </Grid>
             </Border>
+            </Grid>
+            
             <Button Content="确认" Width="50" Height="26" Margin="10,0,0,0" Click="ConfirmButton_Click" 
                     Style="{DynamicResource DarkButton}"/>
             <Button Content="取消" Width="50" Height="26" Margin="10,0,0,0" Click="CancelButton_Click" 

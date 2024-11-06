@@ -13,7 +13,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using Application = System.Windows.Application;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using TextBox = System.Windows.Controls.TextBox; // 需要添加System.Windows.Forms的引用
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace DrugCaculator.View
 {
@@ -27,7 +27,7 @@ namespace DrugCaculator.View
             if (value is double totalHeight)
             {
                 // 减去固定值以确保UI布局合理
-                return totalHeight - 180; // 可以根据需要调整减去的值
+                return totalHeight - 165; // 可以根据需要调整减去的值
             }
             return 0;
         }
@@ -74,8 +74,7 @@ namespace DrugCaculator.View
     }
     public partial class MainWindow : Window
     {
-        private NotifyIcon _notifyIcon;
-        private ContextMenuStrip _contextMenuStrip;
+        private readonly NotifyIcon _notifyIcon;
         private const int HotkeyId = 9000; // 热键ID
         private const int ModWin = 0x0008; // Win 键修饰符
         private const int VkF2 = 0x71; // F2 键的虚拟码
@@ -100,18 +99,18 @@ namespace DrugCaculator.View
                 Visible = true,
                 Text = @"药物查询"
             };
-            _notifyIcon.DoubleClick += (s, e) => ShowWindow();
+            _notifyIcon.DoubleClick += (_, _) => ShowWindow();
 
             // 处理窗口最小化事件
             StateChanged += MainWindow_StateChanged;
 
             // 初始化右键菜单
-            _contextMenuStrip = new ContextMenuStrip();
-            _contextMenuStrip.Items.Add("显示", null, (s, e) => ShowWindow());
-            _contextMenuStrip.Items.Add("退出", null, (s, e) => ExitApplication());
+            var contextMenuStrip = new ContextMenuStrip();
+            contextMenuStrip.Items.Add("显示", null, (_, _) => ShowWindow());
+            contextMenuStrip.Items.Add("退出", null, (_, _) => ExitApplication());
 
             // 将右键菜单赋给托盘图标
-            _notifyIcon.ContextMenuStrip = _contextMenuStrip;
+            _notifyIcon.ContextMenuStrip = contextMenuStrip;
 
             // 处理关闭事件
             Closing += MainWindow_Closing;
@@ -207,6 +206,10 @@ namespace DrugCaculator.View
             UnregisterHotKey(helper.Handle, HotkeyId);
             base.OnClosed(e);
         }
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
+        }
         private void ShowWindow()
         {
             Show(); // 显示窗口
@@ -214,16 +217,6 @@ namespace DrugCaculator.View
             Activate(); // 激活窗口
         }
 
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            // 检查 _notifyIcon 是否为 null
-            if (_notifyIcon != null)
-            {
-                _notifyIcon.Dispose(); // 释放托盘图标资源
-                _notifyIcon = null; // 防止再次调用时出错
-            }
-            base.OnClosing(e);
-        }
         private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != "SelectedDrug") return;
