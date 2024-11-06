@@ -7,10 +7,12 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using Application = System.Windows.Application;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using TextBox = System.Windows.Controls.TextBox;
@@ -27,7 +29,7 @@ namespace DrugCaculator.View
             if (value is double totalHeight)
             {
                 // 减去固定值以确保UI布局合理
-                return totalHeight - 165; // 可以根据需要调整减去的值
+                return totalHeight >= 165 ? totalHeight - 165 : 0; // 可以根据需要调整减去的值
             }
             return 0;
         }
@@ -199,12 +201,25 @@ namespace DrugCaculator.View
             _notifyIcon.Dispose(); // 释放托盘图标
             Application.Current.Shutdown(); // 退出应用程序
         }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
         protected override void OnClosed(EventArgs e)
         {
             // 注销热键
             var helper = new WindowInteropHelper(this);
             UnregisterHotKey(helper.Handle, HotkeyId);
             base.OnClosed(e);
+        }
+        private void SettingButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
         }
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -295,7 +310,17 @@ namespace DrugCaculator.View
             InputLanguageManager.SetInputLanguage((TextBox)sender, new CultureInfo("en-US"));
         }
 
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (sender is not Border border) return;
 
-
+            // 更新裁剪区域，以匹配控件的当前大小和圆角
+            border.Clip = new RectangleGeometry
+            {
+                Rect = new Rect(0, 0, border.ActualWidth, border.ActualHeight),
+                RadiusX = border.CornerRadius.TopLeft,
+                RadiusY = border.CornerRadius.TopLeft
+            };
+        }
     }
 }
