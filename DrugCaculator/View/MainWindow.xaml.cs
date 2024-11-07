@@ -215,7 +215,11 @@ namespace DrugCaculator.View
         }
         private void SettingButton_Click(object sender, RoutedEventArgs e)
         {
-
+            var settings = new SettingsWindow
+            {
+                Owner = this
+            };
+            settings.ShowDialog();
         }
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {

@@ -150,8 +150,7 @@
                                 CornerRadius="15"
                                 Padding="15"
                                 Margin="10,30,10,20"
-                                VerticalAlignment="Center"
-                                >
+                                VerticalAlignment="Center">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="10" ShadowDepth="5" Opacity="0.5" Color="SteelBlue" />
                             </Border.Effect>
@@ -166,20 +165,20 @@
                                             Margin="0"
                                             HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <TextBlock Text="体重:"
-                                               VerticalAlignment="Center" 
+                                               VerticalAlignment="Center"
                                                FontSize="14"
-                                               Foreground="Teal"/>
+                                               Foreground="Teal" />
                                     <TextBox Name="WeightTextBox" Style="{DynamicResource FlatTextBox}"
                                              Width="50"
                                              Text="{Binding Weight, Converter={StaticResource StringToDoubleConverter}, UpdateSourceTrigger=PropertyChanged}"
                                              PreviewTextInput="WeightTextBox_PreviewTextInput"
                                              KeyUp="WeightTextBox_KeyUp"
-                                             Margin="10,0,0,0" 
-                                             FontSize="14"/>
+                                             Margin="10,0,0,0"
+                                             FontSize="14" />
                                     <TextBlock Text=" kg"
-                                               VerticalAlignment="Center" 
+                                               VerticalAlignment="Center"
                                                FontSize="14"
-                                               Foreground="Teal"/>
+                                               Foreground="Teal" />
                                 </StackPanel>
 
                                 <!-- 年龄输入 -->
@@ -187,16 +186,16 @@
                                 <StackPanel Grid.Column="1" Orientation="Horizontal"
                                             HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <TextBlock Text="年龄:"
-                                               VerticalAlignment="Center" 
+                                               VerticalAlignment="Center"
                                                FontSize="14"
-                                               Foreground="Teal"/>
+                                               Foreground="Teal" />
                                     <TextBox Name="AgeTextBox" Style="{DynamicResource FlatTextBox}"
                                              Width="50"
                                              Margin="10,0,0,0"
                                              Text="{Binding Age, Converter={StaticResource StringToIntConverter}, UpdateSourceTrigger=PropertyChanged}"
                                              PreviewTextInput="AgeTextBox_PreviewTextInput"
-                                             KeyUp="AgeTextBox_KeyUp" 
-                                             FontSize="14"/>
+                                             KeyUp="AgeTextBox_KeyUp"
+                                             FontSize="14" />
                                     <!-- 年龄单位选择 -->
                                     <ComboBox Name="AgeUnitComboBox" Style="{DynamicResource UnderLineComboBox}"
                                               MinWidth="20"
@@ -220,7 +219,7 @@
                             MaxWidth="600"
                             CornerRadius="10"
                             Padding="3"
-                            Margin="30,20,30,40"
+                            Margin="30,20,30,20"
                             x:Name="ResultBorder">
                         <Border.Effect>
                             <DropShadowEffect Color="SteelBlue" BlurRadius="15" ShadowDepth="5" Opacity="0.5" />
@@ -328,22 +327,30 @@
                             <DropShadowEffect BlurRadius="10" ShadowDepth="5" Opacity="0.5" Color="SteelBlue" />
                         </Border.Effect>
                         <StackPanel MaxWidth="650" HorizontalAlignment="Left"
-                                    Margin="15,20,15,40">
+                                    Margin="15,10,15,0">
                             <!-- 下方的用法描述 -->
                             <TextBlock Text="用法用量（说明书）:" FontWeight="Black"
                                        VerticalAlignment="Center" FontSize="16" FontFamily="微软雅黑"
                                        Foreground="DarkCyan" />
-                            <TextBlock Name="UsageTextBlock" FontSize="14"
-                                       Text="{Binding SelectedDrug.Usage}"
-                                       Margin="0,10,0,20" TextWrapping="Wrap"
-                                       Foreground="DarkSlateGray" FontFamily="宋体" />
+                            <TextBox Name="UsageTextBlock"
+                                     FontSize="14" MinHeight="60" MaxHeight="80"
+                                     Text="{Binding SelectedDrug.Usage}"
+                                     Margin="0,10,0,20" TextWrapping="Wrap"
+                                     Foreground="DarkSlateGray" FontFamily="宋体"
+                                     BorderThickness="0"
+                                     Background="Transparent"
+                                     IsReadOnly="True" />
                             <TextBlock Text="备注:" FontSize="16" FontWeight="Black" FontFamily="微软雅黑"
                                        VerticalAlignment="Center"
                                        Foreground="DarkCyan" />
-                            <TextBlock Name="DescriptionTextBlock" FontSize="14"
-                                       Text="{Binding SelectedDrug.Description}"
-                                       Margin="0,10,0,0" TextWrapping="Wrap" FontFamily="宋体"
-                                       Foreground="DarkSlateGray" />
+                            <TextBox Name="DescriptionTextBlock"
+                                     FontSize="14" MinHeight="60" MaxHeight="80"
+                                     Text="{Binding SelectedDrug.Description}"
+                                     Margin="0,10,0,0" TextWrapping="Wrap"
+                                     Foreground="DarkSlateGray" FontFamily="宋体"
+                                     BorderThickness="0"
+                                     Background="Transparent"
+                                     IsReadOnly="True" />
                         </StackPanel>
 
                     </Border>
