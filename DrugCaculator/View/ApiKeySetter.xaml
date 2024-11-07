@@ -32,12 +32,12 @@
                     <PasswordBox Grid.Column="0" x:Name="PasswordBox" 
                                  Width="259" Margin="0" BorderThickness="0" 
                                  Background="Transparent"
-                                 PasswordChar="*" FontFamily="宋体" FontSize="14"
+                                 PasswordChar="-" FontFamily="../Fonts/#Gen Jyuu Gothic Monospace Regular" FontSize="14"
                                  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                     <TextBox Grid.Column="0" x:Name="TextBox" 
                              Width="259" Margin="0" BorderThickness="0" 
                              Background="Transparent"
-                             FontFamily="宋体" FontSize="14" 
+                             FontFamily="../Fonts/#Gen Jyuu Gothic Monospace Regular" FontSize="14" 
                              VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                              Visibility="Collapsed" 
                              Text="{Binding ApiKey}"/>
@@ -56,7 +56,7 @@
             </Border>
             </Grid>
             
-            <Button Content="确认" Width="50" Height="26" Margin="10,0,0,0" Click="ConfirmButton_Click" 
+            <Button Content="确认" Width="50" Height="26" Margin="10,0,0,0" Click="ConfirmButton_Click"
                     Style="{DynamicResource DarkButton}"/>
             <Button Content="取消" Width="50" Height="26" Margin="10,0,0,0" Click="CancelButton_Click" 
                     Style="{DynamicResource LightButton}"/>

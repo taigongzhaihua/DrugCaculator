@@ -4,12 +4,12 @@
              StartupUri="/View/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <FontFamily x:Key="SiYuanRouHei">./Fonts/#Gen Jyuu Gothic Monospace Regular</FontFamily>
+            <FontFamily x:Key="SiYuanSongTi">./Fonts/#思源宋体 Source Han Serif CN</FontFamily>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/View/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
         </ResourceDictionary>
-
     </Application.Resources>
 
 </Application>

@@ -10,7 +10,11 @@
     <ApplicationIcon>AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Fonts\GenJyuuGothic-Monospace-Regular-2.ttf" />
     <None Remove="Fonts\iconfont.ttf" />
+    <None Remove="Fonts\NotoSansCJK-Medium-5.otf" />
+    <None Remove="Fonts\NotoSansCJK-Thin-2.otf" />
+    <None Remove="Fonts\SourceHanSerifCN-Regular-1.otf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AppIcon.ico" />
@@ -24,7 +28,19 @@
     <EmbeddedResource Include="AppOptions.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Resource Include="Fonts\GenJyuuGothic-Monospace-Regular-2.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Fonts\iconfont.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\NotoSansCJK-Medium-5.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\NotoSansCJK-Thin-2.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\SourceHanSerifCN-Regular-1.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

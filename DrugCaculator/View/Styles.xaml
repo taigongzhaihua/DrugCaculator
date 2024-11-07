@@ -267,8 +267,8 @@
     <Style TargetType="Button" x:Key="LightButton">
         <Setter Property="Background" Value="GhostWhite"/>
         <Setter Property="Foreground" Value="SteelBlue"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontFamily" Value="微软雅黑"/>
+        <Setter Property="FontSize" Value="11pt"/>
+        <Setter Property="FontFamily" Value="宋体"/>
         <Setter Property="FontWeight" Value="Medium"></Setter>
         <Setter Property="Template">
             <Setter.Value>
@@ -325,10 +325,9 @@
     <!-- 暗色按钮 -->
     <Style TargetType="Button" x:Key="DarkButton">
         <Setter Property="Background" Value="DodgerBlue"/>
-        <Setter Property="Foreground" Value="GhostWhite"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontFamily" Value="微软雅黑"/>
-        <Setter Property="FontWeight" Value="Medium"></Setter>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="11pt"/>
+        <Setter Property="FontFamily" Value="宋体"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -422,6 +421,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!-- 标题栏按钮 -->
     <Style TargetType="Button" x:Key="TitleButton">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="MidnightBlue"/>
@@ -504,6 +504,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!-- 关闭按钮 -->
     <Style TargetType="Button" x:Key="CloseButton">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="MidnightBlue"/>
@@ -687,9 +688,9 @@
 
     <!-- 自定义 ListBoxItem 的样式 -->
     <Style TargetType="ListBoxItem" x:Key="CustomListBoxItemStyle">
-        <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Foreground" Value="MidnightBlue"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontSize" Value="11pt"/>
+        <Setter Property="FontFamily" Value="../Fonts/#Noto Sans CJK Thin"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
