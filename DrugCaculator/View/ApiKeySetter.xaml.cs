@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Setting = DrugCaculator.Properties.Settings;
 
 namespace DrugCaculator.View
 {
@@ -18,96 +19,109 @@ namespace DrugCaculator.View
         public string ApiKey
         {
             get => _apiKey;
-            set
-            {
-                _apiKey = value;
-                OnPropertyChanged();
-                PasswordBox.Password = value;
-            }
+            set => SetField(ref _apiKey, value, nameof(ApiKey));
         }
+
         public ApiKeySetter()
         {
             InitializeComponent();
-            ApiKey = DeepSeekService.GetApiKeyFromSettings();
-
+            ApiKey = DeepSeekService.GetApiKeyFromSettings(); // 从设置中获取 API 密钥
         }
+
+        // 当边框大小改变时，更新裁剪区域以匹配控件的当前大小和圆角
         private void RoundedBorder_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (sender is not Border border) return;
-
-            // 更新裁剪区域，以匹配控件的当前大小和圆角
-            border.Clip = new RectangleGeometry
+            if (sender is Border border)
             {
-                Rect = new Rect(0, 0, border.ActualWidth, border.ActualHeight),
-                RadiusX = border.CornerRadius.TopLeft,
-                RadiusY = border.CornerRadius.TopLeft
-            };
+                border.Clip = new RectangleGeometry
+                {
+                    Rect = new Rect(0, 0, border.ActualWidth, border.ActualHeight),
+                    RadiusX = border.CornerRadius.TopLeft,
+                    RadiusY = border.CornerRadius.TopLeft
+                };
+            }
         }
 
+        // 允许用户通过拖动窗口来移动位置
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
         }
 
+        // 当切换按钮选中时，显示密码
         private void ToggleVisibilityButton_Checked(object sender, RoutedEventArgs e)
         {
-            TextBox.Text = PasswordBox.Password;
-            PasswordBox.Visibility = Visibility.Collapsed;
-            TextBox.Visibility = Visibility.Visible;
-            ToggleVisibilityButton.Content = new Path
+            SetPasswordVisibility(true);
+        }
+
+        // 当切换按钮取消选中时，隐藏密码
+        private void ToggleVisibilityButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SetPasswordVisibility(false);
+        }
+
+        // 设置密码框的可见性
+        private void SetPasswordVisibility(bool isVisible)
+        {
+            if (isVisible)
             {
-                Data = Geometry.Parse("M1 8 A 10 10 0 0 1 19 8 M 10 10 m -3.5 0 a 3.5 3.5 0 1 0 7 0 a 3.5 3.5 0 1 0 -7 0"),
-                Stroke = Brushes.RoyalBlue,
+                TextBox.Text = PasswordBox.Password;
+                PasswordBox.Visibility = Visibility.Collapsed;
+                TextBox.Visibility = Visibility.Visible;
+                ToggleVisibilityButton.Content = CreatePathGeometry("M1 8 A 10 10 0 0 1 19 8 M 10 10 m -3.5 0 a 3.5 3.5 0 1 0 7 0 a 3.5 3.5 0 1 0 -7 0", Brushes.RoyalBlue);
+            }
+            else
+            {
+                PasswordBox.Password = TextBox.Text;
+                TextBox.Visibility = Visibility.Collapsed;
+                PasswordBox.Visibility = Visibility.Visible;
+                ToggleVisibilityButton.Content = EyeClosedIcon;
+            }
+        }
+
+        // 创建路径几何，用于切换按钮的图标
+        private static Path CreatePathGeometry(string data, Brush stroke)
+        {
+            return new Path
+            {
+                Data = Geometry.Parse(data),
+                Stroke = stroke,
                 StrokeThickness = 1.7
             };
         }
 
-        private void ToggleVisibilityButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-            PasswordBox.Password = TextBox.Text;
-            TextBox.Visibility = Visibility.Collapsed;
-            PasswordBox.Visibility = Visibility.Visible;
-            ToggleVisibilityButton.Content = EyeClosedIcon;
-        }
-
+        // 确认按钮点击事件处理程序
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
-            // 获取输入的 API 密钥
             var apiKey = PasswordBox.Visibility == Visibility.Visible ? PasswordBox.Password : TextBox.Text;
 
-            // 打印日志：确认按钮被点击
-            Console.WriteLine(@"确认按钮被点击");
-
-            // 检查输入
-            if (string.IsNullOrWhiteSpace(apiKey)) // 检查 API 密钥是否为空或仅包含空白字符
+            // 检查 API 密钥是否为空
+            if (string.IsNullOrWhiteSpace(apiKey))
             {
-                // 打印日志：API 密钥为空
                 Console.WriteLine(@"API 密钥为空");
-                MessageBox.Show("API 密钥不能为空。", "错误", MessageBoxButton.OK, MessageBoxImage.Error); // 显示错误消息框
-                return; // 退出事件处理程序
+                MessageBox.Show("API 密钥不能为空。", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
-            // 加密并存储到应用程序设置
             try
             {
-                // 打印日志：开始加密 API 密钥
+                // 加密 API 密钥并保存到设置中
                 Console.WriteLine(@"开始加密 API 密钥");
-                var encryptedApiKey = EncryptionService.Encrypt(apiKey, "DeepSeekApiKey"); // 使用加密服务加密 API 密钥
-                Properties.Settings.Default.DeepSeekApiKey = encryptedApiKey; // 将加密后的 API 密钥存储到应用程序设置中
-                Properties.Settings.Default.Save(); // 保存设置
-                // 打印日志：API 密钥已成功保存
+                var encryptedApiKey = EncryptionService.Encrypt(apiKey, "DeepSeekApiKey");
+                Setting.Default.DeepSeekApiKey = encryptedApiKey;
+                Setting.Default.Save();
                 Console.WriteLine(@"API 密钥已成功保存");
-                MessageBox.Show("API 密钥已成功保存。", "成功", MessageBoxButton.OK, MessageBoxImage.Information); // 显示成功消息框
-                Close(); // 关闭输入窗口
+                MessageBox.Show("API 密钥已成功保存。", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
+                Close();
             }
             catch (Exception ex)
             {
-                // 打印日志：保存 API 密钥时发生错误
                 Console.WriteLine($@"保存 API 密钥时发生错误: {ex.Message}");
-                MessageBox.Show($"保存 API 密钥时发生错误: {ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error); // 显示错误消息框
+                MessageBox.Show($"保存 API 密钥时发生错误: {ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
+        // 取消按钮点击事件处理程序
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -115,18 +129,19 @@ namespace DrugCaculator.View
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        // 属性改变时通知界面更新
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        // 设置属性值并通知界面更新
+        protected bool SetField<T>(ref T field, T value, string propertyName)
         {
             if (EqualityComparer<T>.Default.Equals(field, value)) return false;
             field = value;
             OnPropertyChanged(propertyName);
             return true;
         }
-
     }
 }
