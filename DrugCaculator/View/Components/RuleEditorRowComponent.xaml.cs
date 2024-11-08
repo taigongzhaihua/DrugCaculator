@@ -77,7 +77,7 @@ namespace DrugCaculator.View.Components
             Conditions.Add(newCondition);
 
             var conditionComponent = new RuleEditorConditionComponent();
-            conditionComponent.ConditionDeleted += (s, args) => RemoveCondition(conditionComponent);
+            conditionComponent.ConditionDeleted += (_, _) => RemoveCondition(conditionComponent);
             UpdateCondition();
         }
 
@@ -137,12 +137,7 @@ namespace DrugCaculator.View.Components
                 Console.WriteLine(CalculationRule.Frequency);
             }
         }
-        private void OnFormulaPreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            // 允许输入的字符：数字、基本运算符（+ - * /）、括号和小数点
-            var regex = new Regex(@"^[0-9+\-*/().]*$");
-            e.Handled = !regex.IsMatch(e.Text);
-        }
+
         // 将英文格式转换为中文格式
         private static string EnglishToChinese(string condition)
         {
@@ -268,7 +263,7 @@ namespace DrugCaculator.View.Components
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is Visibility visibility && visibility == Visibility.Visible;
+            return value is Visibility.Visible;
         }
     }
     // 条件行类

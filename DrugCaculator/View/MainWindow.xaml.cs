@@ -74,7 +74,7 @@ namespace DrugCaculator.View
             return double.TryParse(value?.ToString(), out var result) ? result : DependencyProperty.UnsetValue; // 返回未设置的值以避免异常
         }
     }
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private readonly NotifyIcon _notifyIcon;
         private const int HotkeyId = 9000; // 热键ID

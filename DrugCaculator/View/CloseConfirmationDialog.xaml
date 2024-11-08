@@ -54,10 +54,10 @@
                     <CheckBox x:Name="CbRememberChoice" Content="记住我的选择" Margin="10,10,0,10" />
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button x:Name="BtnOk" Content="确定" Width="60" Margin="5" Padding="10" Click="btnOk_Click"
+                        <Button x:Name="BtnOk" Content="确定" Width="60" Margin="5" Padding="10" Click="BtnOk_Click"
                                 Style="{DynamicResource DarkButton}" />
                         <Button x:Name="BtnCancel" Content="取消" Width="60" Margin="5" Padding="10"
-                                Click="btnCancel_Click" Style="{DynamicResource LightButton}" />
+                                Click="BtnCancel_Click" Style="{DynamicResource LightButton}" />
                     </StackPanel>
                 </StackPanel>
             </Grid>

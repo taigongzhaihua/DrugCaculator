@@ -36,7 +36,7 @@ public static class EncryptionService
             {
                 Console.WriteLine($@"{DbDirectory}不存在，正在创建");
                 Directory.CreateDirectory(DbDirectory);
-                Console.WriteLine($@"创建成功");
+                Console.WriteLine(@"创建成功");
             }
             if (!HasWritePermission(DbDirectory))
             {
@@ -47,7 +47,7 @@ public static class EncryptionService
             {
                 Console.WriteLine($@"{DbPath} 不存在，正在创建");
                 SQLiteConnection.CreateFile(DbPath);
-                Console.WriteLine($@"创建成功");
+                Console.WriteLine(@"创建成功");
             }
             Console.WriteLine($@"ConnectionString = '{ConnectionString}'");
             using var connection = new SQLiteConnection(ConnectionString);
@@ -72,7 +72,7 @@ public static class EncryptionService
         try
         {
             // 尝试在路径中创建一个文件，以测试写入权限
-            var testFile = Path.Combine(path, "testfile.tmp");
+            var testFile = Path.Combine(path, "test-file.tmp");
             using var fs = File.Create(testFile, 1, FileOptions.DeleteOnClose);
             return true;
         }
@@ -92,9 +92,9 @@ public static class EncryptionService
 
         SaveKeyToDatabase(keyName, protectedKey, protectedIv);
 
-        using var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+        using var encryption = aes.CreateEncryptor(aes.Key, aes.IV);
         using var ms = new MemoryStream();
-        using var cs = new CryptoStream(ms, encryptor, CryptoStreamMode.Write);
+        using var cs = new CryptoStream(ms, encryption, CryptoStreamMode.Write);
         using (var writer = new StreamWriter(cs))
         {
             writer.Write(plainText);

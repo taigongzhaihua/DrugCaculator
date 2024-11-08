@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace DrugCaculator.View
 {
-    public partial class CloseConfirmationDialog : Window
+    public partial class CloseConfirmationDialog
     {
         public bool IsClose { get; private set; }
         public bool RememberChoice { get; private set; }
@@ -16,14 +16,14 @@ namespace DrugCaculator.View
             RbClose.IsChecked = true; // 默认选择关闭程序
         }
 
-        private void btnOk_Click(object sender, RoutedEventArgs e)
+        private void BtnOk_Click(object sender, RoutedEventArgs e)
         {
             IsClose = RbClose.IsChecked == true;
             RememberChoice = CbRememberChoice.IsChecked == true;
             DialogResult = true;
         }
 
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
         }

@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace DrugCaculator.View.Components
 {
-    public partial class RuleEditorConditionComponent : UserControl
+    public partial class RuleEditorConditionComponent
     {
         // 删除事件
         public event EventHandler ConditionDeleted;

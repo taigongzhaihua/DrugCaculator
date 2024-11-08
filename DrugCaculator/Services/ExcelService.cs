@@ -22,7 +22,7 @@ namespace DrugCaculator.Services
             }
 
             // 注册编码提供程序，以支持读取包含特定编码的 Excel 文件
-            Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             // 打开文件流以读取 Excel 文件
             using var stream = File.Open(filePath, FileMode.Open, FileAccess.Read);
@@ -35,7 +35,7 @@ namespace DrugCaculator.Services
             // 将 Excel 文件转换为 DataSet，对应的 DataTable 使用第一行为列标题
             var result = reader.AsDataSet(new ExcelDataSetConfiguration
             {
-                ConfigureDataTable = (_) => new ExcelDataTableConfiguration { UseHeaderRow = true }
+                ConfigureDataTable = _ => new ExcelDataTableConfiguration { UseHeaderRow = true }
             });
 
             // 检查工作簿中是否包含任何表格
@@ -50,7 +50,10 @@ namespace DrugCaculator.Services
             return result.Tables[0];
         }
 
+#pragma warning disable CA1822
+        // ReSharper disable once UnusedMember.Global
         public void Write(DataTable table, string filePath)
+#pragma warning restore CA1822
         {
             // 日志输出，显示文件路径
             Console.WriteLine($@"调用 Write 方法，文件路径：{filePath}");
@@ -64,7 +67,7 @@ namespace DrugCaculator.Services
 
             // 设置 ExcelPackage 的许可证上下文为非商业用途
             // 设置 ExcelPackage 的许可证上下文为非商业用途
-            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 
             // 创建新的 ExcelPackage 对象
