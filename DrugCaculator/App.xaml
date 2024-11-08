@@ -4,8 +4,18 @@
              StartupUri="/View/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <FontFamily x:Key="SiYuanRouHei">./Fonts/#Gen Jyuu Gothic Monospace Regular</FontFamily>
-            <FontFamily x:Key="SiYuanSongTi">./Fonts/#思源宋体 Source Han Serif CN</FontFamily>
+            <Style TargetType="RadioButton">
+                <Setter Property="Foreground" Value="Teal"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Style.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Foreground" Value="IndianRed"/>
+                    </Trigger>
+                    <Trigger Property="IsChecked" Value="False">
+                        <Setter Property="Foreground" Value="Teal"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/View/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>

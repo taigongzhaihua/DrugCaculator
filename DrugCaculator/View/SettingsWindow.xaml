@@ -9,20 +9,6 @@
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True">
-    <Window.Resources>
-        <Style TargetType="RadioButton">
-            <Setter Property="Foreground" Value="Teal"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Style.Triggers>
-                <Trigger Property="IsChecked" Value="True">
-                    <Setter Property="Foreground" Value="IndianRed"/>
-                </Trigger>
-                <Trigger Property="IsChecked" Value="False">
-                    <Setter Property="Foreground" Value="Teal"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
     <Grid>
         <Grid.Effect>
             <DropShadowEffect Color="SteelBlue" BlurRadius="15" ShadowDepth="5" Opacity="0.5" />
