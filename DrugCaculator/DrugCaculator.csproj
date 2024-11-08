@@ -12,9 +12,7 @@
   <ItemGroup>
     <None Remove="Fonts\GenJyuuGothic-Monospace-Regular-2.ttf" />
     <None Remove="Fonts\iconfont.ttf" />
-    <None Remove="Fonts\NotoSansCJK-Medium-5.otf" />
-    <None Remove="Fonts\NotoSansCJK-Thin-2.otf" />
-    <None Remove="Fonts\SourceHanSerifCN-Regular-1.otf" />
+    <None Remove="Fonts\SourceHanSansSC-Regular-2.otf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AppIcon.ico" />
@@ -34,13 +32,7 @@
     <Resource Include="Fonts\iconfont.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Fonts\NotoSansCJK-Medium-5.otf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Fonts\NotoSansCJK-Thin-2.otf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Fonts\SourceHanSerifCN-Regular-1.otf">
+    <Resource Include="Fonts\SourceHanSansSC-Regular-2.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -63,19 +55,12 @@
     <PackageReference Include="EPPlus.System.Drawing" />
     <PackageReference Include="ExcelDataReader" />
     <PackageReference Include="ExcelDataReader.DataSet" />
-    <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" />
     <PackageReference Include="Newtonsoft.Json" />
-    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" />
-    <PackageReference Include="SQLitePCLRaw.core" />
-    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" />
-    <PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" />
     <PackageReference Include="System.Data.SQLite" />
     <PackageReference Include="System.Data.SQLite.Core" />
     <PackageReference Include="System.Data.SQLite.EF6" />
-    <PackageReference Include="System.Reactive" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />
     <PackageReference Include="System.Text.Encoding.CodePages" />

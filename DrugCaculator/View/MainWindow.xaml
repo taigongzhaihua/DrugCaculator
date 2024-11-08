@@ -132,27 +132,28 @@
                                    FontFamily="宋体"
                                    FontSize="14" />
                         <!-- 设置按钮 -->
-                        <Button Grid.Column="1" Content="&#xe966;" Width="40" Click="SettingButton_Click"
+                        <Button Grid.Column="1" Content="&#xe966;" Width="40"
+                                Click="SettingButton_Click" ToolTip="设置"
                                 Style="{DynamicResource TitleButton}" />
                         <!-- 最小化按钮 -->
-                        <Button Grid.Column="2" Content="&#xe95f;" Width="40" Click="MinimizeButton_Click"
+                        <Button Grid.Column="2" Content="&#xe95f;" Width="40"
+                                Click="MinimizeButton_Click" ToolTip="最小化窗口"
                                 Style="{DynamicResource TitleButton}" />
                         <!-- 关闭按钮 -->
-                        <Button Grid.Column="3"
-                                Content="&#xe955;"
-                                Width="40" Click="CloseButton_Click"
+                        <Button Grid.Column="3" Content="&#xe955;" Width="40"
+                                Click="CloseButton_Click" ToolTip="关闭窗口"
                                 Style="{DynamicResource CloseButton}" />
                     </Grid>
                     <!-- 上方计算部分 -->
                     <Grid>
                         <Border Width="{Binding Path=ActualWidth,ElementName=ResultBorder}"
                                 Background="White"
-                                CornerRadius="15"
+                                CornerRadius="10"
                                 Padding="15"
-                                Margin="10,30,10,20"
+                                Margin="15,35,15,15"
                                 VerticalAlignment="Center">
                             <Border.Effect>
-                                <DropShadowEffect BlurRadius="10" ShadowDepth="5" Opacity="0.5" Color="SteelBlue" />
+                                <DropShadowEffect BlurRadius="15" ShadowDepth="5" Opacity="0.5" Color="SteelBlue" />
                             </Border.Effect>
                             <!-- 输入框 -->
                             <Grid>
@@ -166,22 +167,22 @@
                                             HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <TextBlock Text="体重:"
                                                VerticalAlignment="Center"
-                                               FontSize="12pt"
-                                               FontFamily="黑体"
-                                               Foreground="Teal" />
+                                               FontSize="18"
+                                               FontFamily="微软雅黑" FontWeight="Black"
+                                               Foreground="MidnightBlue" />
                                     <TextBox Name="WeightTextBox" Style="{DynamicResource FlatTextBox}"
                                              Width="50"
                                              Text="{Binding Weight, Converter={StaticResource StringToDoubleConverter}, UpdateSourceTrigger=PropertyChanged}"
                                              PreviewTextInput="WeightTextBox_PreviewTextInput"
                                              KeyUp="WeightTextBox_KeyUp"
                                              Margin="10,0,0,0"
-                                             FontFamily="黑体pt"
-                                             FontSize="12pt" />
+                                             FontFamily="../Fonts/#Source Han Serif SC"
+                                             FontSize="18" />
                                     <TextBlock Text=" kg"
                                                VerticalAlignment="Center"
-                                               FontSize="12pt"
-                                               FontFamily="黑体"
-                                               Foreground="Teal" />
+                                               FontSize="18"
+                                               FontFamily="../Fonts/#Source Han Serif SC"
+                                               Foreground="SlateBlue" />
                                 </StackPanel>
 
                                 <!-- 年龄输入 -->
@@ -190,17 +191,17 @@
                                             HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <TextBlock Text="年龄:"
                                                VerticalAlignment="Center"
-                                               FontSize="12pt"
-                                               FontFamily="黑体"
-                                               Foreground="Teal" />
+                                               FontSize="18"
+                                               FontFamily="微软雅黑" FontWeight="Black"
+                                               Foreground="MidnightBlue" />
                                     <TextBox Name="AgeTextBox" Style="{DynamicResource FlatTextBox}"
                                              Width="50"
                                              Margin="10,0,0,0"
                                              Text="{Binding Age, Converter={StaticResource StringToIntConverter}, UpdateSourceTrigger=PropertyChanged}"
                                              PreviewTextInput="AgeTextBox_PreviewTextInput"
                                              KeyUp="AgeTextBox_KeyUp"
-                                             FontFamily="黑体"
-                                             FontSize="12pt" />
+                                             FontFamily="../Fonts/#Source Han Serif SC"
+                                             FontSize="18" />
                                     <!-- 年龄单位选择 -->
                                     <ComboBox Name="AgeUnitComboBox" Style="{DynamicResource UnderLineComboBox}"
                                               MinWidth="20"
@@ -208,9 +209,8 @@
                                               SelectedValue="{Binding AgeUnit}"
                                               SelectedValuePath="Content"
                                               KeyDown="AgeUnitComboBox_KeyDown"
-                                              FontSize="12pt"
-                                              FontFamily="黑体"
-                                              FontWeight="DemiBold">
+                                              FontSize="18" Foreground="SlateBlue"
+                                              FontFamily="../Fonts/#Source Han Serif SC">
                                         <ComboBoxItem Content="月" />
                                         <ComboBoxItem Content="岁"
                                                       IsSelected="True" />
@@ -224,136 +224,131 @@
                     <Border Background="White"
                             MaxWidth="600"
                             CornerRadius="10"
-                            Padding="3"
-                            Margin="30,20,30,20"
+                            Padding="15,10"
+                            Margin="30,15,30,15"
                             x:Name="ResultBorder">
                         <Border.Effect>
                             <DropShadowEffect Color="SteelBlue" BlurRadius="15" ShadowDepth="5" Opacity="0.5" />
                         </Border.Effect>
                         <StackPanel Orientation="Vertical">
-                            <Grid>
+                            <Grid Margin="0,5">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <TextBox Name="NameTextBox" Grid.Column="0"
-                                         IsReadOnly="True" MinWidth="100" Height="50"
+                                         IsReadOnly="True"
                                          HorizontalContentAlignment="Left"
                                          VerticalContentAlignment="Center"
                                          Text="{Binding SelectedDrug.Name,Mode=OneWay}"
-                                         Margin="10,0"
                                          BorderThickness="0"
                                          Background="Transparent"
+                                         FontFamily="微软雅黑"
                                          FontSize="18"
-                                         FontWeight="Black"
-                                         Foreground="DarkBlue" />
+                                         FontWeight="Bold"
+                                         Foreground="#008EED" />
                                 <TextBox Name="SpecificationTextBox" Grid.Column="1"
-                                         IsReadOnly="True" MinWidth="100" Height="50"
+                                         IsReadOnly="True" 
                                          HorizontalContentAlignment="Right"
                                          VerticalContentAlignment="Center"
                                          Text="{Binding SelectedDrug.Specification,Mode=OneWay}"
-                                         Margin="10,0"
-                                         BorderThickness="0"
-                                         Background="Transparent"
-                                         FontSize="16"
-                                         FontFamily="楷体"
-                                         FontWeight="Black"
-                                         Foreground="IndianRed" />
-                            </Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="1*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBox IsReadOnly="True" Height="50"
-                                         Grid.Column="0"
-                                         HorizontalContentAlignment="Left"
-                                         VerticalContentAlignment="Center"
-                                         Text="用法："
-                                         Margin="10,0,0,0"
                                          BorderThickness="0"
                                          Background="Transparent"
                                          FontSize="18"
+                                         FontFamily="楷体"
+                                         Foreground="IndianRed" />
+                            </Grid>
+                            <Grid  Margin="0,5,10,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox IsReadOnly="True" 
+                                         Grid.Column="0"
+                                         HorizontalContentAlignment="Right"
+                                         VerticalContentAlignment="Center"
+                                         Text="用法："
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         FontFamily="微软雅黑"
+                                         FontSize="16"
                                          FontWeight="Black"
-                                         Foreground="DarkBlue" />
+                                         Foreground="#008EED" />
                                 <!-- 剂量 -->
                                 <TextBox Name="DosageTextBox"
                                          Grid.Column="1"
-                                         IsReadOnly="True" Height="50"
+                                         IsReadOnly="True"
                                          HorizontalContentAlignment="Left"
                                          VerticalContentAlignment="Center"
                                          Text="{Binding Dosage,Mode=OneWay}"
-                                         Margin="0,0,10,0"
                                          BorderThickness="0"
                                          Background="Transparent"
                                          FontWeight="Black"
-                                         FontSize="18"
+                                         FontSize="16"
                                          FontFamily="仿宋"
-                                         Foreground="DarkCyan" />
+                                         Foreground="LightSeaGreen" />
                                 <!-- 给药途径 -->
                                 <TextBox Name="AdministrationTextBox"
                                          Grid.Column="2"
-                                         IsReadOnly="True" Height="50"
+                                         IsReadOnly="True"
                                          HorizontalContentAlignment="Center"
                                          VerticalContentAlignment="Center"
                                          Text="{Binding Result.Route}"
-                                         Margin="10,0"
                                          BorderThickness="0"
                                          Background="Transparent"
                                          FontWeight="Black"
-                                         FontSize="18"
-                                         FontFamily="宋体"
-                                         Foreground="DarkCyan" />
+                                         FontSize="16"
+                                         FontFamily="仿宋"
+                                         Foreground="LightSeaGreen" />
                                 <!-- 频次 -->
                                 <TextBox Name="FrequencyTextBox"
                                          Grid.Column="3"
-                                         IsReadOnly="True" Height="50"
+                                         IsReadOnly="True"
                                          HorizontalContentAlignment="Right"
                                          VerticalContentAlignment="Center"
                                          Text="{Binding Result.Frequency}"
-                                         Margin="10,0"
                                          BorderThickness="0"
                                          Background="Transparent"
                                          FontWeight="Black"
-                                         FontSize="18"
+                                         FontSize="16"
                                          FontFamily="仿宋"
-                                         Foreground="DarkCyan" />
+                                         Foreground="LightSeaGreen" />
                             </Grid>
                         </StackPanel>
                     </Border>
                     <Border Width="{Binding Path=ActualWidth,ElementName=ResultBorder}"
                             Background="White"
-                            CornerRadius="15"
+                            CornerRadius="10"
                             Padding="15"
-                            Margin="10"
+                            Margin="15"
                             VerticalAlignment="Center">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="10" ShadowDepth="5" Opacity="0.5" Color="SteelBlue" />
                         </Border.Effect>
                         <StackPanel MaxWidth="650" HorizontalAlignment="Left"
-                                    Margin="15,10,15,0">
+                                    Margin="0,10">
                             <!-- 下方的用法描述 -->
                             <TextBlock Text="用法用量（说明书）:" FontWeight="Black"
-                                       VerticalAlignment="Center" FontSize="16" FontFamily="微软雅黑"
+                                       VerticalAlignment="Center" FontSize="18" FontFamily="微软雅黑"
                                        Foreground="DarkCyan" />
                             <TextBox Name="UsageTextBlock"
                                      FontSize="14" MinHeight="60" MaxHeight="80"
                                      Text="{Binding SelectedDrug.Usage}"
                                      Margin="0,10,0,20" TextWrapping="Wrap"
-                                     Foreground="DarkSlateGray" FontFamily="../Fonts/#Source Han Serif CN"
+                                     Foreground="DarkSlateGray" FontFamily="../Fonts/#Source Han Serif SC"
                                      BorderThickness="0"
                                      Background="Transparent"
                                      IsReadOnly="True" />
-                            <TextBlock Text="备注:" FontSize="16" FontWeight="Black" FontFamily="微软雅黑"
+                            <TextBlock Text="备注:" FontSize="18" FontWeight="Black" FontFamily="微软雅黑"
                                        VerticalAlignment="Center"
                                        Foreground="DarkCyan" />
                             <TextBox Name="DescriptionTextBlock"
                                      FontSize="14" MinHeight="60" MaxHeight="80"
                                      Text="{Binding SelectedDrug.Description}"
                                      Margin="0,10,0,0" TextWrapping="Wrap"
-                                     Foreground="DarkSlateGray" FontFamily="../Fonts/#Source Han Serif CN"
+                                     Foreground="DarkSlateGray" FontFamily="../Fonts/#Source Han Serif SC"
                                      BorderThickness="0"
                                      Background="Transparent"
                                      IsReadOnly="True" />

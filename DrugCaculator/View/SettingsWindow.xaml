@@ -83,7 +83,7 @@
                             <TextBlock Text="关闭选项"
                                        FontSize="14" Foreground="MidnightBlue" FontWeight="Bold"
                                        VerticalAlignment="Center" />
-                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                                 <RadioButton x:Name="ExitProgramRadioButton" Content="退出程序" Margin="5"
                                              GroupName="ExitOptions"
                                              Checked="RadioButton_Checked"/>

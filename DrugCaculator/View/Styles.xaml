@@ -268,7 +268,7 @@
         <Setter Property="Background" Value="GhostWhite"/>
         <Setter Property="Foreground" Value="SteelBlue"/>
         <Setter Property="FontSize" Value="11pt"/>
-        <Setter Property="FontFamily" Value="宋体"/>
+        <Setter Property="FontFamily" Value="微软雅黑"/>
         <Setter Property="FontWeight" Value="Medium"></Setter>
         <Setter Property="Template">
             <Setter.Value>
@@ -327,7 +327,7 @@
         <Setter Property="Background" Value="DodgerBlue"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontSize" Value="11pt"/>
-        <Setter Property="FontFamily" Value="宋体"/>
+        <Setter Property="FontFamily" Value="微软雅黑"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -689,8 +689,7 @@
     <!-- 自定义 ListBoxItem 的样式 -->
     <Style TargetType="ListBoxItem" x:Key="CustomListBoxItemStyle">
         <Setter Property="Foreground" Value="MidnightBlue"/>
-        <Setter Property="FontSize" Value="11pt"/>
-        <Setter Property="FontFamily" Value="../Fonts/#Noto Sans CJK Thin"/>
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
