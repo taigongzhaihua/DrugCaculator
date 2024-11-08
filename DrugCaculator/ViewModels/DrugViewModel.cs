@@ -188,7 +188,7 @@ public class DrugViewModel : INotifyPropertyChanged
             {
                 // 创建 ExcelService 实例并读取 Excel 文件到 DataTable
                 var excelService = new ExcelService();
-                var dataTable = excelService.Read(filePath);
+                var dataTable = ExcelService.Read(filePath);
 
                 // 调用 DrugService.AddDrugsFromTable 方法，将数据导入数据库
                 DrugService.AddDrugsFromTable(dataTable);

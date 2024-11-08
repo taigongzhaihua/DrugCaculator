@@ -1,7 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
 
 namespace DrugCaculator.View
 {
@@ -16,10 +13,7 @@ namespace DrugCaculator.View
             // 窗口加载时设置单选框状态
             LoadUserSettings();
         }
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
-        }
+
         private void LoadUserSettings()
         {
             string isCloseSetting = Properties.Settings.Default.IsClose;
@@ -37,6 +31,7 @@ namespace DrugCaculator.View
                 AskEveryTimeRadioButton.IsChecked = true;
             }
         }
+
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             if (ExitProgramRadioButton.IsChecked == true)
@@ -55,18 +50,7 @@ namespace DrugCaculator.View
             // 保存设置以确保下次启动时加载
             Properties.Settings.Default.Save();
         }
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (sender is not Border border) return;
 
-            // 更新裁剪区域，以匹配控件的当前大小和圆角
-            border.Clip = new RectangleGeometry
-            {
-                Rect = new Rect(0, 0, border.ActualWidth, border.ActualHeight),
-                RadiusX = border.CornerRadius.TopLeft,
-                RadiusY = border.CornerRadius.TopLeft
-            };
-        }
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();

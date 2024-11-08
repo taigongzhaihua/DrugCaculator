@@ -9,7 +9,7 @@ namespace DrugCaculator.Services
 {
     public class ExcelService
     {
-        public DataTable Read(string filePath)
+        public static DataTable Read(string filePath)
         {
             // 日志输出，显示文件路径
             Console.WriteLine($@"调用 Read 方法，文件路径：{filePath}");

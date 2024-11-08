@@ -197,7 +197,7 @@ namespace DrugCaculator.View.Components
             }
         }
 
-        private ConditionRow ParseCondition(string condition)
+        private static ConditionRow ParseCondition(string condition)
         {
             var parts = condition.Split(' ');
 
