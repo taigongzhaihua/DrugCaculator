@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace DrugCaculator.View
 {
@@ -16,19 +17,19 @@ namespace DrugCaculator.View
 
         private void LoadUserSettings()
         {
-            string isCloseSetting = Properties.Settings.Default.IsClose;
+            var isCloseSetting = Properties.Settings.Default.IsClose;
 
-            if (isCloseSetting == "Close")
+            switch (isCloseSetting)
             {
-                ExitProgramRadioButton.IsChecked = true;
-            }
-            else if (isCloseSetting == "Minimize")
-            {
-                MinimizeToTrayRadioButton.IsChecked = true;
-            }
-            else
-            {
-                AskEveryTimeRadioButton.IsChecked = true;
+                case "Close":
+                    ExitProgramRadioButton.IsChecked = true;
+                    break;
+                case "Minimize":
+                    MinimizeToTrayRadioButton.IsChecked = true;
+                    break;
+                default:
+                    AskEveryTimeRadioButton.IsChecked = true;
+                    break;
             }
         }
 
@@ -51,14 +52,12 @@ namespace DrugCaculator.View
             Properties.Settings.Default.Save();
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            var apiKeySetter = new ApiKeySetter();
+            var apiKeySetter = new ApiKeySetter()
+            {
+                Owner = Window.GetWindow((sender as Button)!)
+            };
             apiKeySetter.ShowDialog();
         }
     }

@@ -14,7 +14,7 @@ namespace DrugCaculator.View
             if (value is double totalHeight and > 85)
             {
                 // 减去固定值以确保UI布局合理
-                return totalHeight - 85; // 可以根据需要调整减去的值
+                return totalHeight - 70; // 可以根据需要调整减去的值
             }
             return 0;
         }
@@ -24,6 +24,7 @@ namespace DrugCaculator.View
             throw new NotImplementedException();
         }
     }
+
     public partial class DrugEditor
     {
         // 构造函数
@@ -37,7 +38,5 @@ namespace DrugCaculator.View
             };
             DataContext = viewModel;
         }
-
-        // 保存按钮的点击事件
     }
 }

@@ -1,78 +1,26 @@
-﻿<Window x:Class="DrugCaculator.View.ApiKeySetter"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="输入 API 密钥"
-        MaxHeight="120" MinWidth="200" MaxWidth="520"
-        WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
-        WindowStyle="None"
-        Background="Transparent"
-        AllowsTransparency="True">
-    <!-- 边框设置，背景为淡灰白色，圆角半径为5，内边距设置为15,5，允许用户通过拖动边框来移动窗口 -->
-    <Border Background="GhostWhite" CornerRadius="5" Padding="15,5"
-            MaxHeight="60" MaxWidth="500"
-            MouseLeftButtonDown="Window_MouseLeftButtonDown">
-        <!-- 边框效果，设置阴影颜色为黑色，模糊半径为15，阴影深度为5，不透明度为0.5 -->
-        <Border.Effect>
-            <DropShadowEffect Color="Black" BlurRadius="15" ShadowDepth="5" Opacity="0.5" />
-        </Border.Effect>
-        <!-- 使用水平堆叠面板来布局控件，设置高度和水平对齐方式 -->
-        <StackPanel Orientation="Horizontal" Height="37.8" HorizontalAlignment="Center">
-            <!-- 标签，显示 "ApiKey" 文本，垂直对齐居中，字体加粗，字体颜色为午夜蓝 -->
-            <TextBlock Text="ApiKey：" 
-                       VerticalAlignment="Center" 
-                       FontWeight="Black"
-                       FontSize="14" Foreground="MidnightBlue"/>
-            <Grid>
-                <!-- 网格的阴影效果，颜色为钢蓝，模糊半径为12，阴影深度为3，不透明度为0.5 -->
-                <Grid.Effect>
-                    <DropShadowEffect Color="SteelBlue" BlurRadius="12" ShadowDepth="3" Opacity="0.5" />
-                </Grid.Effect>
-                <!-- 边框设置，背景为白色，圆角半径为5，ClipToBounds为False -->
-                <Border Background="White" x:Name="InputBox"
-                        Height="26" CornerRadius="5" Padding="0,0,0,0"
-                        ClipToBounds="False"
-                        SizeChanged="RoundedBorder_SizeChanged" >
-                    <Grid ClipToBounds="false">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <!-- 密码框，设置列为0，宽度259，无边框，背景透明，设置密码字符为 "-"，字体和对齐方式 -->
-                        <PasswordBox Grid.Column="0" x:Name="PasswordBox" 
-                                     Width="259" Margin="0" BorderThickness="0" 
-                                     Background="Transparent"
-                                     PasswordChar="-" FontFamily="../Fonts/#Gen Jyuu Gothic Monospace Regular" FontSize="14"
-                                     VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                        <!-- 文本框，用于显示明文 API 密钥，初始状态为隐藏 -->
-                        <TextBox Grid.Column="0" x:Name="TextBox" 
-                                 Width="259" Margin="0" BorderThickness="0" 
-                                 Background="Transparent"
-                                 FontFamily="../Fonts/#Gen Jyuu Gothic Monospace Regular" FontSize="14" 
-                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                                 Visibility="Collapsed" 
-                                 Text="{Binding ApiKey, UpdateSourceTrigger=PropertyChanged}"/>
-                        <!-- 切换按钮，切换密码框的可见性 -->
-                        <ToggleButton Grid.Column="1" x:Name="ToggleVisibilityButton" Style="{DynamicResource ToggleVisibilityButton}"
-                                      Width="26" Height="26" 
-                                      VerticalAlignment="Center" 
-                                      Background="Transparent" BorderBrush="Transparent" 
-                                      Checked="ToggleVisibilityButton_Checked" Unchecked="ToggleVisibilityButton_Unchecked"
-                                      ClipToBounds="True">
-                            <!-- 图标路径，初始显示为眼睛闭合图标 -->
-                            <Path x:Name="EyeClosedIcon" 
-                                  Data="M1 8 A 10 10 0 0 1 19 8 M 10 10 m -4 0 a 4 4 0 1 0 8 0 a 4 4 0 1 0 -8 0 M 10 10 m -3 3 l 6 -6" 
-                                  Stroke="CornflowerBlue" StrokeThickness="1.7" />
-                        </ToggleButton>
-                    </Grid>
-                </Border>
-            </Grid>
-            <!-- 确认按钮，点击后调用 ConfirmButton_Click 事件处理程序 -->
-            <Button Content="确认" Width="50" Height="26" Margin="10,0,0,0" Click="ConfirmButton_Click"
-                    Style="{DynamicResource DarkButton}"/>
-            <!-- 取消按钮，点击后调用 CancelButton_Click 事件处理程序 -->
-            <Button Content="取消" Width="50" Height="26" Margin="10,0,0,0" Click="CancelButton_Click" 
-                    Style="{DynamicResource LightButton}"/>
-        </StackPanel>
-    </Border>
-</Window>
+﻿<components:CustomDialog x:Class="DrugCaculator.View.ApiKeySetter" x:Name="Dialog"
+                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:components="clr-namespace:DrugCaculator.View.Components"
+                         xmlns:vm="clr-namespace:DrugCaculator.ViewModels"
+                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+                         Title="输入 API 密钥"
+                         DialogWidth="500" DialogHeight="60"
+                         DialogMinWidth="200" DialogMaxWidth="500"
+                         DialogMinHeight="60" DialogMaxHeight="60"
+                         TitleBarVisibility="Collapsed"
+                         DialogBackgroundColor="GhostWhite">
+    <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Text="ApiKey：" VerticalAlignment="Center"
+                   FontWeight="Black" FontSize="14" Foreground="MidnightBlue"/>
+        <components:PasswordInputComponent x:Name="PasswordInput"/>
+        <Button Content="确认" Width="50" Height="26" Margin="10,0,0,0"
+                Style="{DynamicResource DarkButton}" x:Name="ConfirmButton"
+                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
+        <Button Content="取消" Width="50" Height="26" Margin="10,0,0,0"
+                Style="{DynamicResource LightButton}" x:Name="CancelButton"
+                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
+    </StackPanel>
+</components:CustomDialog>

@@ -710,11 +710,11 @@
                                     <Storyboard>
                                         <ColorAnimation Storyboard.TargetName="ItemBorder" 
                                                         Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.5" 
+                                                        Duration="0:0:0.25" 
                                                         To="Transparent"/>
                                         <ColorAnimation Storyboard.TargetName="contentControl"
                                                         Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                        Duration="0:0:0.5" 
+                                                        Duration="0:0:0.25" 
                                                         To="MidnightBlue"/>
                                     </Storyboard>
                                 </VisualState>
@@ -724,11 +724,11 @@
                                         <!-- 这里直接将背景设为更深的颜色 -->
                                         <ColorAnimation Storyboard.TargetName="ItemBorder" 
                                                 Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                Duration="0:0:0.5" 
+                                                Duration="0:0:0.25" 
                                                 To="PowderBlue"/>
                                         <ColorAnimation Storyboard.TargetName="contentControl"
                                                         Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                        Duration="0:0:0.5" 
+                                                        Duration="0:0:0.25" 
                                                         To="Teal"/>
                                     </Storyboard>
                                 </VisualState>
@@ -737,11 +737,11 @@
                                         <!-- 这里直接将背景设为更深的颜色 -->
                                         <ColorAnimation Storyboard.TargetName="ItemBorder" 
                                                 Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                Duration="0:0:0.5" 
+                                                Duration="0:0:0.25" 
                                                 To="DodgerBlue"/>
                                         <ColorAnimation Storyboard.TargetName="contentControl"
                                                         Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                        Duration="0:0:0.5" 
+                                                        Duration="0:0:0.25" 
                                                         To="Azure"/>
                                     </Storyboard>
                                 </VisualState>
@@ -750,11 +750,11 @@
                                         <!-- 这里直接将背景设为更深的颜色 -->
                                         <ColorAnimation Storyboard.TargetName="ItemBorder" 
                                                         Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.5"  
+                                                        Duration="0:0:0.25"  
                                                         To="DarkGray"/>
                                         <ColorAnimation Storyboard.TargetName="contentControl"
                                                         Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                        Duration="0:0:0.5" 
+                                                        Duration="0:0:0.25" 
                                                         To="White"/>
                                     </Storyboard>
                                 </VisualState>

@@ -15,7 +15,7 @@ namespace DrugCaculator.View
             InitializeComponent();
             InitializeDefaultSettings();
             DialogHeight = 200;
-            DialogWidth = 400;
+            // DialogWidth = 400;
         }
 
         // 初始化默认设置

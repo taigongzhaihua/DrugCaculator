@@ -10,8 +10,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using Button = System.Windows.Controls.Button;
 using MessageBox = System.Windows.MessageBox;
 
 namespace DrugCaculator.ViewModels;
@@ -27,7 +29,7 @@ public class DrugViewModel : INotifyPropertyChanged
     public ICommand AddDrugsFromExcelCommand { get; set; }
     public ICommand AiGenerateRuleCommand { get; set; }
     public ICommand AiGenerateAllRulesCommand { get; set; }
-    public ICommand SetApiKeyCommand { get; set; }
+    public RelayCommand SetApiKeyCommand { get; set; }
     private string _dosage;
     public string Dosage
     {
@@ -160,9 +162,13 @@ public class DrugViewModel : INotifyPropertyChanged
         SetApiKeyCommand = new RelayCommand(SetApiKey);
     }
 
-    private static void SetApiKey(object obj)
+    private void SetApiKey(object obj)
     {
-        var apiKeySetter = new ApiKeySetter();
+        LogService.Info(obj.GetType().ToString());
+        var apiKeySetter = new ApiKeySetter()
+        {
+            Owner = Window.GetWindow((obj as Button)!)
+        };
         apiKeySetter.ShowDialog();
     }
 
@@ -181,27 +187,24 @@ public class DrugViewModel : INotifyPropertyChanged
         };
 
         // 如果用户选择了文件
-        if (openFileDialog.ShowDialog() == DialogResult.OK)
+        if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+        var filePath = openFileDialog.FileName;
+        try
         {
-            var filePath = openFileDialog.FileName;
-            try
-            {
-                // 创建 ExcelService 实例并读取 Excel 文件到 DataTable
-                var excelService = new ExcelService();
-                var dataTable = ExcelService.Read(filePath);
+            // 创建 ExcelService 实例并读取 Excel 文件到 DataTable
+            var dataTable = ExcelService.Read(filePath);
 
-                // 调用 DrugService.AddDrugsFromTable 方法，将数据导入数据库
-                DrugService.AddDrugsFromTable(dataTable);
-                Console.WriteLine(@"药品数据已成功导入数据库。");
-                MessageBox.Show(@"数据导入成功");
-                LoadDrugs(); // 更新药物列表
-                SearchDrug();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($@"导入药品数据时出错：{ex.Message}");
-                MessageBox.Show($@"导入药品数据时出错：{ex.Message}");
-            }
+            // 调用 DrugService.AddDrugsFromTable 方法，将数据导入数据库
+            DrugService.AddDrugsFromTable(dataTable);
+            Console.WriteLine(@"药品数据已成功导入数据库。");
+            MessageBox.Show(@"数据导入成功");
+            LoadDrugs(); // 更新药物列表
+            SearchDrug();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($@"导入药品数据时出错：{ex.Message}");
+            MessageBox.Show($@"导入药品数据时出错：{ex.Message}");
         }
     }
     private async void GenerateAndSaveCalculationRulesForAllDrugsAsync(object obj)
@@ -244,7 +247,7 @@ public class DrugViewModel : INotifyPropertyChanged
     }
     private void DeleteDrug(object parameter)
     {
-        var result = System.Windows.Forms.MessageBox.Show($@"是否删除该药物？",
+        var result = System.Windows.Forms.MessageBox.Show(@"是否删除该药物？",
             @"Confirmation",
             MessageBoxButtons.OK,
             MessageBoxIcon.Question);
@@ -258,7 +261,10 @@ public class DrugViewModel : INotifyPropertyChanged
 
     private void AddDrug(object parameter)
     {
-        var drugEditor = new DrugEditor(null, DrugService); // 创建 DrugEditor 实例
+        var drugEditor = new DrugEditor(null, DrugService)
+        {
+            Owner = Window.GetWindow((parameter as Button)!)
+        }; // 创建 DrugEditor 实例
         drugEditor.ShowDialog();
         LoadDrugs(); // 更新药物列表
         SearchDrug();
@@ -266,7 +272,10 @@ public class DrugViewModel : INotifyPropertyChanged
 
     private void EditDrug(object parameter)
     {
-        var drugEditor = new DrugEditor(SelectedDrug, DrugService);
+        var drugEditor = new DrugEditor(SelectedDrug, DrugService)
+        {
+            Owner = Window.GetWindow((parameter as Button)!)
+        };
         drugEditor.ShowDialog();
         LoadDrugs(); // 更新药物列表
         SearchDrug();

@@ -10,9 +10,7 @@
     <ApplicationIcon>AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Fonts\GenJyuuGothic-Monospace-Regular-2.ttf" />
     <None Remove="Fonts\iconfont.ttf" />
-    <None Remove="Fonts\SourceHanSansSC-Regular-2.otf" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AppIcon.ico" />
@@ -26,13 +24,7 @@
     <EmbeddedResource Include="AppOptions.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <Resource Include="Fonts\GenJyuuGothic-Monospace-Regular-2.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Fonts\iconfont.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Fonts\SourceHanSansSC-Regular-2.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -43,6 +35,7 @@
     <PackageReference Include="CoreCLR-NCalc" />
     <PackageReference Include="Microsoft.CSharp" />
     <PackageReference Include="NCalc.Core" />
+    <PackageReference Include="NLog" />
     <PackageReference Include="NPinyin.Core" />
     <PackageReference Include="System.Data.DataSetExtensions" />
     <PackageReference Include="System.Configuration.ConfigurationManager" />

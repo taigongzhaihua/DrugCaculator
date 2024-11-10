@@ -1,19 +1,27 @@
-﻿<Window x:Class="DrugCaculator.View.DrugEditor"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:view="clr-namespace:DrugCaculator.View"
-        xmlns:viewModels="clr-namespace:DrugCaculator.ViewModels"
-        xmlns:components="clr-namespace:DrugCaculator.View.Components"
-        mc:Ignorable="d"
-        Title="药物编辑器" Height="800" Width="1000" >
-    <Window.Resources>
+﻿<components:CustomDialog x:Class="DrugCaculator.View.DrugEditor"
+                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                         xmlns:view="clr-namespace:DrugCaculator.View"
+                         xmlns:viewModels="clr-namespace:DrugCaculator.ViewModels"
+                         xmlns:components="clr-namespace:DrugCaculator.View.Components"
+                         mc:Ignorable="d"
+                         Title="药物编辑器"
+                         DialogWidth="800" DialogHeight="600"
+                         DialogMinWidth="200" DialogMaxWidth="1200"
+                         DialogMinHeight="400" DialogMaxHeight="1000"
+                         TitleAlignment="Center"
+                         TitleColor="MidnightBlue">
+
+    <components:CustomDialog.Resources>
         <view:HeightConverter x:Key="HeightConverter"/>
-    </Window.Resources>
-    <Window.DataContext>
+    </components:CustomDialog.Resources>
+
+    <components:CustomDialog.DataContext>
         <viewModels:DrugEditorViewModel />
-    </Window.DataContext>
+    </components:CustomDialog.DataContext>
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -28,19 +36,19 @@
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,5">
             <TextBlock Text="药物名称:" VerticalAlignment="Top" Width="80" FontWeight="Bold" Margin="0,5,0,0" FontSize="14"/>
             <TextBox Text="{Binding Drug.Name, UpdateSourceTrigger=PropertyChanged}"
-                     MinWidth="400" MaxWidth="400" 
-                     Style="{DynamicResource FlatTextBox}" 
+                     MinWidth="400" MaxWidth="400"
+                     Style="{DynamicResource FlatTextBox}"
                      Foreground="#FF000C17"
                      FontSize="14"
                      HorizontalContentAlignment="Left"
                      TextWrapping="Wrap"/>
         </StackPanel>
-        <!-- 用法 -->
+        <!-- 规格 -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,5">
             <TextBlock Text="规格:" VerticalAlignment="Top" Width="80" FontWeight="Bold" Margin="0,5,0,0" FontSize="14"/>
             <TextBox Text="{Binding Drug.Specification, UpdateSourceTrigger=PropertyChanged}"
                      MinWidth="400" MaxWidth="400"
-                     Style="{DynamicResource FlatTextBox}" 
+                     Style="{DynamicResource FlatTextBox}"
                      Foreground="#FF000C17"
                      FontSize="14"
                      HorizontalContentAlignment="Left"
@@ -51,7 +59,7 @@
             <TextBlock Text="用法:" VerticalAlignment="Top" Width="80" FontWeight="Bold" Margin="0,5,0,0" FontSize="14"/>
             <TextBox Text="{Binding Drug.Usage, UpdateSourceTrigger=PropertyChanged}"
                      MinWidth="400" MaxWidth="400"
-                     Style="{DynamicResource FlatTextBox}" 
+                     Style="{DynamicResource FlatTextBox}"
                      Foreground="#FF000C17"
                      FontSize="14"
                      HorizontalContentAlignment="Left"
@@ -62,8 +70,8 @@
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,5">
             <TextBlock Text="药物描述:" VerticalAlignment="Top" Width="80" FontWeight="Bold" Margin="0,5,0,0" FontSize="14"/>
             <TextBox Text="{Binding Drug.Description, UpdateSourceTrigger=PropertyChanged}"
-                     MinWidth="400" MaxWidth="400" 
-                     Style="{DynamicResource FlatTextBox}" 
+                     MinWidth="400" MaxWidth="400"
+                     Style="{DynamicResource FlatTextBox}"
                      Foreground="#FF000C17"
                      FontSize="14"
                      HorizontalContentAlignment="Left"
@@ -73,9 +81,9 @@
         <!-- 计算规则列表 -->
         <GroupBox x:Name="GroupBox" Header="计算规则" Grid.Row="4" Margin="0,10" FontWeight="Bold" FontSize="14">
             <StackPanel>
-                <ListBox Name="RuleList" 
-                         ItemsSource="{Binding Drug.CalculationRules}" 
-                         SelectedItem="{Binding SelectedRule}" 
+                <ListBox Name="RuleList"
+                         ItemsSource="{Binding Drug.CalculationRules}"
+                         SelectedItem="{Binding SelectedRule}"
                          Height="{Binding RelativeSource={RelativeSource AncestorType=GroupBox}, Path=ActualHeight, Converter={StaticResource HeightConverter}}">
                     <!-- 使用 RuleEditorRowComponent 作为 ListBox 项的 DataTemplate -->
                     <ListBox.ItemTemplate>
@@ -86,20 +94,24 @@
                 </ListBox>
 
                 <!-- 计算规则操作按钮 -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
-                    <Button Content="添加规则" Command="{Binding AddRuleCommand}" Width="80" Margin="5"
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                    <Button Content="添加规则" Command="{Binding AddRuleCommand}"
+                            Width="80" Height="26"
+                            Margin="5"
                             Style="{DynamicResource DarkButton}"/>
-                    <Button Content="删除规则" Command="{Binding DeleteRuleCommand}" 
+                    <Button Content="删除规则" Command="{Binding DeleteRuleCommand}"
                             Style="{DynamicResource DarkButton}"
-                            Width="80" Margin="5" IsEnabled="{Binding IsRuleSelected}"/>
+                            Width="80" Height="26"
+                            Margin="5" IsEnabled="{Binding IsRuleSelected}"/>
                 </StackPanel>
-
             </StackPanel>
         </GroupBox>
 
         <!-- 保存按钮 -->
         <Button Grid.Row="5" Content="保存" Style="{DynamicResource DarkButton}"
-                Command="{Binding SaveDrugCommand}" 
-                HorizontalAlignment="Center" Width="100" Margin="0,10"/>
+                Command="{Binding SaveDrugCommand}"
+                HorizontalAlignment="Center"
+                Width="50" Height="30"
+                Margin="0,10"/>
     </Grid>
-</Window>
+</components:CustomDialog>
