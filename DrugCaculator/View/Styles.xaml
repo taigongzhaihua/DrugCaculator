@@ -50,6 +50,7 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="4,8"/>
         <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FontFamily" Value="../Fonts/#iconfont"/>
     </Style>
     <!-- 下划线下拉框 -->
     <Style x:Key="UnderLineComboBox" TargetType="ComboBox">
@@ -131,6 +132,7 @@
         <Setter Property="Width" Value="16"/>
         <Setter Property="Height" Value="16"/>
         <Setter Property="Margin" Value="3"/>
+        <Setter Property="FontFamily" Value="../Fonts/#iconfont"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -223,6 +225,7 @@
         <Setter Property="Width" Value="16"/>
         <Setter Property="Height" Value="16"/>
         <Setter Property="Margin" Value="3"/>
+        <Setter Property="FontFamily" Value="../Fonts/#iconfont"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -685,7 +688,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <!-- 自定义 ListBoxItem 的样式 -->
     <Style TargetType="ListBoxItem" x:Key="CustomListBoxItemStyle">
         <Setter Property="Foreground" Value="MidnightBlue"/>
@@ -764,5 +766,88 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+    <!-- 自定义编辑窗列表样式 -->
+    <Style TargetType="ListBox" x:Key="EditorListBoxStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBox">
+                    <Border CornerRadius="4"
+                            Padding="4"
+                            Margin="5"
+                            Background="White"
+                            BorderBrush="LightSlateGray"
+                            BorderThickness="0.5">
+                        <ScrollViewer Padding="0,10">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- 编辑窗列表子项样式 -->
+    <Style TargetType="ListBoxItem" x:Key="EditorListBoxItemStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Grid>
+                        <Border Name="ItemBorder" Margin="5,2" Padding="15,2"
+                            CornerRadius="5"
+                            Background="{TemplateBinding Background}">
+                            <ContentPresenter/>
+                        </Border>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" >
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="ItemBorder" 
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                        Duration="0:0:0.25" 
+                                                        To="Transparent"/>
+                                    </Storyboard>
+                                </VisualState>
+
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <!-- 这里直接将背景设为更深的颜色 -->
+                                        <ColorAnimation Storyboard.TargetName="ItemBorder" 
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                Duration="0:0:0.25" 
+                                                To="PaleTurquoise"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <!-- 这里直接将背景设为更深的颜色 -->
+                                        <ColorAnimation Storyboard.TargetName="ItemBorder" 
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                Duration="0:0:0.25" 
+                                                To="PowderBlue"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <!-- 这里直接将背景设为更深的颜色 -->
+                                        <ColorAnimation Storyboard.TargetName="ItemBorder" 
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                        Duration="0:0:0.25"  
+                                                        To="DarkGray"/>
+                                        <ColorAnimation Storyboard.TargetName="contentControl"
+                                                        Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.25" 
+                                                        To="White"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- 自定义MsgBox图标字体 -->
+    <Style TargetType="TextBlock" x:Key="Icon">
+        <Setter Property="FontFamily" Value="../Fonts/#iconfont"/>
     </Style>
 </ResourceDictionary>

@@ -1,7 +1,7 @@
-﻿<local:CustomDialog x:Class="DrugCaculator.View.SettingsWindow"
+﻿<components:CustomDialog x:Class="DrugCaculator.View.SettingsWindow"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:DrugCaculator.View.Components"
+                    xmlns:components="clr-namespace:DrugCaculator.View.Components"
                     Title="设置"
                     DialogWidth="550" DialogHeight="450"
                     DialogMinWidth="200" DialogMaxWidth="600"
@@ -15,16 +15,14 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
+
                 <!-- 关闭选项区域 -->
-                <Border Width="500"
-                        Background="White"
-                        CornerRadius="15"
-                        Padding="15"
-                        Margin="10"
-                        VerticalAlignment="Center">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="10" ShadowDepth="5" Opacity="0.5" Color="SteelBlue" />
-                    </Border.Effect>
+                <components:ShadowBorder Width="500"
+                                         Background="White"
+                                         CornerRadius="15"
+                                         Padding="15"
+                                         Margin="10"
+                                         VerticalAlignment="Center">
                     <Grid VerticalAlignment="Center"
                           Margin="0,0,10,0">
                         <Grid.ColumnDefinitions>
@@ -45,17 +43,15 @@
                                          Checked="RadioButton_Checked"/>
                         </StackPanel>
                     </Grid>
-                </Border>
+                </components:ShadowBorder>
+
                 <!-- ApiKey 设置区域 -->
-                <Border Grid.Row="1" Width="500"
-                        Background="White"
-                        CornerRadius="15"
-                        Padding="15"
-                        Margin="10"
-                        VerticalAlignment="Center">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="10" ShadowDepth="5" Opacity="0.5" Color="SteelBlue" />
-                    </Border.Effect>
+                <components:ShadowBorder Grid.Row="1" Width="500"
+                                         Background="White"
+                                         CornerRadius="15"
+                                         Padding="15"
+                                         Margin="10"
+                                         VerticalAlignment="Center">
                     <Grid VerticalAlignment="Center"
                           Margin="0,0,10,0">
                         <Grid.ColumnDefinitions>
@@ -72,8 +68,9 @@
                                 Style="{DynamicResource DarkButton}"
                                 Click="ButtonBase_OnClick" />
                     </Grid>
-                </Border>
+                </components:ShadowBorder>
             </Grid>
         </StackPanel>
     </Grid>
-</local:CustomDialog>
+</components:CustomDialog>
+

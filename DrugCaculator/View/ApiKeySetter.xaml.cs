@@ -1,46 +1,39 @@
 ﻿using DrugCaculator.View.Components;
 using DrugCaculator.ViewModels;
+using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 
-namespace DrugCaculator.View
+namespace DrugCaculator.View;
+
+public partial class ApiKeySetter
 {
-    public partial class ApiKeySetter
+    public ApiKeySetter()
     {
-        public ApiKeySetter()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            // 获取单例 ViewModel 实例
-            var viewModel = ApiKeySetterViewModel.Instance;
+        // 获取单例 ViewModel 实例并设置 DataContext
+        var viewModel = new ApiKeySetterViewModel();
+        DataContext = viewModel;
 
-            // 订阅关闭事件
-            viewModel.OnRequestClose += Close;
+        // 订阅关闭事件
+        viewModel.OnRequestClose += Close;
 
-            // 设置 DataContext 为 ViewModel 实例
-            DataContext = viewModel;
+        // 设置控件的绑定
+        BindControl(PasswordInput, PasswordInputComponent.PasswordProperty, "ApiKey", viewModel);
+        BindCommand(ConfirmButton, "ConfirmCommand", viewModel);
+        BindCommand(CancelButton, "CancelCommand", viewModel);
+    }
 
-            // 后端绑定 Password 属性到 PasswordInputComponent 控件
-            var passwordBinding = new Binding("ApiKey")
-            {
-                Source = viewModel,
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-            };
-            PasswordInput.SetBinding(PasswordInputComponent.PasswordProperty, passwordBinding);
+    // 统一的属性绑定方法
+    private static void BindControl(FrameworkElement control, DependencyProperty property, string path, object source)
+    {
+        control.SetBinding(property, new Binding(path) { Source = source, Mode = BindingMode.TwoWay });
+    }
 
-            // 后端绑定 ConfirmCommand 到 ConfirmButton
-            var confirmCommandBinding = new Binding("ConfirmCommand")
-            {
-                Source = viewModel
-            };
-            BindingOperations.SetBinding(ConfirmButton, ButtonBase.CommandProperty, confirmCommandBinding);
-
-            // 后端绑定 CancelCommand 到 CancelButton
-            var cancelCommandBinding = new Binding("CancelCommand")
-            {
-                Source = viewModel
-            };
-            BindingOperations.SetBinding(CancelButton, ButtonBase.CommandProperty, cancelCommandBinding);
-        }
+    // 统一的命令绑定方法
+    private static void BindCommand(ButtonBase button, string commandPath, object source)
+    {
+        BindingOperations.SetBinding(button, ButtonBase.CommandProperty, new Binding(commandPath) { Source = source });
     }
 }

@@ -46,7 +46,7 @@
         </ComboBox>
 
         <!-- 删除按钮 -->
-        <Button Content="➖" Style="{DynamicResource MinusButton}" x:Name="DeleteButton"
+        <Button Content="&#xe95e;" Style="{DynamicResource MinusButton}" x:Name="DeleteButton"
                 Click="OnDeleteCondition"/>
     </StackPanel>
 </UserControl>

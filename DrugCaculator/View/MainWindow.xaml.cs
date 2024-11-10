@@ -7,12 +7,10 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using Application = System.Windows.Application;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using TextBox = System.Windows.Controls.TextBox;
@@ -225,10 +223,7 @@ public partial class MainWindow
     {
         WindowState = WindowState.Minimized;
     }
-    private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-        DragMove();
-    }
+
     private void ShowWindow()
     {
         Show(); // 显示窗口
@@ -312,18 +307,5 @@ public partial class MainWindow
     private void SearchTextBox_Loaded(object sender, RoutedEventArgs e)
     {
         InputLanguageManager.SetInputLanguage((TextBox)sender, new CultureInfo("en-US"));
-    }
-
-    private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        if (sender is not Border border) return;
-
-        // 更新裁剪区域，以匹配控件的当前大小和圆角
-        border.Clip = new RectangleGeometry
-        {
-            Rect = new Rect(0, 0, border.ActualWidth, border.ActualHeight),
-            RadiusX = border.CornerRadius.TopLeft,
-            RadiusY = border.CornerRadius.TopLeft
-        };
     }
 }

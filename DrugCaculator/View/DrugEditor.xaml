@@ -82,7 +82,9 @@
         <GroupBox x:Name="GroupBox" Header="计算规则" Grid.Row="4" Margin="0,10" FontWeight="Bold" FontSize="14">
             <StackPanel>
                 <ListBox Name="RuleList"
+                         Style="{DynamicResource EditorListBoxStyle}"
                          ItemsSource="{Binding Drug.CalculationRules}"
+                         ItemContainerStyle="{StaticResource EditorListBoxItemStyle}"
                          SelectedItem="{Binding SelectedRule}"
                          Height="{Binding RelativeSource={RelativeSource AncestorType=GroupBox}, Path=ActualHeight, Converter={StaticResource HeightConverter}}">
                     <!-- 使用 RuleEditorRowComponent 作为 ListBox 项的 DataTemplate -->
@@ -91,6 +93,9 @@
                             <components:RuleEditorRowComponent CalculationRule="{Binding }" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+                    <ListBox.Resources>
+                        <Style TargetType="ScrollBar" BasedOn="{StaticResource CustomScrollBarStyle}" />
+                    </ListBox.Resources>
                 </ListBox>
 
                 <!-- 计算规则操作按钮 -->

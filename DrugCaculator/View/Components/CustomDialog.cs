@@ -17,8 +17,8 @@ public class CustomDialog : Window
         DependencyProperty.Register(propertyName, typeof(T), typeof(CustomDialog), new PropertyMetadata(defaultValue));
 
     // 依赖属性定义
-    public static readonly DependencyProperty DialogWidthProperty = RegisterDependencyProperty(nameof(DialogWidth), 400.0);
-    public static readonly DependencyProperty DialogHeightProperty = RegisterDependencyProperty(nameof(DialogHeight), 200.0);
+    public static readonly DependencyProperty DialogWidthProperty = RegisterDependencyProperty(nameof(DialogWidth), 200.00);
+    public static readonly DependencyProperty DialogHeightProperty = RegisterDependencyProperty(nameof(DialogHeight), 100.00);
     public static readonly DependencyProperty DialogMinWidthProperty = RegisterDependencyProperty(nameof(DialogMinWidth), 60.0);
     public static readonly DependencyProperty DialogMinHeightProperty = RegisterDependencyProperty(nameof(DialogMinHeight), 60.0);
     public static readonly DependencyProperty DialogMaxWidthProperty = RegisterDependencyProperty(nameof(DialogMaxWidth), double.PositiveInfinity);

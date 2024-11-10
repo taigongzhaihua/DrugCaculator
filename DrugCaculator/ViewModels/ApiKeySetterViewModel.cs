@@ -1,10 +1,12 @@
 ﻿using DrugCaculator.Services;
 using DrugCaculator.Utilities;
+using DrugCaculator.View.Components;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Setting = DrugCaculator.Properties.Settings;
 // ReSharper disable UnusedMember.Global
@@ -13,7 +15,7 @@ namespace DrugCaculator.ViewModels
 {
     public class ApiKeySetterViewModel : INotifyPropertyChanged
     {
-        public static ApiKeySetterViewModel Instance { get; } = new();
+
         private string _apiKey;
         public string ApiKey
         {
@@ -21,7 +23,7 @@ namespace DrugCaculator.ViewModels
             set => SetField(ref _apiKey, value);
         }
 
-        private ApiKeySetterViewModel()
+        public ApiKeySetterViewModel()
         {
             LoadApiKey();
         }
@@ -36,19 +38,20 @@ namespace DrugCaculator.ViewModels
             catch (Exception ex)
             {
                 LogService.Error("从设置中获取 API 密钥时发生错误。", ex);
-                ShowMessageBox("无法从设置中获取 API 密钥。", "错误", MessageBoxImage.Error);
+                CustomMessageBox.Show("无法从设置中获取 API 密钥。", "错误", MsgBoxButtons.Ok, MsgBoxIcon.Error);
             }
         }
 
         private ICommand _confirmCommand;
-        public ICommand ConfirmCommand => _confirmCommand ??= new RelayCommand(_ => ConfirmApiKey());
+        public ICommand ConfirmCommand => _confirmCommand ??= new RelayCommand(ConfirmApiKey);
 
-        private void ConfirmApiKey()
+        private void ConfirmApiKey(object o)
         {
+            var window = Window.GetWindow((o as Button)!);
             if (string.IsNullOrWhiteSpace(ApiKey))
             {
                 LogService.Warning("尝试保存空的 API 密钥。");
-                ShowMessageBox("API 密钥不能为空。", "警告", MessageBoxImage.Warning);
+                CustomMessageBox.Show(window, "API 密钥不能为空。", "警告", MsgBoxButtons.Ok, MsgBoxIcon.Warning);
                 return;
             }
 
@@ -59,13 +62,13 @@ namespace DrugCaculator.ViewModels
                 Setting.Default.Save();
 
                 LogService.Info("API 密钥已成功加密并保存到设置中。");
-                ShowMessageBox("API 密钥已成功保存。", "成功", MessageBoxImage.Information);
+                CustomMessageBox.Show(window, "API 密钥已成功保存。", "成功", MsgBoxButtons.Ok, MsgBoxIcon.Success);
                 OnRequestClose?.Invoke();
             }
             catch (Exception ex)
             {
                 LogService.Error("保存 API 密钥时发生错误。", ex);
-                ShowMessageBox($"保存 API 密钥时发生错误: {ex.Message}", "错误", MessageBoxImage.Error);
+                CustomMessageBox.Show(window, $"无法保存 API 密钥:{ex.Message}", "错误", MsgBoxButtons.Ok, MsgBoxIcon.Error);
             }
         }
 
@@ -92,11 +95,6 @@ namespace DrugCaculator.ViewModels
             field = value;
             OnPropertyChanged(propertyName);
             return true;
-        }
-
-        private static void ShowMessageBox(string message, string caption, MessageBoxImage icon)
-        {
-            MessageBox.Show(message, caption, MessageBoxButton.OK, icon);
         }
 
         public event Action OnRequestClose;

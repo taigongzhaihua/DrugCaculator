@@ -2,6 +2,7 @@
 using DrugCaculator.Services;
 using DrugCaculator.Utilities;
 using DrugCaculator.View;
+using DrugCaculator.View.Components;
 using Newtonsoft.Json;
 using NPinyin;
 using System;
@@ -152,19 +153,21 @@ public class DrugViewModel : INotifyPropertyChanged
         // 数据，从数据库中加载
         LoadDrugs();
 
+        // 初始化 Drugs 列表
         Drugs = new ObservableCollection<Drug>(AllDrugs);
-        AddDrugCommand = new RelayCommand(AddDrug);
-        EditDrugCommand = new RelayCommand(EditDrug);
-        DeleteDrugCommand = new RelayCommand(DeleteDrug);
-        AddDrugsFromExcelCommand = new RelayCommand(AddDrugsFromExcel);
-        AiGenerateRuleCommand = new RelayCommand(GenerateRule);
-        AiGenerateAllRulesCommand = new RelayCommand(GenerateAndSaveCalculationRulesForAllDrugsAsync);
-        SetApiKeyCommand = new RelayCommand(SetApiKey);
+
+        // 初始化命令
+        AddDrugCommand = new RelayCommand(AddDrug);// 创建新药物
+        EditDrugCommand = new RelayCommand(EditDrug);// 编辑药物
+        DeleteDrugCommand = new RelayCommand(DeleteDrug);// 删除药物
+        AddDrugsFromExcelCommand = new RelayCommand(AddDrugsFromExcel);// 从 Excel 导入药物
+        AiGenerateRuleCommand = new RelayCommand(GenerateRule);// 生成规则
+        AiGenerateAllRulesCommand = new RelayCommand(GenerateAndSaveCalculationRulesForAllDrugsAsync);// 生成所有规则
+        SetApiKeyCommand = new RelayCommand(SetApiKey);// 设置 API 密钥
     }
 
-    private void SetApiKey(object obj)
+    private static void SetApiKey(object obj)
     {
-        LogService.Info(obj.GetType().ToString());
         var apiKeySetter = new ApiKeySetter()
         {
             Owner = Window.GetWindow((obj as Button)!)
@@ -247,12 +250,13 @@ public class DrugViewModel : INotifyPropertyChanged
     }
     private void DeleteDrug(object parameter)
     {
-        var result = System.Windows.Forms.MessageBox.Show(@"是否删除该药物？",
-            @"Confirmation",
-            MessageBoxButtons.OK,
-            MessageBoxIcon.Question);
+        var result = CustomMessageBox.Show(Window.GetWindow((parameter as Button)!),
+            $"是否删除“{SelectedDrug.Name}”？",
+            "是否删除？",
+            MsgBoxButtons.YesNo,
+            MsgBoxIcon.Information);
 
-        if (result != DialogResult.OK) return;
+        if (result != MessageBoxResult.Yes) return;
         DrugService.DeleteDrug(SelectedDrug.Id);
         MessageBox.Show(@"删除成功！");
         LoadDrugs(); // 更新药物列表

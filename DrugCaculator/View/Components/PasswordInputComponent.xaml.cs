@@ -8,13 +8,18 @@ namespace DrugCaculator.View.Components
     public partial class PasswordInputComponent
     {
         public static readonly DependencyProperty PasswordProperty =
-            DependencyProperty.Register(nameof(Password), typeof(string), typeof(PasswordInputComponent), new PropertyMetadata(string.Empty, OnPasswordChanged));
+            DependencyProperty.Register(
+                nameof(Password),
+                typeof(string),
+                typeof(PasswordInputComponent),
+                new FrameworkPropertyMetadata(string.Empty, OnPasswordChanged));
 
         private static void OnPasswordChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is PasswordInputComponent component)
             {
                 component.PasswordBoxX.Password = (string)e.NewValue;
+                component.Password = (string)e.NewValue;
             }
         }
 

@@ -38,7 +38,7 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <Button Content="➕" Style="{DynamicResource PlusButton}" 
+        <Button Content="&#xe964;" Style="{DynamicResource PlusButton}" 
                 Click="OnAddCondition"/>
 
         <TextBlock Text="，每次" VerticalAlignment="Center" Foreground="CadetBlue"/>
