@@ -1,4 +1,4 @@
-﻿<components:CustomDialog x:Class="DrugCaculator.View.SettingsWindow"
+﻿<components:CustomDialog x:Class="DrugCaculator.View.Windows.SettingsWindow"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:components="clr-namespace:DrugCaculator.View.Components"

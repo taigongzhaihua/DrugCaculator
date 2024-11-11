@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace DrugCaculator.Utilities
+namespace DrugCaculator.Utilities.Commands
 {
     public class RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
         : ICommand

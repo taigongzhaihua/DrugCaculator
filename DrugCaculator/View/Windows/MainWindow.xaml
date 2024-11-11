@@ -1,11 +1,11 @@
-﻿<components:CustomDialog x:Class="DrugCaculator.View.MainWindow" x:Name="Window"
+﻿<components:CustomDialog x:Class="DrugCaculator.View.Windows.MainWindow" x:Name="Window"
                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                          xmlns:viewModels1="clr-namespace:DrugCaculator.ViewModels"
                          xmlns:components="clr-namespace:DrugCaculator.View.Components"
-                         xmlns:view="clr-namespace:DrugCaculator.View"
+                         xmlns:converters="clr-namespace:DrugCaculator.Utilities.Converters"
                          ResizeMode="CanResize"
                          WindowStyle="None"
                          mc:Ignorable="d"
@@ -17,9 +17,9 @@
                          DialogMinHeight="400" DialogMaxHeight="1000">
 
     <components:CustomDialog.Resources>
-        <view:HeightMinusConverter x:Key="HeightMinusConverter" />
-        <view:StringToDoubleConverter x:Key="StringToDoubleConverter" />
-        <view:StringToIntConverter x:Key="StringToIntConverter" />
+        <converters:MainWindowHeightToDrugList x:Key="MainWindowHeightToDrugList" />
+        <converters:StringToDoubleConverter x:Key="StringToDoubleConverter" />
+        <converters:StringToIntConverter x:Key="StringToIntConverter" />
     </components:CustomDialog.Resources>
     <components:CustomDialog.DataContext>
         <viewModels1:DrugViewModel />
@@ -49,7 +49,7 @@
                      ItemContainerStyle="{StaticResource CustomListBoxItemStyle}"
                      ItemsSource="{Binding Drugs}"
                      SelectedItem="{Binding SelectedDrug}"
-                     Height="{Binding ElementName=Window, Path=DialogHeight, Converter={StaticResource HeightMinusConverter}}">
+                     Height="{Binding ElementName=Window, Path=DialogHeight, Converter={StaticResource MainWindowHeightToDrugList}}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <ContentPresenter Content="{Binding Name}" />

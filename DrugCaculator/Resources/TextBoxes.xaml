@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- 自定义下划线的 TextBox 样式 -->
+    <Style x:Key="FlatTextBox" TargetType="TextBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border Background="Transparent" BorderBrush="Gray" BorderThickness="0,0,0,1">
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="False"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Padding" Value="0,2"/>
+        <Setter Property="Margin" Value="2,4"></Setter>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        <Setter Property="Foreground" Value="DodgerBlue"/>
+        <Setter Property="MinHeight" Value="22"></Setter>
+        <Setter Property="FontFamily" Value="楷体"></Setter>
+        <Setter Property="FontWeight" Value="Thin"></Setter>
+    </Style>
+</ResourceDictionary>

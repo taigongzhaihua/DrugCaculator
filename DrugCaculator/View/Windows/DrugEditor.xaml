@@ -1,11 +1,12 @@
-﻿<components:CustomDialog x:Class="DrugCaculator.View.DrugEditor"
+﻿<components:CustomDialog x:Class="DrugCaculator.View.Windows.DrugEditor"
                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                         xmlns:view="clr-namespace:DrugCaculator.View"
                          xmlns:viewModels="clr-namespace:DrugCaculator.ViewModels"
                          xmlns:components="clr-namespace:DrugCaculator.View.Components"
+                         xmlns:controls="clr-namespace:DrugCaculator.View.Controls"
+                         xmlns:converters="clr-namespace:DrugCaculator.Utilities.Converters"
                          mc:Ignorable="d"
                          Title="药物编辑器"
                          DialogWidth="800" DialogHeight="600"
@@ -15,9 +16,8 @@
                          TitleColor="MidnightBlue">
 
     <components:CustomDialog.Resources>
-        <view:HeightConverter x:Key="HeightConverter"/>
+        <converters:GroupBoxHeightToRuleList x:Key="GroupBoxHeightToRuleList"/>
     </components:CustomDialog.Resources>
-
     <components:CustomDialog.DataContext>
         <viewModels:DrugEditorViewModel />
     </components:CustomDialog.DataContext>
@@ -86,11 +86,11 @@
                          ItemsSource="{Binding Drug.CalculationRules}"
                          ItemContainerStyle="{StaticResource EditorListBoxItemStyle}"
                          SelectedItem="{Binding SelectedRule}"
-                         Height="{Binding RelativeSource={RelativeSource AncestorType=GroupBox}, Path=ActualHeight, Converter={StaticResource HeightConverter}}">
+                         Height="{Binding RelativeSource={RelativeSource AncestorType=GroupBox}, Path=ActualHeight, Converter={StaticResource GroupBoxHeightToRuleList}}">
                     <!-- 使用 RuleEditorRowComponent 作为 ListBox 项的 DataTemplate -->
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <components:RuleEditorRowComponent CalculationRule="{Binding }" />
+                            <controls:RuleEditorRowComponent CalculationRule="{Binding }" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.Resources>

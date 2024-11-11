@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -16,63 +15,9 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using TextBox = System.Windows.Controls.TextBox;
 // ReSharper disable UnusedMember.Global
 
-namespace DrugCaculator.View;
+namespace DrugCaculator.View.Windows;
 
-/// <summary>
-/// MainWindow.xaml 的交互逻辑
-/// </summary>
-public class HeightMinusConverter : IValueConverter
-{
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        if (value is double totalHeight)
-        {
-            // 减去固定值以确保UI布局合理
-            return totalHeight >= 165 ? totalHeight - 165 : 0; // 可以根据需要调整减去的值
-        }
-        return 0;
-    }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-}
-public class StringToIntConverter : IValueConverter
-{
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return value?.ToString();
-    }
-
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        if (Regex.IsMatch(value?.ToString()!, @"\D"))
-        {
-            value = Regex.Replace(value?.ToString()!, @"\D", "");
-        }
-        return int.TryParse(value?.ToString(), out var result) ? result : DependencyProperty.UnsetValue; // 返回未设置的值以避免异常
-    }
-}
-public class StringToDoubleConverter : IValueConverter
-{
-    private string _value;
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        if (_value != null && Regex.IsMatch(_value, @"^\d+\.$"))
-        {
-            return _value;
-        }
-
-        return value?.ToString();
-    }
-
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        _value = value?.ToString();
-        return double.TryParse(value?.ToString(), out var result) ? result : DependencyProperty.UnsetValue; // 返回未设置的值以避免异常
-    }
-}
 public partial class MainWindow
 {
     private readonly NotifyIcon _notifyIcon;

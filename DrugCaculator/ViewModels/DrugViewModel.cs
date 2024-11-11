@@ -1,10 +1,10 @@
 ﻿using DrugCaculator.Models;
 using DrugCaculator.Services;
-using DrugCaculator.Utilities;
-using DrugCaculator.View;
+using DrugCaculator.Utilities.Commands;
+using DrugCaculator.Utilities.Helpers;
 using DrugCaculator.View.Components;
+using DrugCaculator.View.Windows;
 using Newtonsoft.Json;
-using NPinyin;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -302,27 +302,7 @@ public class DrugViewModel : INotifyPropertyChanged
         }
         OnPropertyChanged(nameof(Drugs));
     }
-    private static class PinyinHelper
-    {
-        // 假设这里有一个实现将汉字转换为拼音首字母的逻辑
-        public static string GetFirstLetter(Drug drug)
-        {
-            var drugName = drug.Name;
-            // 实现将汉字转换为拼音首字母的逻辑
-            var firstLetter = Pinyin.GetInitials(drugName);
 
-            return firstLetter;
-        }
-
-        public static string GetPinyin(Drug drug)
-        {
-            var drugName = drug.Name;
-            // 实现将汉字转换为拼音的逻辑
-            var pinyin = Pinyin.GetPinyin(drugName);
-
-            return pinyin;
-        }
-    }
     public void CalculateDosage()
     {
         // 实现计算剂量逻辑
@@ -344,10 +324,7 @@ public class DrugViewModel : INotifyPropertyChanged
         OnPropertyChanged(nameof(Result));
     }
 
-
-
     public event PropertyChangedEventHandler PropertyChanged;
-
     protected void OnPropertyChanged([CallerMemberName] string name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

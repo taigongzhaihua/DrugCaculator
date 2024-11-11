@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace DrugCaculator.View;
+namespace DrugCaculator.View.Windows;
 
 /// <summary>
 /// SettingsWindow.xaml 的交互逻辑

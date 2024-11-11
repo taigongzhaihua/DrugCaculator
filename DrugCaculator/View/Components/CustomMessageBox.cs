@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using DrugCaculator.Utilities.Converters;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -74,12 +73,12 @@ namespace DrugCaculator.View.Components
             iconText.SetBinding(VisibilityProperty, new Binding(nameof(IconFont))
             {
                 Source = this,
-                Converter = StringToVisibilityConverter.Instance
+                Converter = StringIsNullToVisibilityConverter.Instance
             });
             iconText.SetBinding(ForegroundProperty, new Binding(nameof(IconFont))
             {
                 Source = this,
-                Converter = new IconFontToBrushConverter()
+                Converter = new MsgIconToBrushConverter()
             });
 
             // 消息文本框（不可编辑，允许选择）
@@ -133,7 +132,7 @@ namespace DrugCaculator.View.Components
                 noButton.SetBinding(VisibilityProperty, new Binding(nameof(NoButtonText))
                 {
                     Source = this,
-                    Converter = StringToVisibilityConverter.Instance
+                    Converter = StringIsNullToVisibilityConverter.Instance
                 });
                 buttonPanel.Children.Add(noButton);
             }
@@ -148,7 +147,7 @@ namespace DrugCaculator.View.Components
                 cancelButton.SetBinding(VisibilityProperty, new Binding(nameof(CancelButtonText))
                 {
                     Source = this,
-                    Converter = StringToVisibilityConverter.Instance
+                    Converter = StringIsNullToVisibilityConverter.Instance
                 });
                 buttonPanel.Children.Add(cancelButton);
             }
@@ -293,31 +292,5 @@ namespace DrugCaculator.View.Components
             };
         }
     }
+}
 
-}
-public class StringToVisibilityConverter : IValueConverter
-{
-    public static StringToVisibilityConverter Instance = new();
-    public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
-        string.IsNullOrEmpty(value as string) ? Visibility.Collapsed : Visibility.Visible;
-    public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
-}
-public class IconFontToBrushConverter : IValueConverter
-{
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return value switch
-        {
-            "\ue615" => Brushes.DodgerBlue,
-            "\ue629" => Brushes.DarkOrange,
-            "\ue60b" => Brushes.IndianRed,
-            "\ue665" => Brushes.ForestGreen,
-            _ => Brushes.Black
-        };
-    }
-
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-}

@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace DrugCaculator.View.Components
+namespace DrugCaculator.View.Controls
 {
     public partial class PasswordInputComponent
     {

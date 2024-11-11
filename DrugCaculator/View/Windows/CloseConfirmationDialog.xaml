@@ -1,4 +1,4 @@
-﻿<components1:CustomDialog x:Class="DrugCaculator.View.CloseConfirmationDialog"
+﻿<components1:CustomDialog x:Class="DrugCaculator.View.Windows.CloseConfirmationDialog"
                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                          xmlns:components1="clr-namespace:DrugCaculator.View.Components"

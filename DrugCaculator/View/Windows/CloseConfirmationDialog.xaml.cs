@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace DrugCaculator.View;
+namespace DrugCaculator.View.Windows;
 
 public partial class CloseConfirmationDialog
 {
