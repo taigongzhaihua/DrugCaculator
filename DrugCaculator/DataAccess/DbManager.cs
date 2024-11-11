@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿#nullable enable
+using Dapper;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -9,21 +10,18 @@ public class DbManager(string connectionString)
     // 创建表的方法
     public void CreateTableIfNotExists(string tableName, params (string, string)[] columnsDefinitions)
     {
-        using var connection = new SQLiteConnection(connectionString);
-        connection.Open();
         var columns = string.Join(", ", columnsDefinitions.Select(cd => $"{cd.Item1} {cd.Item2}"));
         var sql = $"CREATE TABLE IF NOT EXISTS {tableName} ({columns});";
-        connection.Execute(sql);
+        Execute(sql);
     }
 
     // 执行SQL命令的方法
-    public void Execute(string sql)
+    public void Execute(string sql, params object[] objects)
     {
         using var connection = new SQLiteConnection(connectionString);
         connection.Open();
-        connection.Execute(sql);
+        connection.Execute(sql, objects);
     }
-
 
     // 通用查询方法
     public IEnumerable<T> Query<T>(string tableName, string whereClause = "", params object[] parameters)
@@ -33,6 +31,15 @@ public class DbManager(string connectionString)
         var sql = $"SELECT * FROM {tableName} {whereClause}";
         var dynamicParameters = BuildDynamicParameters(parameters);
         return connection.Query<T>(sql, dynamicParameters);
+    }
+
+    // 通用查询单个方法
+    public T QuerySingleOrDefault<T>(string tableName, string whereClause, string columnNames, object parameters)
+    {
+        using var connection = new SQLiteConnection(connectionString);
+        connection.Open();
+        var sql = $"SELECT {columnNames} FROM {tableName} {whereClause}";
+        return connection.QuerySingleOrDefault<T>(sql, parameters)!;
     }
 
     // 通用插入方法

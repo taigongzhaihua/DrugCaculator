@@ -1,4 +1,4 @@
-﻿using Dapper;
+﻿using DrugCaculator.DataAccess;
 using System;
 using System.Data.SQLite;
 using System.IO;
@@ -14,6 +14,7 @@ public static class EncryptionService
     private static readonly string DbDirectory = Path.Combine(AppDataPath, AppName);
     private static readonly string DbPath = Path.Combine(DbDirectory, "EncryptionDatabase.db");
     private static readonly string ConnectionString = $"Data Source={DbPath}";
+    private static readonly DbManager DbManager = new(ConnectionString);
 
     static EncryptionService()
     {
@@ -50,17 +51,11 @@ public static class EncryptionService
                 Console.WriteLine(@"创建成功");
             }
             Console.WriteLine($@"ConnectionString = '{ConnectionString}'");
-            using var connection = new SQLiteConnection(ConnectionString);
-            Console.WriteLine(@"数据库连接成功");
-            connection.Open();
-            connection.Execute("""
-                               CREATE TABLE IF NOT EXISTS KeyTable (
-                                                                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                                                    KeyName TEXT NOT NULL UNIQUE,
-                                                                    EncryptedKey TEXT NOT NULL,
-                                                                    EncryptedIv TEXT NOT NULL
-                                                                );
-                               """);
+            DbManager.CreateTableIfNotExists("KeyTable",
+                               ("KeyName", "TEXT PRIMARY KEY"),
+                                              ("EncryptedKey", "TEXT"),
+                                              ("EncryptedIv", "TEXT")
+                                          );
         }
         catch (Exception ex)
         {
@@ -129,8 +124,7 @@ public static class EncryptionService
 
     private static void SaveKeyToDatabase(string keyName, byte[] protectedKey, byte[] protectedIv)
     {
-        using var connection = new SQLiteConnection(ConnectionString);
-        connection.Open();
+
 
         const string sql = """
                            INSERT INTO KeyTable (KeyName, EncryptedKey, EncryptedIv)
@@ -138,17 +132,15 @@ public static class EncryptionService
                                                ON CONFLICT(KeyName) DO UPDATE SET EncryptedKey = @EncryptedKey, EncryptedIv = @EncryptedIv;
                            """;
 
-        connection.Execute(sql, new { KeyName = keyName, EncryptedKey = Convert.ToBase64String(protectedKey), EncryptedIv = Convert.ToBase64String(protectedIv) });
+        DbManager.Execute(sql, new { KeyName = keyName, EncryptedKey = Convert.ToBase64String(protectedKey), EncryptedIv = Convert.ToBase64String(protectedIv) });
     }
 
     private static (byte[] protectedKey, byte[] protectedIv) GetKeyFromDatabase(string keyName)
     {
-        using var connection = new SQLiteConnection(ConnectionString);
-        connection.Open();
-
-        const string sql = "SELECT EncryptedKey, EncryptedIv FROM KeyTable WHERE KeyName = @KeyName";
-        var result = connection.QuerySingleOrDefault<(string EncryptedKey, string EncryptedIv)>(sql, new { KeyName = keyName });
-
+        // 从数据库中查询密钥和初始向量
+        var result = DbManager.QuerySingleOrDefault<(string EncryptedKey, string EncryptedIv)>("KeyTable", " WHERE KeyName = @KeyName",
+            "EncryptedKey, EncryptedIv", new { KeyName = keyName });
+        // 如果数据库中没有找到对应的密钥或初始向量，则返回 null
         if (result is not { EncryptedKey: not null, EncryptedIv: not null }) return (null, null);
         var protectedKey = Convert.FromBase64String(result.EncryptedKey);
         var protectedIv = Convert.FromBase64String(result.EncryptedIv);
