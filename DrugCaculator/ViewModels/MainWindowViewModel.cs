@@ -5,6 +5,7 @@ using DrugCaculator.Utilities.Helpers;
 using DrugCaculator.View.Components;
 using DrugCaculator.View.Windows;
 using Newtonsoft.Json;
+using NLog;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -21,6 +22,7 @@ namespace DrugCaculator.ViewModels;
 
 public class MainWindowViewModel : INotifyPropertyChanged
 {
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public ObservableCollection<Drug> DrugsOnList { get; set; }
     private ObservableCollection<Drug> Drugs { get; }
     public DrugService DrugService { get; set; }
@@ -221,14 +223,14 @@ public class MainWindowViewModel : INotifyPropertyChanged
 
             // 调用 DrugService.AddDrugsFromTable 方法，将数据导入数据库
             DrugService.AddDrugsFromTable(dataTable);
-            LogService.Info("成功导入药品数据");
+            Logger.Info("成功导入药品数据");
             CustomMessageBox.Show(@"数据导入成功", "成功", MsgBoxButtons.Ok, MsgBoxIcon.Success);
             LoadDrugs(); // 更新药物列表
             SearchDrug();
         }
         catch (Exception ex)
         {
-            LogService.Error($@"导入药品数据时出错：{ex.Message}", ex);
+            Logger.Error($@"导入药品数据时出错：{ex.Message}", ex);
             CustomMessageBox.Show($@"导入药品数据时出错：{ex.Message}", "错误", MsgBoxButtons.Ok, MsgBoxIcon.Error);
         }
     }

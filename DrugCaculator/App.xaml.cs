@@ -1,4 +1,4 @@
-﻿using DrugCaculator.Services;
+﻿using NLog;
 using System;
 using System.IO;
 using System.IO.Pipes;
@@ -12,6 +12,7 @@ public partial class App
 {
     public static Mutex Mutex1 { get; private set; }
 
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private const string MutexName = "DrugCalculator_SingleInstanceMutex";
     private const string PipeName = "DrugCalculator_SingleInstancePipe";
 
@@ -21,14 +22,14 @@ public partial class App
 
     protected override void OnStartup(StartupEventArgs e)
     {
-        LogService.Info("应用程序启动");
+        Logger.Info("应用程序启动");
 
         // 创建一个命名互斥体，以确保只有一个应用程序实例在运行
         Mutex1 = new Mutex(true, MutexName, out var createdNew);
 
         if (!createdNew)
         {
-            LogService.Warning("检测到已有实例正在运行，通知已存在的实例");
+            Logger.Warn("检测到已有实例正在运行，通知已存在的实例");
             // 如果已经存在实例，则通过管道通知已存在的实例
             NotifyExistingInstance();
             Current.Shutdown();
@@ -51,7 +52,7 @@ public partial class App
         {
             try
             {
-                LogService.Info("尝试连接已有实例");
+                Logger.Info("尝试连接已有实例");
                 // 使用命名管道客户端连接到已存在的实例
                 using var client = new NamedPipeClientStream(".", PipeName, PipeDirection.Out);
                 client.Connect(1000); // 尝试连接已有实例，超时时间为1000毫秒
@@ -61,13 +62,13 @@ public partial class App
                     writer.Flush();
                 }
                 connected = true; // 连接成功
-                LogService.Info("成功连接到已有实例");
+                Logger.Info("成功连接到已有实例");
             }
             catch (Exception ex)
             {
                 retries--; // 连接失败，减少重试次数
-                LogService.Warning($"连接失败，剩余重试次数: {retries}");
-                LogService.Error("连接已有实例时发生异常", ex);
+                Logger.Warn($"连接失败，剩余重试次数: {retries}");
+                Logger.Error("连接已有实例时发生异常", ex);
                 Thread.Sleep(500); // 等待片刻后重试
             }
         }
@@ -79,7 +80,7 @@ public partial class App
         {
             try
             {
-                LogService.Info("等待新的管道连接");
+                Logger.Info("等待新的管道连接");
                 // 创建命名管道服务端，用于接收其他实例的连接请求
                 using var server = new NamedPipeServerStream(PipeName, PipeDirection.In, NamedPipeServerStream.MaxAllowedServerInstances);
                 server.WaitForConnection(); // 等待连接
@@ -89,7 +90,7 @@ public partial class App
                     var message = reader.ReadLine();
                     if (message == "SHOW")
                     {
-                        LogService.Info("接收到SHOW消息，准备显示主窗口");
+                        Logger.Info("接收到SHOW消息，准备显示主窗口");
                         // 如果接收到的消息是"SHOW"，则显示主窗口
                         Current.Dispatcher.Invoke(() =>
                         {
@@ -111,17 +112,17 @@ public partial class App
 
                 if (!server.IsConnected) continue;
                 server.Disconnect(); // 断开连接，准备接受下一个请求
-                LogService.Info("管道连接已断开");
+                Logger.Info("管道连接已断开");
             }
             catch (ObjectDisposedException ex)
             {
-                LogService.Error("管道服务器已关闭，无法访问", ex);
+                Logger.Error("管道服务器已关闭，无法访问", ex);
                 break; // 退出循环，停止管道服务器
             }
             catch (Exception ex)
             {
                 // 如果发生其他异常，继续运行以等待下一次连接
-                LogService.Error("管道服务器发生异常", ex);
+                Logger.Error("管道服务器发生异常", ex);
             }
         }
     }

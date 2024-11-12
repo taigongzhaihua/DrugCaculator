@@ -1,6 +1,7 @@
 ﻿using DrugCaculator.Models;
 using DrugCaculator.Properties;
 using Newtonsoft.Json;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -11,6 +12,7 @@ namespace DrugCaculator.Services
 {
     public class DeepSeekService
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         // API Key 由用户设置并保存在设置中
         private static string ApiKey => GetApiKeyFromSettings();
         private const string ApiUrl = "https://api.deepseek.com/chat/completions";
@@ -124,7 +126,7 @@ namespace DrugCaculator.Services
             catch (Exception ex)
             {
                 // 记录错误日志
-                LogService.Error($"DeepSeekService：生成和保存计算规则时发生错误: {ex.Message}", ex);
+                Logger.Error($"DeepSeekService：生成和保存计算规则时发生错误: {ex.Message}", ex);
                 throw;
             }
         }
@@ -134,7 +136,7 @@ namespace DrugCaculator.Services
         {
             if (string.IsNullOrEmpty(jsonResponse))
             {
-                LogService.Warning("DeepSeekService：JSON响应内容为空或null。");
+                Logger.Warn("DeepSeekService：JSON响应内容为空或null。");
                 throw new ArgumentException(@"DeepSeekService：JSON响应内容为空或null。", nameof(jsonResponse));
             }
 
@@ -143,13 +145,13 @@ namespace DrugCaculator.Services
                 var result = JsonConvert.DeserializeObject<DeepSeekResponse>(jsonResponse);
                 if (result?.Choices != null && result.Choices.Count != 0 && result.Choices[0].Message != null)
                     return result.Choices[0].Message.Content;
-                LogService.Warning("DeepSeekService：无法从响应中提取生成的JSON内容。");
+                Logger.Warn("DeepSeekService：无法从响应中提取生成的JSON内容。");
                 throw new InvalidOperationException("DeepSeekService：无法从响应中提取生成的JSON内容。");
 
             }
             catch (JsonException ex)
             {
-                LogService.Error("DeepSeekService：无法解析响应的JSON内容，请检查返回的格式是否正确。", ex);
+                Logger.Error("DeepSeekService：无法解析响应的JSON内容，请检查返回的格式是否正确。", ex);
                 throw new JsonException("DeepSeekService：无法解析响应的JSON内容，请检查返回的格式是否正确。", ex);
             }
         }
@@ -168,13 +170,13 @@ namespace DrugCaculator.Services
                 var rules = response?.DrugCalculationRules ?? [];
 
                 // 记录解析后的规则
-                LogService.Debug($"DeepSeekService：解析后的 DrugCalculationRule 集合: {JsonConvert.SerializeObject(rules)}");
+                Logger.Debug($"DeepSeekService：解析后的 DrugCalculationRule 集合: {JsonConvert.SerializeObject(rules)}");
 
                 return rules;
             }
             catch (JsonException ex)
             {
-                LogService.Error("DeepSeekService：无法解析生成的JSON内容，请检查返回的格式是否正确。", ex);
+                Logger.Error("DeepSeekService：无法解析生成的JSON内容，请检查返回的格式是否正确。", ex);
                 throw new JsonException("DeepSeekService：无法解析生成的JSON内容，请检查返回的格式是否正确。", ex);
             }
         }
