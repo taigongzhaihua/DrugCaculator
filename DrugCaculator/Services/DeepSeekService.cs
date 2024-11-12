@@ -56,7 +56,7 @@ namespace DrugCaculator.Services
                                       "\nFrequency: 用药频次（PID、QID、TID、BID、QD、QN、Q2H、Q4H、Q6H、Q8H、Q12H、QOD、Q3D、QW、SOS、ST），最好只使用一个频次。" +
                                       "\nRoute: 给药途径（口服,含服,静脉注射,静脉滴注,肌肉注射,皮下注射,皮内注射,局麻用,外用,外敷,外涂,外洗,外贴,外喷,舌下含服,直肠给药,灌肠,肛门塞入,鼻腔喷雾,口腔喷雾,吸入,雾化吸入,滴耳,滴眼,透皮贴片,阴道给药）" +
                                       "\n请以JSON格式返回集合。" +
-                                      "\n注意：1.若多条DrugCalculationRule中Condition相同，若标明有一般剂量/维持剂量，只保留一般剂量/维持剂量，若未标明，则只保留每日给药量最大的一个。" +
+                                      "\n注意：1.若多条DrugCalculationRule中Condition相同，若标明有\"一般剂量\"/\"维持剂量\"，只保留一般剂量/维持剂量，若未标明，则只保留每日给药量最大的一个。" +
                                       "\n2.Condition和Formula必须严格按照给出格式书写，不可出现(Age/Weight)之外的任何变量，不得包含中文。" +
                                       "\n示例：" +
                                       "\n{" +
@@ -124,7 +124,7 @@ namespace DrugCaculator.Services
             catch (Exception ex)
             {
                 // 记录错误日志
-                LogError($"DeepSeekService：生成和保存计算规则时发生错误: {ex.Message}");
+                LogService.Error($"DeepSeekService：生成和保存计算规则时发生错误: {ex.Message}", ex);
                 throw;
             }
         }
@@ -134,21 +134,22 @@ namespace DrugCaculator.Services
         {
             if (string.IsNullOrEmpty(jsonResponse))
             {
+                LogService.Warning("DeepSeekService：JSON响应内容为空或null。");
                 throw new ArgumentException(@"DeepSeekService：JSON响应内容为空或null。", nameof(jsonResponse));
             }
 
             try
             {
                 var result = JsonConvert.DeserializeObject<DeepSeekResponse>(jsonResponse);
-                if (result?.Choices == null || result.Choices.Count == 0 || result.Choices[0].Message == null)
-                {
-                    throw new InvalidOperationException("DeepSeekService：无法从响应中提取生成的JSON内容。");
-                }
+                if (result?.Choices != null && result.Choices.Count != 0 && result.Choices[0].Message != null)
+                    return result.Choices[0].Message.Content;
+                LogService.Warning("DeepSeekService：无法从响应中提取生成的JSON内容。");
+                throw new InvalidOperationException("DeepSeekService：无法从响应中提取生成的JSON内容。");
 
-                return result.Choices[0].Message.Content;
             }
             catch (JsonException ex)
             {
+                LogService.Error("DeepSeekService：无法解析响应的JSON内容，请检查返回的格式是否正确。", ex);
                 throw new JsonException("DeepSeekService：无法解析响应的JSON内容，请检查返回的格式是否正确。", ex);
             }
         }
@@ -167,30 +168,16 @@ namespace DrugCaculator.Services
                 var rules = response?.DrugCalculationRules ?? [];
 
                 // 记录解析后的规则
-                LogInfo($"DeepSeekService：解析后的 DrugCalculationRule 集合: {JsonConvert.SerializeObject(rules)}");
+                LogService.Debug($"DeepSeekService：解析后的 DrugCalculationRule 集合: {JsonConvert.SerializeObject(rules)}");
 
                 return rules;
             }
             catch (JsonException ex)
             {
+                LogService.Error("DeepSeekService：无法解析生成的JSON内容，请检查返回的格式是否正确。", ex);
                 throw new JsonException("DeepSeekService：无法解析生成的JSON内容，请检查返回的格式是否正确。", ex);
             }
         }
-
-        // 记录错误日志
-        private static void LogError(string message)
-        {
-            // 这里可以替换为你实际的日志记录逻辑
-            Console.WriteLine($@"错误: {message}");
-        }
-
-        // 记录信息日志
-        private static void LogInfo(string message)
-        {
-            // 这里可以替换为你实际的日志记录逻辑
-            Console.WriteLine($@"信息: {message}");
-        }
-
     }
 
     public class DeepSeekResponse

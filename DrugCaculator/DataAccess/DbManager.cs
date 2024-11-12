@@ -34,13 +34,17 @@ public class DbManager(string connectionString)
     }
 
     // 通用查询单个方法
-    public T QuerySingleOrDefault<T>(string tableName, string whereClause, string columnNames, object parameters)
+    public T QuerySingleOrDefault<T>(string tableName, string whereClause, string[] columnNames, object parameters)
     {
         using var connection = new SQLiteConnection(connectionString);
         connection.Open();
-        var sql = $"SELECT {columnNames} FROM {tableName} {whereClause}";
+
+        var sanitizedColumnNames = string.Join(", ", columnNames.Select(cn => cn.Replace("\"", "\"\""))); // 防止 SQL 注入
+        var sql = $"SELECT {sanitizedColumnNames} FROM {tableName} {whereClause}";
+
         return connection.QuerySingleOrDefault<T>(sql, parameters)!;
     }
+
 
     // 通用插入方法
     public int Insert(string tableName, params (string, object)[] columnValues)

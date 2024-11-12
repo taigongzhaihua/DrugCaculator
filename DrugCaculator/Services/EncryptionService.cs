@@ -52,9 +52,9 @@ public static class EncryptionService
             }
             Console.WriteLine($@"ConnectionString = '{ConnectionString}'");
             DbManager.CreateTableIfNotExists("KeyTable",
-                               ("KeyName", "TEXT PRIMARY KEY"),
-                                              ("EncryptedKey", "TEXT"),
-                                              ("EncryptedIv", "TEXT")
+                               ("KeyName", "TEXT PRIMARY KEY NOT NULL"),
+                                              ("EncryptedKey", "TEXT NOT NULL"),
+                                              ("EncryptedIv", "TEXT NOT NULL")
                                           );
         }
         catch (Exception ex)
@@ -124,8 +124,6 @@ public static class EncryptionService
 
     private static void SaveKeyToDatabase(string keyName, byte[] protectedKey, byte[] protectedIv)
     {
-
-
         const string sql = """
                            INSERT INTO KeyTable (KeyName, EncryptedKey, EncryptedIv)
                                                VALUES (@KeyName, @EncryptedKey, @EncryptedIv)
@@ -139,7 +137,7 @@ public static class EncryptionService
     {
         // 从数据库中查询密钥和初始向量
         var result = DbManager.QuerySingleOrDefault<(string EncryptedKey, string EncryptedIv)>("KeyTable", " WHERE KeyName = @KeyName",
-            "EncryptedKey, EncryptedIv", new { KeyName = keyName });
+            ["EncryptedKey", "EncryptedIv"], new { KeyName = keyName });
         // 如果数据库中没有找到对应的密钥或初始向量，则返回 null
         if (result is not { EncryptedKey: not null, EncryptedIv: not null }) return (null, null);
         var protectedKey = Convert.FromBase64String(result.EncryptedKey);
