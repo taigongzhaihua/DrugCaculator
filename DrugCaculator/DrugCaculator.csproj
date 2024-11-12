@@ -10,6 +10,7 @@
     <ApplicationIcon>AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="drugs.db" />
     <None Remove="Fonts\iconfont.ttf" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +59,9 @@
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="drugs.db">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Fonts\iconfont.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

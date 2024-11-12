@@ -19,10 +19,10 @@ using MessageBox = System.Windows.MessageBox;
 
 namespace DrugCaculator.ViewModels;
 
-public class DrugViewModel : INotifyPropertyChanged
+public class MainWindowViewModel : INotifyPropertyChanged
 {
-    public ObservableCollection<Drug> Drugs { get; set; }
-    private ObservableCollection<Drug> AllDrugs { get; }
+    public ObservableCollection<Drug> DrugsOnList { get; set; }
+    private ObservableCollection<Drug> Drugs { get; }
     public DrugService DrugService { get; set; }
     public ICommand AddDrugCommand { get; set; }
     public ICommand EditDrugCommand { get; set; }
@@ -30,7 +30,8 @@ public class DrugViewModel : INotifyPropertyChanged
     public ICommand AddDrugsFromExcelCommand { get; set; }
     public ICommand AiGenerateRuleCommand { get; set; }
     public ICommand AiGenerateAllRulesCommand { get; set; }
-    public RelayCommand SetApiKeyCommand { get; set; }
+    public ICommand SettingCommand { get; set; }
+    public ICommand SetApiKeyCommand { get; set; }
     private string _dosage;
     public string Dosage
     {
@@ -135,28 +136,34 @@ public class DrugViewModel : INotifyPropertyChanged
             OnPropertyChanged(nameof(Dosage));
         }
     }
+
+    // 构造函数
+    public MainWindowViewModel()
+    {
+        DrugService = new DrugService();
+        Drugs = [];
+
+        LoadDrugs();// 数据，从数据库中加载
+        InitCommands();// 初始化命令
+    }
+
+    // 加载药物数据
     private void LoadDrugs()
     {
-        AllDrugs.Clear();
+        Drugs.Clear();
         var drugList = DrugService.GetAllDrugs();
         var sortedDrugList = drugList.ToList().OrderBy(PinyinHelper.GetPinyin);
         foreach (var drug in sortedDrugList)
         {
-            AllDrugs.Add(drug);
+            Drugs.Add(drug);
         }
+        // 初始化 DrugsOnList 列表
+        DrugsOnList = new ObservableCollection<Drug>(Drugs);
     }
 
-    public DrugViewModel()
+    // 初始化命令
+    private void InitCommands()
     {
-        DrugService = new DrugService();
-        AllDrugs = [];
-        // 数据，从数据库中加载
-        LoadDrugs();
-
-        // 初始化 Drugs 列表
-        Drugs = new ObservableCollection<Drug>(AllDrugs);
-
-        // 初始化命令
         AddDrugCommand = new RelayCommand(AddDrug);// 创建新药物
         EditDrugCommand = new RelayCommand(EditDrug);// 编辑药物
         DeleteDrugCommand = new RelayCommand(DeleteDrug);// 删除药物
@@ -164,23 +171,38 @@ public class DrugViewModel : INotifyPropertyChanged
         AiGenerateRuleCommand = new RelayCommand(GenerateRule);// 生成规则
         AiGenerateAllRulesCommand = new RelayCommand(GenerateAndSaveCalculationRulesForAllDrugsAsync);// 生成所有规则
         SetApiKeyCommand = new RelayCommand(SetApiKey);// 设置 API 密钥
+        SettingCommand = new RelayCommand(SettingsOpen);// 打开设置窗口
     }
 
-    private static void SetApiKey(object obj)
+    // 设置 API 密钥
+    private static void SetApiKey(object sender)
     {
         var apiKeySetter = new ApiKeySetter()
         {
-            Owner = Window.GetWindow((obj as Button)!)
+            Owner = Window.GetWindow((sender as Button)!)
         };
         apiKeySetter.ShowDialog();
     }
 
-    private async void GenerateRule(object obj)
+    // 打开设置窗口
+    private static void SettingsOpen(object sender)
+    {
+        var settings = new SettingsWindow
+        {
+            Owner = Window.GetWindow((sender as Button)!)
+        };
+        settings.ShowDialog();
+    }
+
+
+    // 生成规则
+    private async void GenerateRule(object sender)
     {
         await GenerateAndSaveCalculationRulesAsync(SelectedDrug);
     }
 
-    public void AddDrugsFromExcel(object obj)
+    // 从 Excel 导入药物
+    public void AddDrugsFromExcel(object sender)
     {
         // 创建文件选择对话框
         var openFileDialog = new OpenFileDialog
@@ -199,20 +221,20 @@ public class DrugViewModel : INotifyPropertyChanged
 
             // 调用 DrugService.AddDrugsFromTable 方法，将数据导入数据库
             DrugService.AddDrugsFromTable(dataTable);
-            Console.WriteLine(@"药品数据已成功导入数据库。");
-            MessageBox.Show(@"数据导入成功");
+            LogService.Info("成功导入药品数据");
+            CustomMessageBox.Show(@"数据导入成功", "成功", MsgBoxButtons.Ok, MsgBoxIcon.Success);
             LoadDrugs(); // 更新药物列表
             SearchDrug();
         }
         catch (Exception ex)
         {
-            Console.WriteLine($@"导入药品数据时出错：{ex.Message}");
-            MessageBox.Show($@"导入药品数据时出错：{ex.Message}");
+            LogService.Error($@"导入药品数据时出错：{ex.Message}", ex);
+            CustomMessageBox.Show($@"导入药品数据时出错：{ex.Message}", "错误", MsgBoxButtons.Ok, MsgBoxIcon.Error);
         }
     }
-    private async void GenerateAndSaveCalculationRulesForAllDrugsAsync(object obj)
+    private async void GenerateAndSaveCalculationRulesForAllDrugsAsync(object sender)
     {
-        foreach (var drug in AllDrugs)
+        foreach (var drug in Drugs)
         {
             Console.WriteLine($@"正在生成【{drug.Name}】规则");
             await GenerateAndSaveCalculationRulesAsync(drug);
@@ -290,17 +312,17 @@ public class DrugViewModel : INotifyPropertyChanged
         if (string.IsNullOrWhiteSpace(SearchText))
         {
             // 如果搜索框为空，则显示全部药物
-            Drugs = AllDrugs;
+            DrugsOnList = Drugs;
         }
         else
         {
             // 筛选药物列表，支持中文查找和首字母查找
-            var filteredDrugs = new ObservableCollection<Drug>(AllDrugs.Where(drug =>
+            var filteredDrugs = new ObservableCollection<Drug>(Drugs.Where(drug =>
                 drug.Name.ToLower().Contains(SearchText) ||
                 PinyinHelper.GetFirstLetter(drug).ToLower().Contains(SearchText.ToLower())).ToList());
-            Drugs = filteredDrugs;
+            DrugsOnList = filteredDrugs;
         }
-        OnPropertyChanged(nameof(Drugs));
+        OnPropertyChanged(nameof(DrugsOnList));
     }
 
     public void CalculateDosage()

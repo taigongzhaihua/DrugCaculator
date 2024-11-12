@@ -9,3 +9,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>", Scope = "member", Target = "~M:DrugCaculator.Services.EncryptionService.Decrypt(System.String,System.String)~System.String")]
 [assembly: SuppressMessage("Usage", "CA2211:非常量字段应当不可见", Justification = "<挂起>", Scope = "member", Target = "~F:DrugCaculator.Utilities.Converters.StringIsNullToVisibilityConverter.Instance")]
 [assembly: SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>", Scope = "member", Target = "~M:DrugCaculator.View.Windows.MainWindow.#ctor")]
+[assembly: SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>", Scope = "member", Target = "~M:DrugCaculator.View.Windows.MainWindow.InitializeNotifyIcon")]

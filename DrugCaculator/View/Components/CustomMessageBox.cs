@@ -85,6 +85,7 @@ namespace DrugCaculator.View.Components
             var messageTextBox = new TextBox
             {
                 Text = Message,
+                MaxWidth = 220,
                 TextWrapping = TextWrapping.Wrap,
                 VerticalAlignment = VerticalAlignment.Center,
                 IsReadOnly = true,

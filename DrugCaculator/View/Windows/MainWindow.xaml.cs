@@ -1,10 +1,10 @@
 ﻿using DrugCaculator.Properties;
+using DrugCaculator.Utilities.Helpers;
 using DrugCaculator.ViewModels;
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Forms;
@@ -20,96 +20,92 @@ namespace DrugCaculator.View.Windows;
 
 public partial class MainWindow
 {
-    private readonly NotifyIcon _notifyIcon;
+    private NotifyIcon _notifyIcon;
     private const int HotkeyId = 9000; // 热键ID
     private const int ModWin = 0x0008; // Win 键修饰符
     private const int VkF2 = 0x71; // F2 键的虚拟码
 
-    [DllImport("user32.dll")]
-    private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
-
-    [DllImport("user32.dll")]
-    private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
     public MainWindow()
     {
         InitializeComponent();
+        InitializeWindowSettings(); // 初始化窗口设置
+        RegisterHotKeys(); // 注册全局快捷键
+        InitializeNotifyIcon(); // 初始化托盘图标
+        InitializeContextMenu(); // 初始化右键菜单
+        Closing += MainWindow_Closing; // 订阅窗口关闭事件
+        SubscribeViewModelEvents(); // 订阅 ViewModel 的 PropertyChanged 事件
+    }
 
+    // 初始化窗口设置
+    private void InitializeWindowSettings()
+    {
         // 设置窗口在屏幕中央显示
         WindowStartupLocation = WindowStartupLocation.CenterScreen;
-        // 注册全局快捷键 Win + F2
-        var helper = new WindowInteropHelper(this);
-        RegisterHotKey(helper.Handle, HotkeyId, ModWin, VkF2);
+    }
 
-        ComponentDispatcher.ThreadPreprocessMessage += ComponentDispatcher_ThreadPreprocessMessage;
-        // 初始化托盘图标
+    // 初始化托盘图标
+    private void InitializeNotifyIcon()
+    {
+        // 初始化托盘图标并设置属性
         _notifyIcon = new NotifyIcon
         {
-            Icon = new Icon(fileName: "AppIcon.ico"), // 使用你的图标文件
+            Icon = new Icon(fileName: "AppIcon.ico"), // 使用指定的图标文件
             Visible = true,
             Text = @"药物查询"
         };
+        // 双击托盘图标时显示窗口
         _notifyIcon.DoubleClick += (_, _) => ShowWindow();
+    }
 
-        // 处理窗口最小化事件
-        StateChanged += MainWindow_StateChanged;
-
-        // 初始化右键菜单
+    // 初始化右键菜单
+    private void InitializeContextMenu()
+    {
+        // 初始化托盘图标的右键菜单
         var contextMenuStrip = new ContextMenuStrip();
-        contextMenuStrip.Items.Add("显示", null, (_, _) => ShowWindow());
-        contextMenuStrip.Items.Add("退出", null, (_, _) => ExitApplication());
-
-        // 将右键菜单赋给托盘图标
+        contextMenuStrip.Items.Add("打开", null, (_, _) => ShowWindow()); // 显示窗口选项
+        contextMenuStrip.Items.Add("退出", null, (_, _) => ExitApplication()); // 退出应用程序选项
         _notifyIcon.ContextMenuStrip = contextMenuStrip;
+    }
 
-        // 处理关闭事件
-        Closing += MainWindow_Closing;
-        // 订阅 ViewModel 的 PropertyChanged 事件
-        if (DataContext is DrugViewModel viewModel)
+    // 订阅 ViewModel 的 PropertyChanged 事件
+    private void SubscribeViewModelEvents()
+    {
+        // 订阅 ViewModel 的 PropertyChanged 事件，以便在属性变化时更新 UI
+        if (DataContext is MainWindowViewModel viewModel)
         {
             viewModel.PropertyChanged += ViewModel_PropertyChanged;
         }
     }
 
-    private void MainWindow_StateChanged(object sender, EventArgs e)
+    // 注册全局快捷键
+    private void RegisterHotKeys()
     {
-        if (WindowState == WindowState.Minimized)
-        {
-
-        }
+        var helper = new WindowInteropHelper(this);
+        HotKeyHelper.Register(helper.Handle, HotkeyId, ModWin, VkF2);
+        ComponentDispatcher.ThreadPreprocessMessage += ComponentDispatcher_ThreadPreprocessMessage;
     }
+
+    // 处理热键消息
     private void ComponentDispatcher_ThreadPreprocessMessage(ref MSG msg, ref bool handled)
     {
         if (msg.message != 0x0312 || msg.wParam.ToInt32() != HotkeyId) return; // 0x0312 为 WM_HOTKEY
         ShowWindow(); // 显示窗口
         handled = true;
     }
+
+    // 窗口关闭事件处理
     private void MainWindow_Closing(object sender, CancelEventArgs e)
     {
         // 检查是否已经有保存的用户选择
         var savedChoice = Settings.Default.IsClose;
         if (!string.IsNullOrEmpty(savedChoice))
         {
-            switch (savedChoice)
-            {
-                case "Close":
-                    // 用户选择了关闭程序
-                    _notifyIcon.Dispose();
-                    return; // 继续关闭窗口
-                case "Minimize":
-                    // 用户选择了最小化到托盘
-                    e.Cancel = true;
-                    WindowState = WindowState.Minimized;
-                    Hide();
-                    return;
-            }
+            HandleUserChoice(savedChoice, e);
+            return;
         }
 
-        // 弹出自定义对话框
-        var dialog = new CloseConfirmationDialog
-        {
-            Owner = this
-        };
-
+        // 弹出自定义对话框获取用户选择
+        var dialog = new CloseConfirmationDialog { Owner = this };
         var result = dialog.ShowDialog();
         if (result == true)
         {
@@ -119,19 +115,7 @@ public partial class MainWindow
                 Settings.Default.IsClose = dialog.IsClose ? "Close" : "Minimize";
                 Settings.Default.Save();
             }
-
-            if (dialog.IsClose)
-            {
-                // 用户选择关闭程序
-                _notifyIcon.Dispose();
-            }
-            else
-            {
-                // 用户选择最小化到托盘
-                e.Cancel = true;
-                WindowState = WindowState.Minimized;
-                Hide();
-            }
+            HandleUserChoice(dialog.IsClose ? "Close" : "Minimize", e);
         }
         else
         {
@@ -139,6 +123,25 @@ public partial class MainWindow
             e.Cancel = true;
         }
     }
+    // 处理用户选择
+    private void HandleUserChoice(string choice, CancelEventArgs e)
+    {
+        switch (choice)
+        {
+            case "Close":
+                // 用户选择了关闭程序
+                ExitApplication();
+                break;
+            case "Minimize":
+                // 用户选择了最小化到托盘
+                e.Cancel = true;
+                WindowState = WindowState.Minimized;
+                Hide();
+                break;
+        }
+    }
+
+    // 退出应用程序
     private void ExitApplication()
     {
         _notifyIcon.Dispose(); // 释放托盘图标
@@ -149,24 +152,16 @@ public partial class MainWindow
     {
         Close();
     }
+    private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+    {
+        WindowState = WindowState.Minimized;
+    }
     protected override void OnClosed(EventArgs e)
     {
         // 注销热键
         var helper = new WindowInteropHelper(this);
-        UnregisterHotKey(helper.Handle, HotkeyId);
+        HotKeyHelper.Unregister(helper.Handle, HotkeyId);
         base.OnClosed(e);
-    }
-    private void SettingButton_Click(object sender, RoutedEventArgs e)
-    {
-        var settings = new SettingsWindow
-        {
-            Owner = this
-        };
-        settings.ShowDialog();
-    }
-    private void MinimizeButton_Click(object sender, RoutedEventArgs e)
-    {
-        WindowState = WindowState.Minimized;
     }
 
     private void ShowWindow()

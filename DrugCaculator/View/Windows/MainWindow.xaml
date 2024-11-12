@@ -6,25 +6,21 @@
                          xmlns:viewModels1="clr-namespace:DrugCaculator.ViewModels"
                          xmlns:components="clr-namespace:DrugCaculator.View.Components"
                          xmlns:converters="clr-namespace:DrugCaculator.Utilities.Converters"
-                         ResizeMode="CanResize"
-                         WindowStyle="None"
-                         mc:Ignorable="d"
-                         Title="药物查询"
-                         AllowsTransparency="True"
+                         ResizeMode="CanResize" WindowStyle="None" AllowsTransparency="True"
+                         mc:Ignorable="d" Title="药物查询"
                          Background="Transparent" TitleBarVisibility="Collapsed"
                          DialogWidth="840" DialogHeight="600"
                          DialogMinWidth="200" DialogMaxWidth="1200"
                          DialogMinHeight="400" DialogMaxHeight="1000">
-
     <components:CustomDialog.Resources>
         <converters:MainWindowHeightToDrugList x:Key="MainWindowHeightToDrugList" />
         <converters:StringToDoubleConverter x:Key="StringToDoubleConverter" />
         <converters:StringToIntConverter x:Key="StringToIntConverter" />
     </components:CustomDialog.Resources>
     <components:CustomDialog.DataContext>
-        <viewModels1:DrugViewModel />
+        <viewModels1:MainWindowViewModel />
     </components:CustomDialog.DataContext>
-    <Grid ClipToBounds="True">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300" />
             <ColumnDefinition Width="1*" />
@@ -43,11 +39,10 @@
                          Loaded="SearchTextBox_Loaded" />
             </components:ShadowBorder>
 
-
             <ListBox Name="DrugList" HorizontalAlignment="Center" Margin="0" Width="265"
                      Style="{DynamicResource CustomListBoxStyle}"
                      ItemContainerStyle="{StaticResource CustomListBoxItemStyle}"
-                     ItemsSource="{Binding Drugs}"
+                     ItemsSource="{Binding DrugsOnList}"
                      SelectedItem="{Binding SelectedDrug}"
                      Height="{Binding ElementName=Window, Path=DialogHeight, Converter={StaticResource MainWindowHeightToDrugList}}">
                 <ListBox.ItemTemplate>
@@ -130,8 +125,8 @@
                            FontWeight="DemiBold"
                            FontFamily="宋体"
                            FontSize="14" />
-                <Button Grid.Column="1" Content="&#xe966;" Width="40"
-                        Click="SettingButton_Click" ToolTip="设置"
+                <Button Grid.Column="1" Content="&#xe966;" Width="40" ToolTip="设置"
+                        Command="{Binding SettingCommand}"
                         Style="{DynamicResource TitleButton}" />
                 <Button Grid.Column="2" Content="&#xe95f;" Width="40"
                         Click="MinimizeButton_Click" ToolTip="最小化窗口"
