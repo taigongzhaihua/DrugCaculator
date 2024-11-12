@@ -127,6 +127,7 @@
                            FontSize="14" />
                 <Button Grid.Column="1" Content="&#xe966;" Width="40" ToolTip="设置"
                         Command="{Binding SettingCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                         Style="{DynamicResource TitleButton}" />
                 <Button Grid.Column="2" Content="&#xe95f;" Width="40"
                         Click="MinimizeButton_Click" ToolTip="最小化窗口"
