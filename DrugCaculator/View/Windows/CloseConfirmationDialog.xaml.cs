@@ -20,7 +20,7 @@ public partial class CloseConfirmationDialog
     // 初始化默认设置
     private void InitializeDefaultSettings()
     {
-        RbClose.IsChecked = true; // 默认选择关闭程序
+        RbMinimizeToTray.IsChecked = true; // 默认选择关闭程序
     }
 
     // "确定" 按钮点击事件处理
