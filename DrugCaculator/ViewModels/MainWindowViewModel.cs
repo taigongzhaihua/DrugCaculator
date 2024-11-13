@@ -34,6 +34,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     public ICommand AiGenerateAllRulesCommand { get; set; }
     public ICommand SettingCommand { get; set; }
     public ICommand SetApiKeyCommand { get; set; }
+    public ICommand LogsCommand { get; set; }
     private string _dosage;
     public string Dosage
     {
@@ -139,6 +140,8 @@ public class MainWindowViewModel : INotifyPropertyChanged
         }
     }
 
+
+
     // 构造函数
     public MainWindowViewModel()
     {
@@ -174,12 +177,22 @@ public class MainWindowViewModel : INotifyPropertyChanged
         AiGenerateAllRulesCommand = new RelayCommand(GenerateAndSaveCalculationRulesForAllDrugsAsync);// 生成所有规则
         SetApiKeyCommand = new RelayCommand(SetApiKey);// 设置 API 密钥
         SettingCommand = new RelayCommand(SettingsOpen);// 打开设置窗口
+        LogsCommand = new RelayCommand(ShowLogs);
+    }
+
+    private static void ShowLogs(object sender)
+    {
+        var apiKeySetter = new LogViewer
+        {
+            Owner = Window.GetWindow((sender as Button)!)
+        };
+        apiKeySetter.ShowDialog();
     }
 
     // 设置 API 密钥
     private static void SetApiKey(object sender)
     {
-        var apiKeySetter = new ApiKeySetter()
+        var apiKeySetter = new ApiKeySetter
         {
             Owner = Window.GetWindow((sender as Button)!)
         };

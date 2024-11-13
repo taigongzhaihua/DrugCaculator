@@ -52,7 +52,7 @@ public class DbManager(string connectionString)
     {
         try
         {
-            Logger.Info($"查询表 {tableName}");
+            Logger.Debug($"查询表 {tableName}");
             using var connection = new SQLiteConnection(connectionString);
             connection.Open();
             var sql = $"SELECT * FROM {tableName} {whereClause}";

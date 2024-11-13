@@ -117,6 +117,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="{Binding Title, ElementName=Window}"
                            VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -125,14 +126,18 @@
                            FontWeight="DemiBold"
                            FontFamily="宋体"
                            FontSize="14" />
-                <Button Grid.Column="1" Content="&#xe966;" Width="40" ToolTip="设置"
+                <Button Grid.Column="1" Content="&#xe668;" Width="40" ToolTip="日志"
+                        Command="{Binding LogsCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                        Style="{DynamicResource TitleButton}" />
+                <Button Grid.Column="2" Content="&#xe966;" Width="40" ToolTip="设置"
                         Command="{Binding SettingCommand}"
                         CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                         Style="{DynamicResource TitleButton}" />
-                <Button Grid.Column="2" Content="&#xe95f;" Width="40"
+                <Button Grid.Column="3" Content="&#xe95f;" Width="40"
                         Click="MinimizeButton_Click" ToolTip="最小化窗口"
                         Style="{DynamicResource TitleButton}" />
-                <Button Grid.Column="3" Content="&#xe955;" Width="40"
+                <Button Grid.Column="4" Content="&#xe955;" Width="40"
                         Click="CloseButton_Click" ToolTip="关闭窗口"
                         Style="{DynamicResource CloseButton}" />
             </Grid>

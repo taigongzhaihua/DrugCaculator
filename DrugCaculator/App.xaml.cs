@@ -97,14 +97,8 @@ public partial class App
                         {
                             var mainWindow = Current.MainWindow;
                             if (mainWindow == null) return;
-                            if (mainWindow.Visibility != Visibility.Visible)
-                            {
-                                mainWindow.Show(); // 显示窗口
-                            }
-                            if (mainWindow.WindowState == WindowState.Minimized)
-                            {
-                                mainWindow.WindowState = WindowState.Normal; // 恢复窗口状态
-                            }
+                            mainWindow.Show(); // 显示窗口
+                            mainWindow.WindowState = WindowState.Normal; // 恢复窗口状态
                             mainWindow.Activate(); // 激活窗口并将其置于前台
                             SetForegroundWindow(new System.Windows.Interop.WindowInteropHelper(mainWindow).Handle); // 确保窗口在最前
                         });
@@ -139,7 +133,7 @@ public partial class App
         var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
 
         // 配置日志级别和输出目标
-        config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+        config.AddRule(LogLevel.Info, LogLevel.Fatal, logfile);
         config.AddRule(LogLevel.Debug, LogLevel.Fatal, logconsole);
 
         // 应用配置

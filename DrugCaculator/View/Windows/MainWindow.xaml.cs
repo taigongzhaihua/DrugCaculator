@@ -108,7 +108,7 @@ public partial class MainWindow
         // 检查是否已经有保存的用户选择
         var savedChoice = Settings.Default.IsClose;
 
-        if (savedChoice is not "Ask" and not null)
+        if (savedChoice is not ("Ask" or null or ""))
         {
             Logger.Info("找到已保存的用户选择: " + savedChoice);
             HandleUserChoice(savedChoice, e);
