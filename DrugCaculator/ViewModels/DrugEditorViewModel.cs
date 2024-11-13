@@ -1,6 +1,6 @@
-﻿using DrugCaculator.Models;
-using DrugCaculator.Services;
-using DrugCaculator.Utilities.Commands;
+﻿using DrugCalculator.Models;
+using DrugCalculator.Services;
+using DrugCalculator.Utilities.Commands;
 using NLog;
 using System;
 using System.ComponentModel;
@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 
-namespace DrugCaculator.ViewModels
+namespace DrugCalculator.ViewModels
 {
     public class DrugEditorViewModel : INotifyPropertyChanged
     {

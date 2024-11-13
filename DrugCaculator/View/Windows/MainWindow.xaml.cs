@@ -1,6 +1,6 @@
-﻿using DrugCaculator.Properties;
-using DrugCaculator.Utilities.Helpers;
-using DrugCaculator.ViewModels;
+﻿using DrugCalculator.Properties;
+using DrugCalculator.Utilities.Helpers;
+using DrugCalculator.ViewModels;
 using NLog;
 using System;
 using System.ComponentModel;
@@ -16,7 +16,7 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using TextBox = System.Windows.Controls.TextBox;
 // ReSharper disable UnusedMember.Global
 
-namespace DrugCaculator.View.Windows;
+namespace DrugCalculator.View.Windows;
 
 public partial class MainWindow
 {

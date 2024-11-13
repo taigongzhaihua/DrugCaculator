@@ -1,7 +1,7 @@
 ﻿using NLog;
 using System.Windows;
 
-namespace DrugCaculator.View.Windows;
+namespace DrugCalculator.View.Windows;
 
 public partial class CloseConfirmationDialog
 {

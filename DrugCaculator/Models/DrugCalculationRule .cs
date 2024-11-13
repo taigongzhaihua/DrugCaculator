@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace DrugCaculator.Models
+namespace DrugCalculator.Models
 {
     public class DrugCalculationRule : INotifyPropertyChanged
     {

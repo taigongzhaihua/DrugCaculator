@@ -1,11 +1,11 @@
-﻿using DrugCaculator.Models;
+﻿using DrugCalculator.Models;
 using NCalc;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
-namespace DrugCaculator.Services
+namespace DrugCalculator.Services
 {
     public class CalculateService
     {

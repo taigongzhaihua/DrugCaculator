@@ -1,11 +1,11 @@
-﻿using DrugCaculator.View.Controls;
-using DrugCaculator.ViewModels;
+﻿using DrugCalculator.View.Controls;
+using DrugCalculator.ViewModels;
 using NLog;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 
-namespace DrugCaculator.View.Windows;
+namespace DrugCalculator.View.Windows;
 
 public partial class ApiKeySetter
 {

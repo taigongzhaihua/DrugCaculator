@@ -1,9 +1,9 @@
-﻿using DrugCaculator.Models;
-using DrugCaculator.Services;
-using DrugCaculator.ViewModels;
+﻿using DrugCalculator.Models;
+using DrugCalculator.Services;
+using DrugCalculator.ViewModels;
 using NLog;
 
-namespace DrugCaculator.View.Windows;
+namespace DrugCalculator.View.Windows;
 public partial class DrugEditor
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

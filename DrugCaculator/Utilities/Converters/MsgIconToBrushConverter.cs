@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace DrugCaculator.Utilities.Converters
+namespace DrugCalculator.Utilities.Converters
 {
     public class MsgIconToBrushConverter : IValueConverter
     {

@@ -1,5 +1,5 @@
-﻿using DrugCaculator.Models;
-using DrugCaculator.Properties;
+﻿using DrugCalculator.Models;
+using DrugCalculator.Properties;
 using Newtonsoft.Json;
 using NLog;
 using System;
@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DrugCaculator.Services
+namespace DrugCalculator.Services
 {
     public class DeepSeekService
     {

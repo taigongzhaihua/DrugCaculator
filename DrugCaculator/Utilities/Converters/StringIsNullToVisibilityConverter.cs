@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace DrugCaculator.Utilities.Converters;
+namespace DrugCalculator.Utilities.Converters;
 public class StringIsNullToVisibilityConverter : IValueConverter
 {
     public static StringIsNullToVisibilityConverter Instance = new();

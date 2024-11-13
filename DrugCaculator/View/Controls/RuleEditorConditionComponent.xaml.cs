@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace DrugCaculator.View.Controls
+namespace DrugCalculator.View.Controls
 {
     public partial class RuleEditorConditionComponent
     {

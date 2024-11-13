@@ -1,4 +1,4 @@
-﻿<Application x:Class="DrugCaculator.App"
+﻿<Application x:Class="DrugCalculator.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="/View/Windows/MainWindow.xaml">

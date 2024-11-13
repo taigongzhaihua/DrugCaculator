@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace DrugCaculator.Utilities.Helpers
+namespace DrugCalculator.Utilities.Helpers
 {
     public static class HotKeyHelper
     {

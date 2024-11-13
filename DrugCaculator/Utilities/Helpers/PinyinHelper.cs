@@ -1,7 +1,7 @@
-﻿using DrugCaculator.Models;
+﻿using DrugCalculator.Models;
 using NPinyin;
 
-namespace DrugCaculator.Utilities.Helpers
+namespace DrugCalculator.Utilities.Helpers
 {
     public static class PinyinHelper
     {

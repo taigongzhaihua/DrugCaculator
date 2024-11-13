@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace DrugCaculator.Utilities.Converters
+namespace DrugCalculator.Utilities.Converters
 {
     // 静态转换器实例以减少重复创建，转换器用于在绑定时增加一个固定值（40）
     public class Add40Converter : IValueConverter

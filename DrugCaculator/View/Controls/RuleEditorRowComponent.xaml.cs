@@ -1,5 +1,5 @@
-﻿using DrugCaculator.Models;
-using DrugCaculator.Services;
+﻿using DrugCalculator.Models;
+using DrugCalculator.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace DrugCaculator.View.Controls
+namespace DrugCalculator.View.Controls
 {
 
 

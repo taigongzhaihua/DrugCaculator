@@ -1,12 +1,12 @@
-﻿using DrugCaculator.DataAccess;
-using DrugCaculator.Models;
+﻿using DrugCalculator.DataAccess;
+using DrugCalculator.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 
-namespace DrugCaculator.Services;
+namespace DrugCalculator.Services;
 public class DrugService
 {
     private readonly DbManager _dbManager;

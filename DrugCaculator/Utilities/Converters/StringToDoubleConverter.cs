@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Data;
 
-namespace DrugCaculator.Utilities.Converters;
+namespace DrugCalculator.Utilities.Converters;
 
 public class StringToDoubleConverter : IValueConverter
 {

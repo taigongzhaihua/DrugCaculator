@@ -1,9 +1,9 @@
-﻿using DrugCaculator.Models;
-using DrugCaculator.Services;
-using DrugCaculator.Utilities.Commands;
-using DrugCaculator.Utilities.Helpers;
-using DrugCaculator.View.Components;
-using DrugCaculator.View.Windows;
+﻿using DrugCalculator.Models;
+using DrugCalculator.Services;
+using DrugCalculator.Utilities.Commands;
+using DrugCalculator.Utilities.Helpers;
+using DrugCalculator.View.Components;
+using DrugCalculator.View.Windows;
 using Newtonsoft.Json;
 using NLog;
 using System;
@@ -18,7 +18,7 @@ using System.Windows.Input;
 using Button = System.Windows.Controls.Button;
 using MessageBox = System.Windows.MessageBox;
 
-namespace DrugCaculator.ViewModels;
+namespace DrugCalculator.ViewModels;
 
 public class MainWindowViewModel : INotifyPropertyChanged
 {

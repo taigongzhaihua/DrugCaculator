@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace DrugCaculator.Utilities.Converters;
+namespace DrugCalculator.Utilities.Converters;
 
 public class MainWindowHeightToDrugList : IValueConverter
 {

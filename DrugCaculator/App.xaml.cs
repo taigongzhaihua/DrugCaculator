@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace DrugCaculator;
+namespace DrugCalculator;
 public partial class App
 {
     public static Mutex Mutex1 { get; private set; }
@@ -22,6 +22,7 @@ public partial class App
 
     protected override void OnStartup(StartupEventArgs e)
     {
+        SetLogger();
         Logger.Info("应用程序启动");
 
         // 创建一个命名互斥体，以确保只有一个应用程序实例在运行
@@ -68,7 +69,7 @@ public partial class App
             {
                 retries--; // 连接失败，减少重试次数
                 Logger.Warn($"连接失败，剩余重试次数: {retries}");
-                Logger.Error("连接已有实例时发生异常", ex);
+                Logger.Error($"连接已有实例时发生异常：{ex.Message}");
                 Thread.Sleep(500); // 等待片刻后重试
             }
         }
@@ -116,14 +117,33 @@ public partial class App
             }
             catch (ObjectDisposedException ex)
             {
-                Logger.Error("管道服务器已关闭，无法访问", ex);
+                Logger.Error($"管道服务器已关闭，无法访问：{ex.Message}");
                 break; // 退出循环，停止管道服务器
             }
             catch (Exception ex)
             {
                 // 如果发生其他异常，继续运行以等待下一次连接
-                Logger.Error("管道服务器发生异常", ex);
+                Logger.Error($"管道服务器发生异常：{ex.Message}", ex);
             }
         }
+    }
+
+    private static void SetLogger()
+    {
+        var config = new NLog.Config.LoggingConfiguration();
+
+        // 设置日志输出到文件
+        var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "Log.log" };
+
+        // 设置日志输出到控制台
+        var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
+
+        // 配置日志级别和输出目标
+        config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+        config.AddRule(LogLevel.Debug, LogLevel.Fatal, logconsole);
+
+        // 应用配置
+        LogManager.Configuration = config;
+
     }
 }

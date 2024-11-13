@@ -1,6 +1,7 @@
-﻿using DrugCaculator.Services;
-using DrugCaculator.Utilities.Commands;
-using DrugCaculator.View.Components;
+﻿using DrugCalculator.Properties;
+using DrugCalculator.Services;
+using DrugCalculator.Utilities.Commands;
+using DrugCalculator.View.Components;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,9 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Setting = DrugCaculator.Properties.Settings;
 // ReSharper disable UnusedMember.Global
 
-namespace DrugCaculator.ViewModels
+namespace DrugCalculator.ViewModels
 {
 
     public class ApiKeySetterViewModel : INotifyPropertyChanged
@@ -63,8 +63,8 @@ namespace DrugCaculator.ViewModels
             try
             {
                 var encryptedApiKey = EncryptionService.Encrypt(ApiKey, "DeepSeekApiKey");
-                Setting.Default.DeepSeekApiKey = encryptedApiKey;
-                Setting.Default.Save();
+                Settings.Default.DeepSeekApiKey = encryptedApiKey;
+                Settings.Default.Save();
 
                 Logger.Info("API 密钥已成功加密并保存到设置中。");
                 CustomMessageBox.Show(window, "API 密钥已成功保存。", "成功", MsgBoxButtons.Ok, MsgBoxIcon.Success);

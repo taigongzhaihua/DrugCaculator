@@ -1,11 +1,11 @@
-﻿<UserControl x:Class="DrugCaculator.View.Controls.RuleEditorRowComponent"
+﻿<UserControl x:Class="DrugCalculator.View.Controls.RuleEditorRowComponent"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:view="clr-namespace:DrugCaculator.View"
-             xmlns:components="clr-namespace:DrugCaculator.View.Components"
-             xmlns:controls="clr-namespace:DrugCaculator.View.Controls"
+             xmlns:view="clr-namespace:DrugCalculator.View"
+             xmlns:components="clr-namespace:DrugCalculator.View.Components"
+             xmlns:controls="clr-namespace:DrugCalculator.View.Controls"
              mc:Ignorable="d"
              Height="Auto" Width="Auto">
     <UserControl.Resources>

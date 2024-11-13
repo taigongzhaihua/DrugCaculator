@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
 
-namespace DrugCaculator.Services;
+namespace DrugCalculator.Services;
 
 public class ConfigurationService(string configFilePath = "AppOptions.json")
 {

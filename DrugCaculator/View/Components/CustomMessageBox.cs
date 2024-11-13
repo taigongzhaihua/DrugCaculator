@@ -1,10 +1,10 @@
-﻿using DrugCaculator.Utilities.Converters;
+﻿using DrugCalculator.Utilities.Converters;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Brushes = System.Windows.Media.Brushes;
 
-namespace DrugCaculator.View.Components
+namespace DrugCalculator.View.Components
 {
     public enum MsgBoxButtons
     {

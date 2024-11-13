@@ -1,7 +1,7 @@
-﻿<components1:CustomDialog x:Class="DrugCaculator.View.Windows.CloseConfirmationDialog"
+﻿<components1:CustomDialog x:Class="DrugCalculator.View.Windows.CloseConfirmationDialog"
                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                         xmlns:components1="clr-namespace:DrugCaculator.View.Components"
+                         xmlns:components1="clr-namespace:DrugCalculator.View.Components"
                          Title="确认关闭" DialogHeight="200" DialogWidth="400"
                           Visibility="Visible">
     <StackPanel Margin="10">

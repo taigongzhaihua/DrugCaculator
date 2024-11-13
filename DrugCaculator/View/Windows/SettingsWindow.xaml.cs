@@ -1,6 +1,6 @@
 ﻿using NLog;
 
-namespace DrugCaculator.View.Windows;
+namespace DrugCalculator.View.Windows;
 
 public partial class SettingsWindow
 {

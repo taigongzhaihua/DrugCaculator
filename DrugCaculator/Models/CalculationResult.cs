@@ -1,4 +1,4 @@
-﻿namespace DrugCaculator.Models;
+﻿namespace DrugCalculator.Models;
 
 public class CalculationResult
 {

@@ -1,5 +1,5 @@
-﻿using DrugCaculator.Utilities.Commands;
-using DrugCaculator.View.Windows;
+﻿using DrugCalculator.Utilities.Commands;
+using DrugCalculator.View.Windows;
 using NLog;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace DrugCaculator.ViewModels
+namespace DrugCalculator.ViewModels
 {
     public class SettingsViewModel : INotifyPropertyChanged
     {
