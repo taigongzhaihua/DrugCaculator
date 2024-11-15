@@ -1,52 +1,40 @@
-﻿<UserControl x:Class="DrugCalculator.View.Controls.RuleEditorConditionComponent"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:DrugCalculator.View.Controls" x:Class="DrugCalculator.View.Controls.RuleEditorConditionComponent"
+             mc:Ignorable="d"
              Height="Auto" Width="Auto">
-    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left"
+                >
 
-        <!-- 条件类型 -->
         <ComboBox MinWidth="20" Style="{DynamicResource FlatComboBox}"
                   x:Name="ConditionTypeComboBox" SelectionChanged="OnConditionTypeChanged"
-                  SelectedValue="{Binding ConditionType, Mode=TwoWay}" d:DataContext="{d:DesignData }"
-                  SelectedValuePath="Content">
-            <ComboBoxItem IsSelected="True">年龄</ComboBoxItem>
-            <ComboBoxItem>体重</ComboBoxItem>
-        </ComboBox>
+                  SelectedItem="{Binding ConditionRow.ConditionType, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"
+                  ItemsSource="{Binding ConditionTypeOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"
+                  />
 
-        <!-- 比较类型 -->
         <ComboBox MinWidth="20" Style="{DynamicResource FlatComboBox}"
                   x:Name="ComparisonComboBox" SelectionChanged="OnComparisonChanged"
-                  SelectedValue="{Binding Comparison, Mode=TwoWay}"
-                  SelectedValuePath="Content">
-            <ComboBoxItem>小于</ComboBoxItem>
-            <ComboBoxItem>小于等于</ComboBoxItem>
-            <ComboBoxItem>大于</ComboBoxItem>
-            <ComboBoxItem>大于等于</ComboBoxItem>
-            <ComboBoxItem>范围在</ComboBoxItem>
-            <ComboBoxItem>等于</ComboBoxItem>
-        </ComboBox>
+                  SelectedItem="{Binding ConditionRow.Comparison, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"
+                  ItemsSource="{Binding ComparisonOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"/>
+
+        <!-- 单位部分 -->
 
         <!-- 数值输入框 -->
         <TextBox MinWidth="20" Style="{DynamicResource FlatTextBox}"
                  x:Name="ValueTextBox" TextChanged="OnValueChanged"
                  Text="{Binding Value, Mode=TwoWay}" />
 
-        <!-- 单位部分 -->
-
         <!-- 下拉框切换部分 -->
         <ComboBox MinWidth="15" Style="{DynamicResource FlatComboBox}"
                   x:Name="UnitComboBox" SelectionChanged="OnUnitChanged"
-                  SelectedValue="{Binding Unit, Mode=TwoWay}"
-                  SelectedValuePath="Content">
-            <ComboBoxItem x:Name="BoxItemMonth">月</ComboBoxItem>
-            <ComboBoxItem x:Name="BoxItemYears">岁</ComboBoxItem>
-            <ComboBoxItem x:Name="BoxItemKg">Kg</ComboBoxItem>
-        </ComboBox>
+                  SelectedItem="{Binding ConditionRow.Unit, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"
+                  ItemsSource="{Binding ConditionUnitOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"
+                  />
 
         <!-- 删除按钮 -->
-        <Button Content="&#xe95e;" Style="{DynamicResource MinusButton}" x:Name="DeleteButton"
+        <Button Content="&#xE95E;" Style="{DynamicResource MinusButton}" x:Name="DeleteButton"
                 Click="OnDeleteCondition" />
     </StackPanel>
 </UserControl>

@@ -85,12 +85,12 @@ public class ExcelService
         // 写入每一行数据到工作表
         Logger.Info(@"正在写入行数据...");
         for (var i = 0; i < table.Rows.Count; i++)
-        for (var j = 0; j < columnCount; j++)
-        {
-            var cellValue = table.Rows[i][j];
-            // 如果单元格值为 DBNull，则写入 null
-            worksheet.Cells[i + 2, j + 1].Value = cellValue is DBNull ? null : cellValue;
-        }
+            for (var j = 0; j < columnCount; j++)
+            {
+                var cellValue = table.Rows[i][j];
+                // 如果单元格值为 DBNull，则写入 null
+                worksheet.Cells[i + 2, j + 1].Value = cellValue is DBNull ? null : cellValue;
+            }
 
         // 获取目标文件的目录路径
         var directoryPath = Path.GetDirectoryName(filePath);

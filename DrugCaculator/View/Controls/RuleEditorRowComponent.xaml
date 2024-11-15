@@ -4,13 +4,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:DrugCalculator.View.Controls"
+             xmlns:converters="clr-namespace:DrugCalculator.Utilities.Converters"
              mc:Ignorable="d"
              Height="Auto" Width="Auto">
     <UserControl.Resources>
-        <controls:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
-    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-        <ItemsControl x:Name="ConditionsList">
+    
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding CalculationRule, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:RuleEditorRowComponent}}}" >
+        <ItemsControl x:Name="ConditionsList"
+                      ItemsSource="{Binding Conditions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:RuleEditorRowComponent}}}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" />
@@ -22,13 +25,9 @@
                         <ComboBox MinWidth="20" Style="{DynamicResource FlatComboBox}"
                                   x:Name="LogicComboBox"
                                   Visibility="{Binding ShowLogic, Converter={StaticResource BoolToVisibilityConverter}}"
+                                  ItemsSource="{Binding LogicOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:RuleEditorRowComponent}}}"
                                   SelectionChanged="OnLogicChanged"
-                                  SelectedValue="{Binding Logic}"
-                                  SelectedValuePath="Content">
-                            <ComboBoxItem>且</ComboBoxItem>
-                            <ComboBoxItem>或</ComboBoxItem>
-                        </ComboBox>
-
+                                  SelectedItem="{Binding Logic}"/>
                         <controls:RuleEditorConditionComponent ConditionRow="{Binding Path=., Mode=TwoWay}"
                                                                ConditionChanged="OnConditionChanged"
                                                                ConditionDeleted="OnConditionDeleteClicked" />
@@ -50,19 +49,19 @@
         <ComboBox MinWidth="10" Style="{DynamicResource FlatComboBox}" x:Name="UnitComboBox"
                   SelectionChanged="OnUnitChanged"
                   SelectedValue="{Binding Unit,Mode=TwoWay}"
-                  ItemsSource="{Binding UnitOptions}" />
+                  ItemsSource="{Binding UnitOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:RuleEditorRowComponent}}}" />
 
         <TextBlock Text="，" VerticalAlignment="Center" />
 
         <ComboBox MinWidth="30" Style="{DynamicResource FlatComboBox}" x:Name="RouteComboBox"
                   SelectionChanged="OnRouteChanged"
                   SelectedValue="{Binding Route, Mode=TwoWay}"
-                  ItemsSource="{Binding RouteOptions}" />
+                  ItemsSource="{Binding RouteOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:RuleEditorRowComponent}}}" />
         <TextBlock Text="，" VerticalAlignment="Center" />
         <ComboBox MinWidth="20" Style="{DynamicResource FlatComboBox}" x:Name="FrequencyComboBox"
                   SelectionChanged="OnFrequencyChanged"
                   SelectedValue="{Binding Frequency, Mode=TwoWay}"
-                  ItemsSource="{Binding FrequencyOptions}" />
+                  ItemsSource="{Binding FrequencyOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:RuleEditorRowComponent}}}" />
         <TextBlock Text="。" VerticalAlignment="Center" />
     </StackPanel>
 </UserControl>

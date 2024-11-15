@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DrugCalculator.Models;
+using DrugCalculator.Services;
+using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,10 +12,15 @@ public partial class RuleEditorConditionComponent
     // 删除事件
     public event EventHandler ConditionDeleted;
     public event EventHandler ConditionChanged;
+    private readonly ConfigurationService _configurationService = ConfigurationService.Instance;
+    public List<string> ConditionTypeOptions { get; set; }
+    public List<string> ConditionUnitOptions { get; set; }
+    public List<string> ComparisonOptions { get; set; }
 
     public RuleEditorConditionComponent()
     {
         InitializeComponent();
+        LoadOptions();
     }
 
     // 定义 IsDeleteVisible 依赖属性
@@ -46,6 +54,12 @@ public partial class RuleEditorConditionComponent
         set => SetValue(ConditionRowProperty, value);
     }
 
+    private void LoadOptions()
+    {
+        ConditionTypeOptions = _configurationService.GetOption("ConditionTypeOptions");
+        ConditionUnitOptions = _configurationService.GetOption("ConditionUnitOptions");
+        ComparisonOptions = _configurationService.GetOption("ComparisonOptions");
+    }
     // 更新删除按钮的可见性
     private static void OnIsDeleteVisibleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -56,11 +70,9 @@ public partial class RuleEditorConditionComponent
     // ConditionRow 属性变化时更新 UI
     private static void OnConditionRowChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is RuleEditorConditionComponent component && e.NewValue is ConditionRow row)
-        {
-            component.UpdateUnitOptions(row.ConditionType);
-            component.RaiseConditionChanged();
-        }
+        if (d is not RuleEditorConditionComponent component || e.NewValue is not ConditionRow row) return;
+        component.UpdateUnitOptions(row.ConditionType);
+        component.RaiseConditionChanged();
     }
 
     // UI 控件值变化时更新 ConditionRow
@@ -101,17 +113,19 @@ public partial class RuleEditorConditionComponent
     private void UpdateUnitOptions(string conditionType)
     {
         var isAge = conditionType == "年龄";
-        BoxItemKg.IsEnabled = !isAge;
-        BoxItemKg.Visibility = isAge ? Visibility.Collapsed : Visibility.Visible;
-
-        BoxItemMonth.IsEnabled = isAge;
-        BoxItemMonth.Visibility = isAge ? Visibility.Visible : Visibility.Collapsed;
-
-        BoxItemYears.IsEnabled = isAge;
-        BoxItemYears.Visibility = isAge ? Visibility.Visible : Visibility.Collapsed;
-        if (isAge && ConditionRow.Unit == "Kg")
-            BoxItemYears.IsSelected = true;
-        else if (!isAge && ConditionRow.Unit != "Kg") BoxItemKg.IsSelected = true;
+        ConditionUnitOptions = isAge ? ["岁", "月"] : ["Kg"];
+        switch (isAge, ConditionRow.Unit)
+        {
+            case (true, "Kg"):
+                ConditionRow.Unit = "岁";
+                break;
+            case (true, _):
+                // 保持原值
+                break;
+            case (false, _):
+                ConditionRow.Unit = "Kg";
+                break;
+        }
     }
 
     // 通知条件变化

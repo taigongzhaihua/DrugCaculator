@@ -1,23 +1,22 @@
 ﻿using DrugCalculator.Models;
 using DrugCalculator.Services;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 
 namespace DrugCalculator.View.Controls;
 
 public partial class RuleEditorRowComponent
 {
-    private readonly ConfigurationService _configService = new();
+    private readonly ConfigurationService _configService = ConfigurationService.Instance;
+    private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+    public List<string> LogicOptions { get; set; }
     public List<string> RouteOptions { get; set; }
     public List<string> UnitOptions { get; set; }
     public List<string> FrequencyOptions { get; set; }
@@ -39,6 +38,7 @@ public partial class RuleEditorRowComponent
 
     private void LoadOptions()
     {
+        LogicOptions = _configService.GetOption("LogicOptions");
         RouteOptions = _configService.GetOption("RouteOptions");
         UnitOptions = _configService.GetOption("UnitOptions");
         FrequencyOptions = _configService.GetOption("FrequencyOptions");
@@ -57,17 +57,15 @@ public partial class RuleEditorRowComponent
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        Debug.WriteLine(CalculationRule != null ? $"CalculationRule: {CalculationRule}" : "CalculationRule is null");
+        _logger.Debug(CalculationRule != null ? $"CalculationRule: {CalculationRule}" : "CalculationRule is null");
         CalculationRule ??= new DrugCalculationRule();
     }
 
     private static void OnCalculationRuleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is RuleEditorRowComponent component && e.NewValue is DrugCalculationRule rule)
-        {
-            component.LoadConditions(EnglishToChinese(rule.Condition));
-            Console.WriteLine(rule.Condition);
-        }
+        if (d is not RuleEditorRowComponent component || e.NewValue is not DrugCalculationRule rule) return;
+        component.LoadConditions(EnglishToChinese(rule.Condition));
+        Console.WriteLine(rule.Condition);
     }
 
     // 添加新条件行
@@ -96,22 +94,21 @@ public partial class RuleEditorRowComponent
 
     private void OnConditionDeleteClicked(object sender, EventArgs e)
     {
-        if (sender is RuleEditorConditionComponent conditionComponent)
-        {
-            Conditions.Remove(conditionComponent.ConditionRow);
-            UpdateCondition();
-            OnCalculationRuleChanged();
-        }
+        if (sender is not RuleEditorConditionComponent conditionComponent) return;
+        Conditions.Remove(conditionComponent.ConditionRow);
+        UpdateCondition();
+        OnCalculationRuleChanged();
     }
 
     private void OnLogicChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (sender is ComboBox { DataContext: ConditionRow condition, SelectedItem: ComboBoxItem selectedItem })
-        {
-            condition.Logic = selectedItem.Content.ToString();
-            UpdateCondition();
-            OnCalculationRuleChanged();
-        }
+        if (sender is not ComboBox
+            {
+                DataContext: ConditionRow condition, SelectedItem: ComboBoxItem selectedItem
+            }) return;
+        condition.Logic = selectedItem.Content.ToString();
+        UpdateCondition();
+        OnCalculationRuleChanged();
     }
 
     private void OnFormulaChanged(object sender, TextChangedEventArgs e)
@@ -122,21 +119,17 @@ public partial class RuleEditorRowComponent
 
     private void OnUnitChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (CalculationRule != null && UnitComboBox?.SelectedItem is ComboBoxItem selectedItem)
-        {
-            CalculationRule.Unit = selectedItem.Content.ToString();
-            OnCalculationRuleChanged();
-        }
+        if (CalculationRule == null || UnitComboBox?.SelectedItem is not ComboBoxItem selectedItem) return;
+        CalculationRule.Unit = selectedItem.Content.ToString();
+        OnCalculationRuleChanged();
     }
 
     private void OnFrequencyChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (CalculationRule != null && FrequencyComboBox?.SelectedItem is ComboBoxItem selectedItem)
-        {
-            CalculationRule.Frequency = selectedItem.Content.ToString();
-            OnCalculationRuleChanged();
-            Console.WriteLine(CalculationRule.Frequency);
-        }
+        if (CalculationRule == null || FrequencyComboBox?.SelectedItem is not ComboBoxItem selectedItem) return;
+        CalculationRule.Frequency = selectedItem.Content.ToString();
+        OnCalculationRuleChanged();
+        Console.WriteLine(CalculationRule.Frequency);
     }
 
     // 将英文格式转换为中文格式
@@ -182,7 +175,7 @@ public partial class RuleEditorRowComponent
         var logic = "";
 
         foreach (var part in parts)
-            if (part == "且" || part == "或")
+            if (part is "且" or "或")
             {
                 logic = part;
             }
@@ -244,120 +237,5 @@ public partial class RuleEditorRowComponent
     {
         var regex = new Regex(@"^[0-9+\-*/(). AaeghitWw]+$");
         e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
-    }
-}
-
-public class BoolToVisibilityConverter : IValueConverter
-{
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        if (value is bool boolValue) return boolValue ? Visibility.Visible : Visibility.Collapsed;
-        return Visibility.Collapsed;
-    }
-
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return value is Visibility.Visible;
-    }
-}
-// 条件行类
-
-public class ConditionRow : INotifyPropertyChanged
-{
-    private string _conditionType = "年龄";
-    private string _comparison = "小于";
-    private string _value = "1";
-    private string _unit = "岁";
-    private string _logic = "且";
-    private bool _showLogic;
-
-    public string ConditionType
-    {
-        get => _conditionType;
-        set
-        {
-            if (_conditionType != value)
-            {
-                _conditionType = value;
-                OnPropertyChanged(nameof(ConditionType));
-            }
-        }
-    }
-
-    public string Comparison
-    {
-        get => _comparison;
-        set
-        {
-            if (_comparison != value)
-            {
-                _comparison = value;
-                OnPropertyChanged(nameof(Comparison));
-            }
-        }
-    }
-
-    public string Value
-    {
-        get => _value;
-        set
-        {
-            if (_value != value)
-            {
-                _value = value;
-                OnPropertyChanged(nameof(Value));
-            }
-        }
-    }
-
-    public string Unit
-    {
-        get => _unit;
-        set
-        {
-            if (_unit != value)
-            {
-                _unit = value;
-                OnPropertyChanged(nameof(Unit));
-            }
-        }
-    }
-
-    public string Logic
-    {
-        get => _logic;
-        set
-        {
-            if (_logic != value)
-            {
-                _logic = value;
-                OnPropertyChanged(nameof(Logic));
-            }
-        }
-    }
-
-    public bool ShowLogic
-    {
-        get => _showLogic;
-        set
-        {
-            if (_showLogic != value)
-            {
-                _showLogic = value;
-                OnPropertyChanged(nameof(ShowLogic));
-            }
-        }
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    public override string ToString()
-    {
-        return $"{ConditionType} {Comparison} {Value} {Unit}".Trim();
     }
 }

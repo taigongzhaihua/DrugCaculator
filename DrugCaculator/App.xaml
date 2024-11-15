@@ -11,6 +11,7 @@
                 <ResourceDictionary Source="/Resources/TextBoxes.xaml" />
                 <ResourceDictionary Source="/Resources/ToggleButtons.xaml" />
                 <ResourceDictionary Source="/Resources/ListBoxes.xaml" />
+                <ResourceDictionary Source="/Resources/Sliders.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
