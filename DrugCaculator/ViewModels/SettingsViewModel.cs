@@ -1,8 +1,8 @@
-﻿using DrugCalculator.DataAccess;
-using DrugCalculator.Services;
+﻿using DrugCalculator.Services;
 using DrugCalculator.Utilities.Commands;
 using DrugCalculator.View.Windows;
 using NLog;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -14,7 +14,7 @@ namespace DrugCalculator.ViewModels;
 public class SettingsViewModel : INotifyPropertyChanged
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    private static readonly OptionRepository OptionRepository = OptionRepository.Instance;
+    private static readonly ConfigurationService ConfigurationService = ConfigurationService.Instance;
     // 是否关闭设置的属性
     private string _isCloseSetting;
 
@@ -54,14 +54,14 @@ public class SettingsViewModel : INotifyPropertyChanged
 
     // 配置 API 密钥的命令
     public ICommand ConfigureApiKeyCommand { get; set; }
-    public string[] LogLevelOptions { get; set; }
+    public List<string> LogLevelOptions { get; set; }
 
     // 构造函数
     public SettingsViewModel()
     {
         Logger.Info("初始化 SettingsViewModel");
         LoadSetting(out _isCloseSetting, "IsClose");
-        LogLevelOptions = OptionRepository.GetLogLevelOptions();
+        LogLevelOptions = ConfigurationService.GetOption("LogLevelOptions");
         LogLevelValue = LoggerService.GetSavedLogLevel().Ordinal;
         ConfigureApiKeyCommand = new RelayCommand(OpenApiKeyDialog);
     }

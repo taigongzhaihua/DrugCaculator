@@ -104,6 +104,7 @@
                             <!-- Slider 控件 -->
                             <Slider x:Name="LogLevelSlider" Minimum="0" Maximum="4" TickFrequency="1"
                                     IsSnapToTickEnabled="True"
+                                    Style="{DynamicResource BeautifySliderStyle}"
                                     Value="{Binding LogLevelValue, Mode=TwoWay}"
                                     VerticalAlignment="Center" Margin="35,5" />
 
