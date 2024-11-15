@@ -112,7 +112,7 @@
                             <ItemsControl ItemsSource="{Binding LogLevelOptions}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <UniformGrid Rows="1" Columns="{Binding  LogLevelOptions.Length}" />
+                                        <UniformGrid Rows="1" Columns="{Binding  LogLevelOptions.Count}" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>

@@ -23,3 +23,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly:
     SuppressMessage("Style", "IDE0019:使用模式匹配", Justification = "<挂起>", Scope = "member",
         Target = "~M:DrugCalculator.ViewModels.LogViewerViewModel.LogFilter(System.Object)~System.Boolean")]
+[assembly: SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>", Scope = "member", Target = "~M:DrugCalculator.View.Windows.MainWindow.InitializeContextMenu")]

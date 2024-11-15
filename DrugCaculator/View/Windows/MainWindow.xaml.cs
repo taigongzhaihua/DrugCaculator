@@ -14,7 +14,6 @@ using System.Windows.Interop;
 using Application = System.Windows.Application;
 using Button = System.Windows.Controls.Button;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using TextBox = System.Windows.Controls.TextBox;
 
 // ReSharper disable UnusedMember.Global
@@ -68,10 +67,12 @@ public partial class MainWindow
     private void InitializeContextMenu()
     {
         Logger.Info("初始化托盘图标右键菜单");
+        var openIcon = Image.FromFile("./Resources/Images/Icons/OpenWindow.png"); // 打开图标
+        var exitIcon = Image.FromFile("./Resources/Images/Icons/Exit.png");  // 退出图标
         // 初始化托盘图标的右键菜单
         var contextMenuStrip = new ContextMenuStrip();
-        contextMenuStrip.Items.Add("打开", null, (_, _) => ShowWindow()); // 显示窗口选项
-        contextMenuStrip.Items.Add("退出", null, (_, _) => ExitApplication()); // 退出应用程序选项
+        contextMenuStrip.Items.Add("打开", openIcon, (_, _) => ShowWindow()); // 显示窗口选项
+        contextMenuStrip.Items.Add("退出", exitIcon, (_, _) => ExitApplication()); // 退出应用程序选项
         _notifyIcon.ContextMenuStrip = contextMenuStrip;
     }
 
@@ -198,7 +199,7 @@ public partial class MainWindow
     }
     private void OptionsButton_Click(object sender, RoutedEventArgs e)
     {
-        if (sender is Button button && button.ContextMenu != null)
+        if (sender is Button { ContextMenu: not null } button)
         {
             // 手动设置 ContextMenu 的位置
             button.ContextMenu.PlacementTarget = button;
@@ -207,20 +208,6 @@ public partial class MainWindow
             // 显示或隐藏 ContextMenu
             button.ContextMenu.IsOpen = !button.ContextMenu.IsOpen;
         }
-    }
-    private void MenuItem_MouseEnter(object sender, MouseEventArgs e)
-    {
-        VisualStateManager.GoToState((FrameworkElement)sender, "MouseOver", true);
-    }
-
-    private void MenuItem_MouseLeave(object sender, MouseEventArgs e)
-    {
-        VisualStateManager.GoToState((FrameworkElement)sender, "Normal", true);
-    }
-
-    private void MenuItem_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-    {
-        VisualStateManager.GoToState((FrameworkElement)sender, "Pressed", true);
     }
 
     private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

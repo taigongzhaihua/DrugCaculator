@@ -42,10 +42,10 @@
                                                         To="Transparent" Duration="0:0:0.2"/>
                                         <ColorAnimation Storyboard.TargetName="MenuItemContent"
                                                         Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                                                        To="Black" Duration="0:0:0.2"/>
+                                                        To="MidnightBlue" Duration="0:0:0.2"/>
                                         <ColorAnimation Storyboard.TargetName="MenuItemIcon"
                                                         Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                                                        To="Black" Duration="0:0:0.2"/>
+                                                        To="MidnightBlue" Duration="0:0:0.2"/>
                                     </Storyboard>
                                 </VisualState>
                                 <!-- MouseOver State -->
@@ -82,11 +82,12 @@
                                 CornerRadius="5" BorderThickness="0"
                                 MinWidth="120" MinHeight="30" Margin="2"
                                 Background="Transparent">
-                            <StackPanel Orientation="Horizontal" Height="26">
+                            <StackPanel Orientation="Horizontal">
                                 <!-- 图标 -->
                                 <TextBlock x:Name="MenuItemIcon"
                                            Text="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
                                            FontFamily="{DynamicResource IconFont}"
+                                           VerticalAlignment="Center"
                                            FontSize="18"
                                            Margin="4"/>
                                 <!-- 菜单项内容 -->
@@ -94,7 +95,7 @@
                                            Text="{TemplateBinding Header}"
                                            FontSize="14"
                                            VerticalAlignment="Center"
-                                           Margin="5,6"/>
+                                           Margin="5,0"/>
                         </StackPanel>
                         </Border>
                         
