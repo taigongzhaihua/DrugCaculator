@@ -3,8 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:view="clr-namespace:DrugCalculator.View"
-             xmlns:components="clr-namespace:DrugCalculator.View.Components"
              xmlns:controls="clr-namespace:DrugCalculator.View.Controls"
              mc:Ignorable="d"
              Height="Auto" Width="Auto">
@@ -12,16 +10,16 @@
         <controls:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-        <ItemsControl x:Name="ConditionsList" >
+        <ItemsControl x:Name="ConditionsList">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"/>
+                    <StackPanel Orientation="Horizontal" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
-                <DataTemplate >
+                <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <ComboBox MinWidth="20" Style="{DynamicResource FlatComboBox}" 
+                        <ComboBox MinWidth="20" Style="{DynamicResource FlatComboBox}"
                                   x:Name="LogicComboBox"
                                   Visibility="{Binding ShowLogic, Converter={StaticResource BoolToVisibilityConverter}}"
                                   SelectionChanged="OnLogicChanged"
@@ -31,26 +29,26 @@
                             <ComboBoxItem>或</ComboBoxItem>
                         </ComboBox>
 
-                        <controls:RuleEditorConditionComponent ConditionRow="{Binding Path=., Mode=TwoWay}" 
-                                                  ConditionChanged="OnConditionChanged"
-                                                  ConditionDeleted="OnConditionDeleteClicked"/>
+                        <controls:RuleEditorConditionComponent ConditionRow="{Binding Path=., Mode=TwoWay}"
+                                                               ConditionChanged="OnConditionChanged"
+                                                               ConditionDeleted="OnConditionDeleteClicked" />
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <Button Content="&#xe964;" Style="{DynamicResource PlusButton}" 
-                Click="OnAddCondition"/>
+        <Button Content="&#xe964;" Style="{DynamicResource PlusButton}"
+                Click="OnAddCondition" />
 
-        <TextBlock Text="，每次" VerticalAlignment="Center" Foreground="CadetBlue"/>
+        <TextBlock Text="，每次" VerticalAlignment="Center" Foreground="CadetBlue" />
 
-        <TextBox MinWidth="20" Style="{DynamicResource FlatTextBox}" x:Name="FormulaTextBox" 
+        <TextBox MinWidth="20" Style="{DynamicResource FlatTextBox}" x:Name="FormulaTextBox"
                  TextChanged="OnFormulaChanged"
                  Text="{Binding Formula}"
-                 PreviewTextInput="FormulaTextBox_OnPreviewTextInput"/>
+                 PreviewTextInput="FormulaTextBox_OnPreviewTextInput" />
 
-        <ComboBox MinWidth="10" Style="{DynamicResource FlatComboBox}" x:Name="UnitComboBox" 
-                  SelectionChanged="OnUnitChanged" 
+        <ComboBox MinWidth="10" Style="{DynamicResource FlatComboBox}" x:Name="UnitComboBox"
+                  SelectionChanged="OnUnitChanged"
                   SelectedValue="{Binding Unit,Mode=TwoWay}"
                   ItemsSource="{Binding UnitOptions}" />
 

@@ -36,6 +36,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     public ICommand SetApiKeyCommand { get; set; }
     public ICommand LogsCommand { get; set; }
     private string _dosage;
+
     public string Dosage
     {
         get => _dosage;
@@ -47,6 +48,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     }
 
     private Drug _selectedDrug;
+
     public Drug SelectedDrug
     {
         get => _selectedDrug;
@@ -58,9 +60,11 @@ public class MainWindowViewModel : INotifyPropertyChanged
             OnPropertyChanged(nameof(IsDrugSelected));
         }
     }
+
     public bool IsDrugSelected => SelectedDrug != null;
 
     private double _weight;
+
     public double Weight
     {
         get => _weight;
@@ -73,6 +77,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     }
 
     private int _age;
+
     public int Age
     {
         get => _age;
@@ -85,6 +90,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     }
 
     private bool _isChild = true;
+
     public bool IsChild
     {
         get => _isChild;
@@ -98,6 +104,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
 
     public bool IsAdult => !IsChild;
     private string _searchText;
+
     public string SearchText
     {
         get => _searchText;
@@ -110,6 +117,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     }
 
     private string _ageUnit;
+
     public string AgeUnit
     {
         get => _ageUnit;
@@ -122,6 +130,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     }
 
     private CalculationResult _result;
+
     public CalculationResult Result
     {
         get => _result;
@@ -141,15 +150,14 @@ public class MainWindowViewModel : INotifyPropertyChanged
     }
 
 
-
     // 构造函数
     public MainWindowViewModel()
     {
         DrugService = new DrugService();
         Drugs = [];
 
-        LoadDrugs();// 数据，从数据库中加载
-        InitCommands();// 初始化命令
+        LoadDrugs(); // 数据，从数据库中加载
+        InitCommands(); // 初始化命令
     }
 
     // 加载药物数据
@@ -158,10 +166,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         Drugs.Clear();
         var drugList = DrugService.GetAllDrugs();
         var sortedDrugList = drugList.ToList().OrderBy(PinyinHelper.GetPinyin);
-        foreach (var drug in sortedDrugList)
-        {
-            Drugs.Add(drug);
-        }
+        foreach (var drug in sortedDrugList) Drugs.Add(drug);
         // 初始化 DrugsOnList 列表
         DrugsOnList = new ObservableCollection<Drug>(Drugs);
     }
@@ -169,14 +174,14 @@ public class MainWindowViewModel : INotifyPropertyChanged
     // 初始化命令
     private void InitCommands()
     {
-        AddDrugCommand = new RelayCommand(AddDrug);// 创建新药物
-        EditDrugCommand = new RelayCommand(EditDrug);// 编辑药物
-        DeleteDrugCommand = new RelayCommand(DeleteDrug);// 删除药物
-        AddDrugsFromExcelCommand = new RelayCommand(AddDrugsFromExcel);// 从 Excel 导入药物
-        AiGenerateRuleCommand = new RelayCommand(GenerateRule);// 生成规则
-        AiGenerateAllRulesCommand = new RelayCommand(GenerateAndSaveCalculationRulesForAllDrugsAsync);// 生成所有规则
-        SetApiKeyCommand = new RelayCommand(SetApiKey);// 设置 API 密钥
-        SettingCommand = new RelayCommand(SettingsOpen);// 打开设置窗口
+        AddDrugCommand = new RelayCommand(AddDrug); // 创建新药物
+        EditDrugCommand = new RelayCommand(EditDrug); // 编辑药物
+        DeleteDrugCommand = new RelayCommand(DeleteDrug); // 删除药物
+        AddDrugsFromExcelCommand = new RelayCommand(AddDrugsFromExcel); // 从 Excel 导入药物
+        AiGenerateRuleCommand = new RelayCommand(GenerateRule); // 生成规则
+        AiGenerateAllRulesCommand = new RelayCommand(GenerateAndSaveCalculationRulesForAllDrugsAsync); // 生成所有规则
+        SetApiKeyCommand = new RelayCommand(SetApiKey); // 设置 API 密钥
+        SettingCommand = new RelayCommand(SettingsOpen); // 打开设置窗口
         LogsCommand = new RelayCommand(ShowLogs);
     }
 
@@ -247,6 +252,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             CustomMessageBox.Show($@"导入药品数据时出错：{ex.Message}", "错误", MsgBoxButtons.Ok, MsgBoxIcon.Error);
         }
     }
+
     private async void GenerateAndSaveCalculationRulesForAllDrugsAsync(object sender)
     {
         foreach (var drug in Drugs)
@@ -255,9 +261,9 @@ public class MainWindowViewModel : INotifyPropertyChanged
             await GenerateAndSaveCalculationRulesAsync(drug);
             Console.WriteLine($@"【{drug.Name}】生成完毕！");
         }
+
         Console.WriteLine(@"所有药物规则生成完毕！");
         MessageBox.Show(@"所有药物规则生成完毕！");
-
     }
 
     private async Task GenerateAndSaveCalculationRulesAsync(Drug drug)
@@ -285,6 +291,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             Console.WriteLine($@"生成和保存计算规则时发生错误: {ex.Message}");
         }
     }
+
     private void DeleteDrug(object parameter)
     {
         var result = CustomMessageBox.Show(Window.GetWindow((parameter as Button)!),
@@ -337,6 +344,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
                 PinyinHelper.GetFirstLetter(drug).ToLower().Contains(SearchText.ToLower())).ToList());
             DrugsOnList = filteredDrugs;
         }
+
         OnPropertyChanged(nameof(DrugsOnList));
     }
 
@@ -362,6 +370,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
+
     protected void OnPropertyChanged([CallerMemberName] string name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

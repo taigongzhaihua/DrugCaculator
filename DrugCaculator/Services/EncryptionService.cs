@@ -127,9 +127,7 @@ public static class EncryptionService
             var (protectedKey, protectedIv) = GetKeyFromDatabase(keyName);
 
             if (protectedKey == null || protectedIv == null)
-            {
                 throw new InvalidOperationException("无法从数据库中找到对应的密钥或初始向量。");
-            }
 
             var key = ProtectedData.Unprotect(protectedKey, null, DataProtectionScope.CurrentUser);
             var iv = ProtectedData.Unprotect(protectedIv, null, DataProtectionScope.CurrentUser);

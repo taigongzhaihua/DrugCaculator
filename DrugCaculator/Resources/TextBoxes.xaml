@@ -6,19 +6,19 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
                     <Border Background="Transparent" BorderBrush="Gray" BorderThickness="0,0,0,1">
-                        <ScrollViewer x:Name="PART_ContentHost" Focusable="False"/>
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="False" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Padding" Value="0,2"/>
-        <Setter Property="Margin" Value="2,4"></Setter>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-        <Setter Property="Foreground" Value="DodgerBlue"/>
-        <Setter Property="MinHeight" Value="22"></Setter>
-        <Setter Property="FontFamily" Value="楷体"></Setter>
-        <Setter Property="FontWeight" Value="Thin"></Setter>
+        <Setter Property="Padding" Value="0,2" />
+        <Setter Property="Margin" Value="2,4" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="DodgerBlue" />
+        <Setter Property="MinHeight" Value="22" />
+        <Setter Property="FontFamily" Value="楷体" />
+        <Setter Property="FontWeight" Value="Thin" />
     </Style>
 </ResourceDictionary>

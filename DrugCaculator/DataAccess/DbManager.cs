@@ -7,6 +7,7 @@ using System.Data.SQLite;
 using System.Linq;
 
 namespace DrugCalculator.DataAccess;
+
 public class DbManager(string connectionString)
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
@@ -76,7 +77,8 @@ public class DbManager(string connectionString)
             using var connection = new SQLiteConnection(connectionString);
             connection.Open();
 
-            var sanitizedColumnNames = string.Join(", ", columnNames.Select(cn => cn.Replace("\"", "\"\""))); // 防止 SQL 注入
+            var sanitizedColumnNames =
+                string.Join(", ", columnNames.Select(cn => cn.Replace("\"", "\"\""))); // 防止 SQL 注入
             var sql = $"SELECT {sanitizedColumnNames} FROM {tableName} {whereClause}";
             Logger.Debug($"执行查询单个记录 SQL: {sql}");
             return connection.QuerySingleOrDefault<T>(sql, parameters)!;
@@ -100,10 +102,7 @@ public class DbManager(string connectionString)
             var values = string.Join(", ", columnValues.Select(cv => "@" + cv.Item1));
             var sql = $"INSERT INTO {tableName} ({columns}) VALUES ({values}); SELECT last_insert_rowid();";
             var parameters = new DynamicParameters();
-            foreach (var (key, value) in columnValues)
-            {
-                parameters.Add(key, value);
-            }
+            foreach (var (key, value) in columnValues) parameters.Add(key, value);
             Logger.Debug($"执行插入 SQL: {sql}");
             return connection.QuerySingle<int>(sql, parameters);
         }
@@ -115,7 +114,8 @@ public class DbManager(string connectionString)
     }
 
     // 通用更新方法
-    public void Update(string tableName, (string, object)[] columnValues, string whereClause, params object[] parameters)
+    public void Update(string tableName, (string, object)[] columnValues, string whereClause,
+        params object[] parameters)
     {
         try
         {
@@ -125,10 +125,7 @@ public class DbManager(string connectionString)
             var setClause = string.Join(", ", columnValues.Select(cv => $"{cv.Item1} = @{cv.Item1}"));
             var sql = $"UPDATE {tableName} SET {setClause} {whereClause}";
             var dynamicParameters = BuildDynamicParameters(parameters);
-            foreach (var (key, value) in columnValues)
-            {
-                dynamicParameters.Add(key, value);
-            }
+            foreach (var (key, value) in columnValues) dynamicParameters.Add(key, value);
             Logger.Debug($"执行更新 SQL: {sql}");
             connection.Execute(sql, dynamicParameters);
             Logger.Info("更新操作成功");
@@ -166,12 +163,8 @@ public class DbManager(string connectionString)
     {
         var dynamicParameters = new DynamicParameters();
         for (var i = 0; i < parameters.Length; i += 2)
-        {
             if (i + 1 < parameters.Length)
-            {
                 dynamicParameters.Add(parameters[i].ToString()!, parameters[i + 1]);
-            }
-        }
         return dynamicParameters;
     }
 }

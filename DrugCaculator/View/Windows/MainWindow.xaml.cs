@@ -14,6 +14,7 @@ using System.Windows.Interop;
 using Application = System.Windows.Application;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using TextBox = System.Windows.Controls.TextBox;
+
 // ReSharper disable UnusedMember.Global
 
 namespace DrugCalculator.View.Windows;
@@ -53,7 +54,7 @@ public partial class MainWindow
         // 初始化托盘图标并设置属性
         _notifyIcon = new NotifyIcon
         {
-            Icon = new Icon(fileName: "AppIcon.ico"), // 使用指定的图标文件
+            Icon = new Icon("AppIcon.ico"), // 使用指定的图标文件
             Visible = true,
             Text = @"药物查询"
         };
@@ -77,10 +78,7 @@ public partial class MainWindow
     {
         Logger.Info("订阅 ViewModel 的 PropertyChanged 事件");
         // 订阅 ViewModel 的 PropertyChanged 事件，以便在属性变化时更新 UI
-        if (DataContext is MainWindowViewModel viewModel)
-        {
-            viewModel.PropertyChanged += ViewModel_PropertyChanged;
-        }
+        if (DataContext is MainWindowViewModel viewModel) viewModel.PropertyChanged += ViewModel_PropertyChanged;
     }
 
     // 注册全局快捷键
@@ -128,6 +126,7 @@ public partial class MainWindow
                 Settings.Default.Save();
                 Logger.Info("保存用户选择: " + Settings.Default.IsClose);
             }
+
             HandleUserChoice(dialog.IsClose ? "Close" : "Minimize", e);
         }
         else
@@ -203,10 +202,7 @@ public partial class MainWindow
         // 当 SelectedDrug 改变时，让 WeightTextBox 获得焦点
         if (SearchTextBox.IsFocused) return;
         WeightTextBox.Focus();
-        if (WeightTextBox.Text == "0")
-        {
-            WeightTextBox.Text = "";
-        }
+        if (WeightTextBox.Text == "0") WeightTextBox.Text = "";
     }
 
     private void WeightTextBox_KeyUp(object sender, KeyEventArgs e)
@@ -215,14 +211,8 @@ public partial class MainWindow
         Logger.Info("WeightTextBox 键盘事件: " + e.Key);
         // 当按下回车键时，将焦点设置到 AgeTextBox
         AgeTextBox.Focus();
-        if (AgeTextBox.Text == "0")
-        {
-            AgeTextBox.Text = "";
-        }
-        if (WeightTextBox.Text == "")
-        {
-            WeightTextBox.Text = "0";
-        }
+        if (AgeTextBox.Text == "0") AgeTextBox.Text = "";
+        if (WeightTextBox.Text == "") WeightTextBox.Text = "0";
     }
 
     private void AgeTextBox_KeyUp(object sender, KeyEventArgs e)
@@ -232,10 +222,7 @@ public partial class MainWindow
         // 当按下回车键时，将焦点设置到 AgeUnitComboBox
         AgeUnitComboBox.IsDropDownOpen = true;
         AgeUnitComboBox.Focus();
-        if (AgeTextBox.Text == "")
-        {
-            AgeTextBox.Text = "0";
-        }
+        if (AgeTextBox.Text == "") AgeTextBox.Text = "0";
     }
 
     private void AgeUnitComboBox_KeyDown(object sender, KeyEventArgs e)
@@ -245,19 +232,14 @@ public partial class MainWindow
         {
             case Key.Enter:
                 if (AgeUnitComboBox.IsDropDownOpen == false)
-                {
                     AgeUnitComboBox.IsDropDownOpen = !AgeUnitComboBox.IsDropDownOpen;
-                }
                 break;
             case Key.Down or Key.Space:
                 AgeUnitComboBox.IsDropDownOpen = true;
                 break;
             case Key.Tab:
                 {
-                    if (WeightTextBox.Text == "0")
-                    {
-                        WeightTextBox.Text = "";
-                    }
+                    if (WeightTextBox.Text == "0") WeightTextBox.Text = "";
                     WeightTextBox.Focus();
                     break;
                 }

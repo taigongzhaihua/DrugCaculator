@@ -2,46 +2,46 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- 删除按钮 -->
     <Style TargetType="Button" x:Key="MinusButton">
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="Background" Value="Crimson"/>
-        <Setter Property="FontSize" Value="8"/>
-        <Setter Property="Width" Value="16"/>
-        <Setter Property="Height" Value="16"/>
-        <Setter Property="Margin" Value="3"/>
-        <Setter Property="FontFamily" Value="../Fonts/#iconfont"/>
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background" Value="Crimson" />
+        <Setter Property="FontSize" Value="8" />
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="FontFamily" Value="../Fonts/#iconfont" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid>
                         <Border x:Name="border"
-                                Background="{TemplateBinding Background}" 
+                                Background="{TemplateBinding Background}"
                                 CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                              VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
                         </Border>
                         <!-- 定义视觉状态 -->
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.1" 
-                                                        To="Brown"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.1"
+                                                        To="Brown" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                Duration="0:0:0.1" 
-                                                To="DarkRed"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.1"
+                                                        To="DarkRed" />
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Disabled"/>
+                                <VisualState x:Name="Disabled" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
@@ -51,46 +51,46 @@
     </Style>
     <!-- 添加按钮 -->
     <Style TargetType="Button" x:Key="PlusButton">
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="Background" Value="SeaGreen"/>
-        <Setter Property="FontSize" Value="8"/>
-        <Setter Property="Width" Value="16"/>
-        <Setter Property="Height" Value="16"/>
-        <Setter Property="Margin" Value="3"/>
-        <Setter Property="FontFamily" Value="../Fonts/#iconfont"/>
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background" Value="SeaGreen" />
+        <Setter Property="FontSize" Value="8" />
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="FontFamily" Value="../Fonts/#iconfont" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid>
                         <Border x:Name="border"
-                                Background="{TemplateBinding Background}" 
+                                Background="{TemplateBinding Background}"
                                 CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                              VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
                         </Border>
                         <!-- 定义视觉状态 -->
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.1" 
-                                                        To="Teal"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.1"
+                                                        To="Teal" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.1" 
-                                                        To="DarkGreen"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.1"
+                                                        To="DarkGreen" />
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Disabled"/>
+                                <VisualState x:Name="Disabled" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>
@@ -100,11 +100,11 @@
     </Style>
     <!-- 亮色按钮 -->
     <Style TargetType="Button" x:Key="LightButton">
-        <Setter Property="Background" Value="GhostWhite"/>
-        <Setter Property="Foreground" Value="SteelBlue"/>
-        <Setter Property="FontSize" Value="11pt"/>
-        <Setter Property="FontFamily" Value="微软雅黑"/>
-        <Setter Property="FontWeight" Value="Medium"></Setter>
+        <Setter Property="Background" Value="GhostWhite" />
+        <Setter Property="Foreground" Value="SteelBlue" />
+        <Setter Property="FontSize" Value="11pt" />
+        <Setter Property="FontFamily" Value="微软雅黑" />
+        <Setter Property="FontWeight" Value="Medium" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -115,39 +115,38 @@
                             <Border.Effect>
                                 <DropShadowEffect Color="SteelBlue" BlurRadius="12" ShadowDepth="3" Opacity="0.5" />
                             </Border.Effect>
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                              VerticalAlignment="Center" 
-                                              />
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
                         </Border>
                         <!-- 定义视觉状态 -->
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.1" 
-                                                        To="AliceBlue"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.1"
+                                                        To="AliceBlue" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.1" 
-                                                        To="Azure"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.1"
+                                                        To="Azure" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.1" 
-                                                        To="LightGray"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.1"
+                                                        To="LightGray" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -159,94 +158,93 @@
     </Style>
     <!-- 暗色按钮 -->
     <Style TargetType="Button" x:Key="DarkButton">
-        <Setter Property="Background" Value="DodgerBlue"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="FontSize" Value="11pt"/>
-        <Setter Property="FontFamily" Value="微软雅黑"/>
+        <Setter Property="Background" Value="DodgerBlue" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="11pt" />
+        <Setter Property="FontFamily" Value="微软雅黑" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid>
                         <Border x:Name="border"
-                        Background="{TemplateBinding Background}"
-                        CornerRadius="2">
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="2">
                             <Border.Effect>
                                 <DropShadowEffect x:Name="Effect"
-                                    Color="SteelBlue" BlurRadius="12" ShadowDepth="3" Opacity="0.5" />
+                                                  Color="SteelBlue" BlurRadius="12" ShadowDepth="3" Opacity="0.5" />
                             </Border.Effect>
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                      VerticalAlignment="Center" 
-                                      />
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
                         </Border>
                         <!-- 定义视觉状态 -->
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" >
+                                <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.3" 
-                                                        To="DodgerBlue"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.3"
+                                                        To="DodgerBlue" />
                                         <DoubleAnimation Storyboard.TargetName="Effect"
                                                          Storyboard.TargetProperty="BlurRadius"
                                                          Duration="0:0:0.3"
-                                                         To="12"/>
+                                                         To="12" />
                                         <DoubleAnimation Storyboard.TargetName="Effect"
                                                          Storyboard.TargetProperty="ShadowDepth"
                                                          Duration="0:0:0.3"
-                                                         To="3"/>
+                                                         To="3" />
                                     </Storyboard>
                                 </VisualState>
 
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                Duration="0:0:0.3" 
-                                                To="RoyalBlue"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.3"
+                                                        To="RoyalBlue" />
                                         <DoubleAnimation Storyboard.TargetName="Effect"
                                                          Storyboard.TargetProperty="BlurRadius"
                                                          Duration="0:0:0.3"
-                                                         To="12"/>
+                                                         To="12" />
                                         <DoubleAnimation Storyboard.TargetName="Effect"
                                                          Storyboard.TargetProperty="ShadowDepth"
                                                          Duration="0:0:0.3"
-                                                         To="3"/>
+                                                         To="3" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                Duration="0:0:0.3" 
-                                                To="SteelBlue"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.3"
+                                                        To="SteelBlue" />
                                         <DoubleAnimation Storyboard.TargetName="Effect"
                                                          Storyboard.TargetProperty="BlurRadius"
                                                          Duration="0:0:0.3"
-                                                         To="12"/>
+                                                         To="12" />
                                         <DoubleAnimation Storyboard.TargetName="Effect"
                                                          Storyboard.TargetProperty="ShadowDepth"
                                                          Duration="0:0:0.3"
-                                                         To="3"/>
+                                                         To="3" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.3" 
-                                                        To="DarkGray"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.3"
+                                                        To="DarkGray" />
                                         <DoubleAnimation Storyboard.TargetName="Effect"
                                                          Storyboard.TargetProperty="BlurRadius"
                                                          Duration="0:0:0.3"
-                                                         To="0"/>
+                                                         To="0" />
                                         <DoubleAnimation Storyboard.TargetName="Effect"
                                                          Storyboard.TargetProperty="ShadowDepth"
                                                          Duration="0:0:0.3"
-                                                         To="0"/>
+                                                         To="0" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -258,78 +256,78 @@
     </Style>
     <!-- 标题栏按钮 -->
     <Style TargetType="Button" x:Key="TitleButton">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="MidnightBlue"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="MidnightBlue" />
+        <Setter Property="FontSize" Value="14" />
         <!-- ReSharper disable once MarkupAttributeTypo -->
-        <Setter Property="FontFamily" Value="../Fonts/#iconfont"/>
+        <Setter Property="FontFamily" Value="../Fonts/#iconfont" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid>
                         <Border x:Name="border"
-                        Background="{TemplateBinding Background}"
-                        BorderThickness="0">
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="0">
                             <ContentControl x:Name="contentControl"
                                             Content="{TemplateBinding Content}"
                                             ContentTemplate="{TemplateBinding ContentTemplate}"
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Center"
-                                            Foreground="{TemplateBinding Foreground}"/>
+                                            Foreground="{TemplateBinding Foreground}" />
                         </Border>
                         <!-- 定义视觉状态 -->
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" >
+                                <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.3" 
-                                                        To="Transparent"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.3"
+                                                        To="Transparent" />
                                         <ColorAnimation Storyboard.TargetName="contentControl"
                                                         Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                        Duration="0:0:0.3" 
-                                                        To="MidnightBlue"/>
+                                                        Duration="0:0:0.3"
+                                                        To="MidnightBlue" />
                                     </Storyboard>
                                 </VisualState>
 
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.3" 
-                                                        To="LightCyan"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.3"
+                                                        To="LightCyan" />
                                         <ColorAnimation Storyboard.TargetName="contentControl"
                                                         Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                        Duration="0:0:0.3" 
-                                                        To="DarkCyan"/>
+                                                        Duration="0:0:0.3"
+                                                        To="DarkCyan" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                Duration="0:0:0.3" 
-                                                To="PowderBlue"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.3"
+                                                        To="PowderBlue" />
                                         <ColorAnimation Storyboard.TargetName="contentControl"
                                                         Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                        Duration="0:0:0.3" 
-                                                        To="Teal"/>
+                                                        Duration="0:0:0.3"
+                                                        To="Teal" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.3" 
-                                                        To="Transparent"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.3"
+                                                        To="Transparent" />
                                         <ColorAnimation Storyboard.TargetName="contentControl"
                                                         Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                        Duration="0:0:0.3" 
-                                                        To="LightSlateGray"/>
+                                                        Duration="0:0:0.3"
+                                                        To="LightSlateGray" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -341,78 +339,78 @@
     </Style>
     <!-- 关闭按钮 -->
     <Style TargetType="Button" x:Key="CloseButton">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="MidnightBlue"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="MidnightBlue" />
+        <Setter Property="FontSize" Value="14" />
         <!-- ReSharper disable once MarkupAttributeTypo -->
-        <Setter Property="FontFamily" Value="../Fonts/#iconfont"/>
+        <Setter Property="FontFamily" Value="../Fonts/#iconfont" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid>
                         <Border x:Name="border"
-                        Background="{TemplateBinding Background}"
-                        BorderThickness="0">
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="0">
                             <ContentControl x:Name="contentControl"
                                             Content="{TemplateBinding Content}"
                                             ContentTemplate="{TemplateBinding ContentTemplate}"
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Center"
-                                            Foreground="{TemplateBinding Foreground}"/>
+                                            Foreground="{TemplateBinding Foreground}" />
                         </Border>
                         <!-- 定义视觉状态 -->
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" >
+                                <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.3" 
-                                                        To="Transparent"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.3"
+                                                        To="Transparent" />
                                         <ColorAnimation Storyboard.TargetName="contentControl"
                                                         Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                        Duration="0:0:0.3" 
-                                                        To="MidnightBlue"/>
+                                                        Duration="0:0:0.3"
+                                                        To="MidnightBlue" />
                                     </Storyboard>
                                 </VisualState>
 
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.3" 
-                                                        To="IndianRed"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.3"
+                                                        To="IndianRed" />
                                         <ColorAnimation Storyboard.TargetName="contentControl"
                                                         Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                        Duration="0:0:0.3" 
-                                                        To="FloralWhite"/>
+                                                        Duration="0:0:0.3"
+                                                        To="FloralWhite" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                Duration="0:0:0.3" 
-                                                To="Brown"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.3"
+                                                        To="Brown" />
                                         <ColorAnimation Storyboard.TargetName="contentControl"
                                                         Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                        Duration="0:0:0.3" 
-                                                        To="FloralWhite"/>
+                                                        Duration="0:0:0.3"
+                                                        To="FloralWhite" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.3" 
-                                                        To="Transparent"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.3"
+                                                        To="Transparent" />
                                         <ColorAnimation Storyboard.TargetName="contentControl"
                                                         Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
-                                                        Duration="0:0:0.3" 
-                                                        To="LightSlateGray"/>
+                                                        Duration="0:0:0.3"
+                                                        To="LightSlateGray" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>

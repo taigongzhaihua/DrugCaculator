@@ -13,34 +13,112 @@ namespace DrugCalculator.View.Components;
 public class CustomDialog : Window
 {
     // 使用一个通用方法来注册依赖属性，减少代码冗余
-    private static DependencyProperty RegisterDependencyProperty<T>(string propertyName, T defaultValue) =>
-        DependencyProperty.Register(propertyName, typeof(T), typeof(CustomDialog), new PropertyMetadata(defaultValue));
+    private static DependencyProperty RegisterDependencyProperty<T>(string propertyName, T defaultValue)
+    {
+        return DependencyProperty.Register(propertyName, typeof(T), typeof(CustomDialog),
+            new PropertyMetadata(defaultValue));
+    }
 
     // 依赖属性定义
-    public static readonly DependencyProperty DialogWidthProperty = RegisterDependencyProperty(nameof(DialogWidth), 200.00);
-    public static readonly DependencyProperty DialogHeightProperty = RegisterDependencyProperty(nameof(DialogHeight), 100.00);
-    public static readonly DependencyProperty DialogMinWidthProperty = RegisterDependencyProperty(nameof(DialogMinWidth), 60.0);
-    public static readonly DependencyProperty DialogMinHeightProperty = RegisterDependencyProperty(nameof(DialogMinHeight), 60.0);
-    public static readonly DependencyProperty DialogMaxWidthProperty = RegisterDependencyProperty(nameof(DialogMaxWidth), double.PositiveInfinity);
-    public static readonly DependencyProperty DialogMaxHeightProperty = RegisterDependencyProperty(nameof(DialogMaxHeight), double.PositiveInfinity);
-    public static readonly DependencyProperty DialogBackgroundColorProperty = RegisterDependencyProperty(nameof(DialogBackgroundColor), Brushes.White);
-    public static readonly DependencyProperty TitleBarBackgroundProperty = RegisterDependencyProperty(nameof(TitleBarBackground), Brushes.GhostWhite);
-    public static readonly DependencyProperty TitleColorProperty = RegisterDependencyProperty(nameof(TitleColor), Brushes.IndianRed);
-    public static readonly DependencyProperty TitleAlignmentProperty = RegisterDependencyProperty(nameof(TitleAlignment), HorizontalAlignment.Center);
-    public static readonly DependencyProperty TitleBarVisibilityProperty = RegisterDependencyProperty(nameof(TitleBarVisibility), Visibility.Visible);
+    public static readonly DependencyProperty DialogWidthProperty =
+        RegisterDependencyProperty(nameof(DialogWidth), 200.00);
+
+    public static readonly DependencyProperty DialogHeightProperty =
+        RegisterDependencyProperty(nameof(DialogHeight), 100.00);
+
+    public static readonly DependencyProperty DialogMinWidthProperty =
+        RegisterDependencyProperty(nameof(DialogMinWidth), 60.0);
+
+    public static readonly DependencyProperty DialogMinHeightProperty =
+        RegisterDependencyProperty(nameof(DialogMinHeight), 60.0);
+
+    public static readonly DependencyProperty DialogMaxWidthProperty =
+        RegisterDependencyProperty(nameof(DialogMaxWidth), double.PositiveInfinity);
+
+    public static readonly DependencyProperty DialogMaxHeightProperty =
+        RegisterDependencyProperty(nameof(DialogMaxHeight), double.PositiveInfinity);
+
+    public static readonly DependencyProperty DialogBackgroundColorProperty =
+        RegisterDependencyProperty(nameof(DialogBackgroundColor), Brushes.White);
+
+    public static readonly DependencyProperty TitleBarBackgroundProperty =
+        RegisterDependencyProperty(nameof(TitleBarBackground), Brushes.GhostWhite);
+
+    public static readonly DependencyProperty TitleColorProperty =
+        RegisterDependencyProperty(nameof(TitleColor), Brushes.IndianRed);
+
+    public static readonly DependencyProperty TitleAlignmentProperty =
+        RegisterDependencyProperty(nameof(TitleAlignment), HorizontalAlignment.Center);
+
+    public static readonly DependencyProperty TitleBarVisibilityProperty =
+        RegisterDependencyProperty(nameof(TitleBarVisibility), Visibility.Visible);
 
     // 使用表达式属性简化包装器
-    public double DialogWidth { get => (double)GetValue(DialogWidthProperty); set => SetValue(DialogWidthProperty, value); }
-    public double DialogHeight { get => (double)GetValue(DialogHeightProperty); set => SetValue(DialogHeightProperty, value); }
-    public double DialogMinWidth { get => (double)GetValue(DialogMinWidthProperty); set => SetValue(DialogMinWidthProperty, value); }
-    public double DialogMinHeight { get => (double)GetValue(DialogMinHeightProperty); set => SetValue(DialogMinHeightProperty, value); }
-    public double DialogMaxWidth { get => (double)GetValue(DialogMaxWidthProperty); set => SetValue(DialogMaxWidthProperty, value); }
-    public double DialogMaxHeight { get => (double)GetValue(DialogMaxHeightProperty); set => SetValue(DialogMaxHeightProperty, value); }
-    public Brush DialogBackgroundColor { get => (Brush)GetValue(DialogBackgroundColorProperty); set => SetValue(DialogBackgroundColorProperty, value); }
-    public Brush TitleBarBackground { get => (Brush)GetValue(TitleBarBackgroundProperty); set => SetValue(TitleBarBackgroundProperty, value); }
-    public Brush TitleColor { get => (Brush)GetValue(TitleColorProperty); set => SetValue(TitleColorProperty, value); }
-    public HorizontalAlignment TitleAlignment { get => (HorizontalAlignment)GetValue(TitleAlignmentProperty); set => SetValue(TitleAlignmentProperty, value); }
-    public Visibility TitleBarVisibility { get => (Visibility)GetValue(TitleBarVisibilityProperty); set => SetValue(TitleBarVisibilityProperty, value); }
+    public double DialogWidth
+    {
+        get => (double)GetValue(DialogWidthProperty);
+        set => SetValue(DialogWidthProperty, value);
+    }
+
+    public double DialogHeight
+    {
+        get => (double)GetValue(DialogHeightProperty);
+        set => SetValue(DialogHeightProperty, value);
+    }
+
+    public double DialogMinWidth
+    {
+        get => (double)GetValue(DialogMinWidthProperty);
+        set => SetValue(DialogMinWidthProperty, value);
+    }
+
+    public double DialogMinHeight
+    {
+        get => (double)GetValue(DialogMinHeightProperty);
+        set => SetValue(DialogMinHeightProperty, value);
+    }
+
+    public double DialogMaxWidth
+    {
+        get => (double)GetValue(DialogMaxWidthProperty);
+        set => SetValue(DialogMaxWidthProperty, value);
+    }
+
+    public double DialogMaxHeight
+    {
+        get => (double)GetValue(DialogMaxHeightProperty);
+        set => SetValue(DialogMaxHeightProperty, value);
+    }
+
+    public Brush DialogBackgroundColor
+    {
+        get => (Brush)GetValue(DialogBackgroundColorProperty);
+        set => SetValue(DialogBackgroundColorProperty, value);
+    }
+
+    public Brush TitleBarBackground
+    {
+        get => (Brush)GetValue(TitleBarBackgroundProperty);
+        set => SetValue(TitleBarBackgroundProperty, value);
+    }
+
+    public Brush TitleColor
+    {
+        get => (Brush)GetValue(TitleColorProperty);
+        set => SetValue(TitleColorProperty, value);
+    }
+
+    public HorizontalAlignment TitleAlignment
+    {
+        get => (HorizontalAlignment)GetValue(TitleAlignmentProperty);
+        set => SetValue(TitleAlignmentProperty, value);
+    }
+
+    public Visibility TitleBarVisibility
+    {
+        get => (Visibility)GetValue(TitleBarVisibilityProperty);
+        set => SetValue(TitleBarVisibilityProperty, value);
+    }
 
     // 构造函数，初始化窗口的样式和行为
     public CustomDialog()
@@ -53,8 +131,14 @@ public class CustomDialog : Window
         ResizeMode = ResizeMode.NoResize;
 
         InitializeTemplate();
-        MouseLeftButtonDown += (_, e) => { if (e.LeftButton == MouseButtonState.Pressed) TryDragMove(); };
-        KeyDown += (_, e) => { if (e.Key == Key.Escape) Close(); };
+        MouseLeftButtonDown += (_, e) =>
+        {
+            if (e.LeftButton == MouseButtonState.Pressed) TryDragMove();
+        };
+        KeyDown += (_, e) =>
+        {
+            if (e.Key == Key.Escape) Close();
+        };
         InitializeBindings();
     }
 
@@ -62,17 +146,15 @@ public class CustomDialog : Window
     private void InitializeBindings()
     {
         foreach (var (property, name) in new[]
-        {
-            (WidthProperty, nameof(DialogWidth)),
-            (HeightProperty, nameof(DialogHeight)),
-            (MinWidthProperty, nameof(DialogMinWidth)),
-            (MinHeightProperty, nameof(DialogMinHeight)),
-            (MaxWidthProperty, nameof(DialogMaxWidth)),
-            (MaxHeightProperty, nameof(DialogMaxHeight))
-        })
-        {
+                 {
+                     (WidthProperty, nameof(DialogWidth)),
+                     (HeightProperty, nameof(DialogHeight)),
+                     (MinWidthProperty, nameof(DialogMinWidth)),
+                     (MinHeightProperty, nameof(DialogMinHeight)),
+                     (MaxWidthProperty, nameof(DialogMaxWidth)),
+                     (MaxHeightProperty, nameof(DialogMaxHeight))
+                 })
             SetBinding(property, new Binding(name) { Source = this, Converter = Add40Converter.Instance });
-        }
     }
 
     // 初始化控件模板，定义窗口的可视外观
@@ -130,20 +212,19 @@ public class CustomDialog : Window
             (Border.CornerRadiusProperty, new CornerRadius(15)),
             (Border.PaddingProperty, new Thickness(0, 0, 0, 5)),
             (ClipToBoundsProperty, true));
-        borderFactory.AddHandler(SizeChangedEvent, new SizeChangedEventHandler((sender, _) => UpdateClipRegion((Border)sender)));
+        borderFactory.AddHandler(SizeChangedEvent,
+            new SizeChangedEventHandler((sender, _) => UpdateClipRegion((Border)sender)));
 
         foreach (var (property, name) in new[]
-        {
-            (WidthProperty, nameof(DialogWidth)),
-            (HeightProperty, nameof(DialogHeight)),
-            (MinWidthProperty, nameof(DialogMinWidth)),
-            (MinHeightProperty, nameof(DialogMinHeight)),
-            (MaxWidthProperty, nameof(DialogMaxWidth)),
-            (MaxHeightProperty, nameof(DialogMaxHeight))
-        })
-        {
+                 {
+                     (WidthProperty, nameof(DialogWidth)),
+                     (HeightProperty, nameof(DialogHeight)),
+                     (MinWidthProperty, nameof(DialogMinWidth)),
+                     (MinHeightProperty, nameof(DialogMinHeight)),
+                     (MaxWidthProperty, nameof(DialogMaxWidth)),
+                     (MaxHeightProperty, nameof(DialogMaxHeight))
+                 })
             borderFactory.SetBinding(property, new Binding(name) { Source = this });
-        }
 
         return borderFactory;
     }
@@ -160,7 +241,7 @@ public class CustomDialog : Window
     // 创建行定义，用于内部 Grid 的布局
     private static FrameworkElementFactory CreateRowDefinition(GridLength height)
     {
-        return CreateFrameworkElementFactory<RowDefinition>((RowDefinition.HeightProperty, height));// 设置行高
+        return CreateFrameworkElementFactory<RowDefinition>((RowDefinition.HeightProperty, height)); // 设置行高
     }
 
     // 创建标题栏，包含标题文本和关闭按钮
@@ -172,12 +253,14 @@ public class CustomDialog : Window
             (VerticalAlignmentProperty, VerticalAlignment.Center)); // 垂直居中
 
         // 定义标题栏的两列
-        titleGridFactory.AppendChild(CreateFrameworkElementFactory<ColumnDefinition>((ColumnDefinition.WidthProperty, new GridLength(1, GridUnitType.Star))));
-        titleGridFactory.AppendChild(CreateFrameworkElementFactory<ColumnDefinition>((ColumnDefinition.WidthProperty, GridLength.Auto)));
+        titleGridFactory.AppendChild(CreateFrameworkElementFactory<ColumnDefinition>((ColumnDefinition.WidthProperty,
+            new GridLength(1, GridUnitType.Star))));
+        titleGridFactory.AppendChild(
+            CreateFrameworkElementFactory<ColumnDefinition>((ColumnDefinition.WidthProperty, GridLength.Auto)));
 
         // 标题文本
         var titleTextFactory = CreateFrameworkElementFactory<TextBlock>(
-            (TextBlock.TextProperty, new TemplateBindingExtension(TitleProperty)),// 绑定标题属性
+            (TextBlock.TextProperty, new TemplateBindingExtension(TitleProperty)), // 绑定标题属性
             (MarginProperty, new Thickness(40, 0, 0, 0)), // 设置左边距
             (VerticalAlignmentProperty, VerticalAlignment.Center), // 垂直居中
             (HorizontalAlignmentProperty, new TemplateBindingExtension(TitleAlignmentProperty)), // 绑定标题对齐属性
@@ -206,7 +289,10 @@ public class CustomDialog : Window
         {
             DragMove();
         }
-        catch (InvalidOperationException) { /* 忽略异常，防止在某些情况下拖动失败导致的崩溃 */ }
+        catch (InvalidOperationException)
+        {
+            /* 忽略异常，防止在某些情况下拖动失败导致的崩溃 */
+        }
     }
 
     // 更新 Border 的裁剪区域，使其匹配当前大小和圆角
@@ -223,18 +309,15 @@ public class CustomDialog : Window
     // 通用 SetProperties 方法，用于简化属性设置
     private static void SetProperties(FrameworkElementFactory factory, params (DependencyProperty, object)[] properties)
     {
-        foreach (var (property, value) in properties)
-        {
-            factory.SetValue(property, value);
-        }
+        foreach (var (property, value) in properties) factory.SetValue(property, value);
     }
 
     // 通用 CreateFrameworkElementFactory 方法，用于创建 FrameworkElementFactory 并设置属性
-    private static FrameworkElementFactory CreateFrameworkElementFactory<T>(params (DependencyProperty, object)[] properties)
+    private static FrameworkElementFactory CreateFrameworkElementFactory<T>(
+        params (DependencyProperty, object)[] properties)
     {
         var factory = new FrameworkElementFactory(typeof(T));
         SetProperties(factory, properties);
         return factory;
     }
 }
-

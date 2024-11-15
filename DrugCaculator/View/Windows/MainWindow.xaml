@@ -27,9 +27,8 @@
         </Grid.ColumnDefinitions>
 
         <!-- 左侧：药物列表 -->
-        <StackPanel Grid.Column="0" 
-                    Margin="10,15,10,10" 
-                    >
+        <StackPanel Grid.Column="0"
+                    Margin="10,15,10,10">
             <components:ShadowBorder CornerRadius="15" Padding="15,5" Margin="10,10">
                 <TextBox HorizontalAlignment="Center" x:Name="SearchTextBox"
                          Height="20" Margin="0" Width="230"

@@ -7,7 +7,7 @@
     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
 
         <!-- 条件类型 -->
-        <ComboBox MinWidth="20" Style="{DynamicResource FlatComboBox}"  
+        <ComboBox MinWidth="20" Style="{DynamicResource FlatComboBox}"
                   x:Name="ConditionTypeComboBox" SelectionChanged="OnConditionTypeChanged"
                   SelectedValue="{Binding ConditionType, Mode=TwoWay}" d:DataContext="{d:DesignData }"
                   SelectedValuePath="Content">
@@ -29,9 +29,9 @@
         </ComboBox>
 
         <!-- 数值输入框 -->
-        <TextBox MinWidth="20" Style="{DynamicResource FlatTextBox}" 
+        <TextBox MinWidth="20" Style="{DynamicResource FlatTextBox}"
                  x:Name="ValueTextBox" TextChanged="OnValueChanged"
-                 Text="{Binding Value, Mode=TwoWay}"/>
+                 Text="{Binding Value, Mode=TwoWay}" />
 
         <!-- 单位部分 -->
 
@@ -47,6 +47,6 @@
 
         <!-- 删除按钮 -->
         <Button Content="&#xe95e;" Style="{DynamicResource MinusButton}" x:Name="DeleteButton"
-                Click="OnDeleteCondition"/>
+                Click="OnDeleteCondition" />
     </StackPanel>
 </UserControl>

@@ -15,13 +15,13 @@
     <StackPanel Orientation="Horizontal"
                 HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBlock Text="ApiKey：" VerticalAlignment="Center"
-                   FontWeight="Black" FontSize="14" Foreground="MidnightBlue"/>
-        <controls:PasswordInputComponent x:Name="PasswordInput"/>
+                   FontWeight="Black" FontSize="14" Foreground="MidnightBlue" />
+        <controls:PasswordInputComponent x:Name="PasswordInput" />
         <Button Content="确认" Width="50" Height="26" Margin="10,0,0,0"
                 Style="{DynamicResource DarkButton}" x:Name="ConfirmButton"
-                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
+                CommandParameter="{Binding RelativeSource={RelativeSource Self}}" />
         <Button Content="取消" Width="50" Height="26" Margin="10,0,0,0"
                 Style="{DynamicResource LightButton}" x:Name="CancelButton"
-                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
+                CommandParameter="{Binding RelativeSource={RelativeSource Self}}" />
     </StackPanel>
 </components:CustomDialog>

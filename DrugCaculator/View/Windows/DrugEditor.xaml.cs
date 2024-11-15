@@ -4,6 +4,7 @@ using DrugCalculator.ViewModels;
 using NLog;
 
 namespace DrugCalculator.View.Windows;
+
 public partial class DrugEditor
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();

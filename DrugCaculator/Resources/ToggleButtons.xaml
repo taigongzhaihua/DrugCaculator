@@ -11,32 +11,32 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="0"
                                 CornerRadius="0">
-                            <ContentPresenter HorizontalAlignment="Center" 
-                                              VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
                         </Border>
                         <!-- 定义视觉状态 -->
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.3" 
-                                                        To="Azure"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.3"
+                                                        To="Azure" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
                                         <!-- 这里直接将背景设为更深的颜色 -->
-                                        <ColorAnimation Storyboard.TargetName="border" 
-                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                                        Duration="0:0:0.3" 
-                                                        To="LightSkyBlue"/>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                        Duration="0:0:0.3"
+                                                        To="LightSkyBlue" />
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Disabled"/>
+                                <VisualState x:Name="Disabled" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Grid>

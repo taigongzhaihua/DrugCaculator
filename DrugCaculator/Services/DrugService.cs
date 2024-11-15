@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 
 namespace DrugCalculator.Services;
+
 public class DrugService
 {
     private readonly DbManager _dbManager;
@@ -48,9 +49,11 @@ public class DrugService
         var enumerable = drugs as Drug[] ?? drugs.ToArray();
         foreach (var drug in enumerable)
         {
-            var rules = _dbManager.Query<DrugCalculationRule>("DrugCalculationRule", "WHERE DrugId = @DrugId", "DrugId", drug.Id);
+            var rules = _dbManager.Query<DrugCalculationRule>("DrugCalculationRule", "WHERE DrugId = @DrugId", "DrugId",
+                drug.Id);
             drug.CalculationRules = new ObservableCollection<DrugCalculationRule>(rules);
         }
+
         return enumerable;
     }
 
@@ -71,6 +74,7 @@ public class DrugService
             AddCalculationRule(rule);
         }
     }
+
     public void AddDrugsFromTable(DataTable dataTable)
     {
         if (dataTable == null || dataTable.Rows.Count == 0)
@@ -92,6 +96,7 @@ public class DrugService
             AddDrug(drug);
         }
     }
+
     // 更新药物及其规则
     public void UpdateDrug(Drug drug)
     {
@@ -109,7 +114,6 @@ public class DrugService
 
         // 更新现有的计算规则或插入新的规则
         foreach (var rule in drug.CalculationRules)
-        {
             if (rule.Id == 0)
             {
                 // 新的规则，插入到数据库中
@@ -121,7 +125,6 @@ public class DrugService
                 // 更新现有规则
                 UpdateCalculationRule(rule);
             }
-        }
     }
 
     // 更新计算规则

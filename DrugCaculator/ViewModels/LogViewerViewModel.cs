@@ -55,10 +55,7 @@ public class LogViewerViewModel : INotifyPropertyChanged
             while (reader.ReadLine() is { } line)
             {
                 var logEntry = ParseLogLine(line);
-                if (logEntry != null)
-                {
-                    _logEntries.Add(logEntry);
-                }
+                if (logEntry != null) _logEntries.Add(logEntry);
             }
         }
         catch (IOException ex)
@@ -74,29 +71,25 @@ public class LogViewerViewModel : INotifyPropertyChanged
         // 假设日志格式为：时间戳|日志级别|来源|消息
         var parts = line.Split('|');
         if (parts.Length >= 4)
-        {
             return new LogEntry
             {
                 Time = parts[0].Trim(),
                 Level = parts[1].Trim(),
                 Message = $"[{parts[2].Trim()}] {parts[3].Trim()}"
             };
-        }
         return null;
     }
 
     private bool LogFilter(object item)
     {
-        if (string.IsNullOrEmpty(SelectedFilter) || SelectedFilter == "全部")
-        {
-            return true;
-        }
+        if (string.IsNullOrEmpty(SelectedFilter) || SelectedFilter == "全部") return true;
 
         var logEntry = item as LogEntry;
         return logEntry != null && logEntry.Level.Equals(SelectedFilter, StringComparison.OrdinalIgnoreCase);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
+
     protected void OnPropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

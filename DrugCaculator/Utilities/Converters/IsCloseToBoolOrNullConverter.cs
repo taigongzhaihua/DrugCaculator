@@ -8,19 +8,13 @@ public class IsCloseToBoolOrNullConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is string stringValue && parameter is string targetValue)
-        {
-            return stringValue == targetValue;
-        }
+        if (value is string stringValue && parameter is string targetValue) return stringValue == targetValue;
         return null;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is true && parameter is string targetValue)
-        {
-            return targetValue;
-        }
+        if (value is true && parameter is string targetValue) return targetValue;
         return Binding.DoNothing;
     }
 }

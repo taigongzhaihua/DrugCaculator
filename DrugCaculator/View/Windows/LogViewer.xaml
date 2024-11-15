@@ -8,37 +8,75 @@
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <!-- 过滤选择 -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10">
-            <Label Content="过滤日志:" VerticalAlignment="Center"/>
+            <Label Content="过滤日志:" VerticalAlignment="Center" />
             <ComboBox Width="150" SelectedValue="{Binding SelectedFilter}"
                       SelectedValuePath="Content">
-                <ComboBoxItem Content="全部"/>
-                <ComboBoxItem Content="INFO"/>
-                <ComboBoxItem Content="WARN"/>
-                <ComboBoxItem Content="ERROR"/>
+                <ComboBoxItem Content="全部" />
+                <ComboBoxItem Content="INFO" />
+                <ComboBoxItem Content="WARN" />
+                <ComboBoxItem Content="ERROR" />
             </ComboBox>
         </StackPanel>
 
         <!-- 日志显示区域 -->
-        <DataGrid ItemsSource="{Binding LogEntriesView}" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="10">
+        <DataGrid ItemsSource="{Binding LogEntriesView}" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True"
+                  Margin="10">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="时间" 
-                                    Binding="{Binding Time}" 
-                                    Width="160" FontWeight="Light"
-                                    FontFamily="宋体"/>
-                <DataGridTextColumn Header="级别" 
-                                    Binding="{Binding Level}" 
-                                    Width="50" FontWeight="Black"
-                                    FontFamily="宋体"/>
-                <DataGridTextColumn Header="消息" 
-                                    Binding="{Binding Message}"
-                                    Width="*" FontWeight="Regular"
-                                    FontFamily="宋体"/>
+                <DataGridTextColumn Header="时间" Binding="{Binding Time}" Width="160">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontFamily" Value="宋体" />
+                            <Setter Property="FontWeight" Value="Light" />
+                            <Setter Property="Foreground" Value="LightGray" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="级别" Binding="{Binding Level}" Width="50">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontFamily" Value="宋体" />
+                            <Setter Property="FontWeight" Value="Black" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Level}" Value="INFO">
+                                    <Setter Property="Foreground" Value="DodgerBlue" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Level}" Value="WARN">
+                                    <Setter Property="Foreground" Value="Coral" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Level}" Value="ERROR">
+                                    <Setter Property="Foreground" Value="Brown" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="消息" Binding="{Binding Message}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontFamily" Value="宋体" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Level}" Value="INFO">
+                                    <Setter Property="Foreground" Value="DeepSkyBlue" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Level}" Value="WARN">
+                                    <Setter Property="Foreground" Value="DarkOrange" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Level}" Value="ERROR">
+                                    <Setter Property="Foreground" Value="IndianRed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

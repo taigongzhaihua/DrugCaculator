@@ -9,6 +9,7 @@ public partial class CloseConfirmationDialog
 
     // 是否关闭程序的标志
     public bool IsClose { get; private set; }
+
     // 是否记住用户选择的标志
     public bool RememberChoice { get; private set; }
 

@@ -7,12 +7,12 @@
                 <ControlTemplate TargetType="ComboBox">
                     <Grid>
                         <!-- 下拉按钮 -->
-                        <ToggleButton Name="ToggleButton" 
+                        <ToggleButton Name="ToggleButton"
                                       Focusable="False"
                                       IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                       ClickMode="Press"
                                       Background="Transparent"
-                                      BorderThickness="0"/>
+                                      BorderThickness="0" />
 
                         <!-- 内容显示区域 -->
                         <ContentPresenter Name="ContentSite"
@@ -22,7 +22,7 @@
                                           ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                           Margin="2,5"
                                           VerticalAlignment="Center"
-                                          HorizontalAlignment="Left"/>
+                                          HorizontalAlignment="Left" />
 
                         <!-- 下拉列表部分 -->
                         <Popup Name="Popup"
@@ -34,7 +34,7 @@
                             <Border BorderThickness="1" BorderBrush="Gray" Background="White">
                                 <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
                                     <StackPanel IsItemsHost="True"
-                                                KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                                KeyboardNavigation.DirectionalNavigation="Contained" />
                                 </ScrollViewer>
                             </Border>
                         </Popup>
@@ -44,11 +44,11 @@
         </Setter>
 
         <!-- 设置其他样式属性 -->
-        <Setter Property="Foreground" Value="Green"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Padding" Value="4,8"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="FontFamily" Value="../Fonts/#iconfont"/>
+        <Setter Property="Foreground" Value="Green" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="4,8" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FontFamily" Value="../Fonts/#iconfont" />
     </Style>
     <!-- 下划线下拉框 -->
     <Style x:Key="UnderLineComboBox" TargetType="ComboBox">
@@ -63,7 +63,7 @@
                                       ClickMode="Release"
                                       Background="Transparent"
                                       BorderBrush="CadetBlue"
-                                      BorderThickness="0,0,0,1"/>
+                                      BorderThickness="0,0,0,1" />
 
                         <!-- 内容显示区域 -->
                         <ContentPresenter Name="ContentSite"
@@ -73,7 +73,7 @@
                                           ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                           Margin="0"
                                           VerticalAlignment="Center"
-                                          HorizontalAlignment="Center"/>
+                                          HorizontalAlignment="Center" />
 
                         <!-- 下拉列表部分 -->
                         <Popup Name="Popup"
@@ -85,7 +85,7 @@
                             <Border BorderThickness="1,2,1,5" BorderBrush="CadetBlue" Background="White">
                                 <ScrollViewer Margin="2,4,2,4" SnapsToDevicePixels="True">
                                     <StackPanel IsItemsHost="True"
-                                            KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                                KeyboardNavigation.DirectionalNavigation="Contained" />
                                 </ScrollViewer>
                             </Border>
                         </Popup>
@@ -95,9 +95,9 @@
         </Setter>
 
         <!-- 设置其他样式属性 -->
-        <Setter Property="Foreground" Value="CadetBlue"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Padding" Value="4"/>
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="CadetBlue" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="4" />
+        <Setter Property="Background" Value="Transparent" />
     </Style>
 </ResourceDictionary>

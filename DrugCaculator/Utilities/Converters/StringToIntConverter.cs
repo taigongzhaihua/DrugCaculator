@@ -15,10 +15,7 @@ public class StringToIntConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (Regex.IsMatch(value?.ToString()!, @"\D"))
-        {
-            value = Regex.Replace(value?.ToString()!, @"\D", "");
-        }
+        if (Regex.IsMatch(value?.ToString()!, @"\D")) value = Regex.Replace(value?.ToString()!, @"\D", "");
         return int.TryParse(value?.ToString(), out var result) ? result : DependencyProperty.UnsetValue; // 返回未设置的值以避免异常
     }
 }
