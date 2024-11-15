@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using Application = System.Windows.Application;
 using Button = System.Windows.Controls.Button;
 using MessageBox = System.Windows.MessageBox;
 
@@ -189,7 +190,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     {
         var apiKeySetter = new LogViewer
         {
-            Owner = Window.GetWindow((sender as Button)!)
+            Owner = Application.Current.MainWindow
         };
         apiKeySetter.ShowDialog();
     }
@@ -209,7 +210,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     {
         var settings = new SettingsWindow
         {
-            Owner = Window.GetWindow((sender as Button)!)
+            Owner = Application.Current.MainWindow
         };
         settings.ShowDialog();
     }

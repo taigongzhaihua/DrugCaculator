@@ -12,7 +12,9 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using Application = System.Windows.Application;
+using Button = System.Windows.Controls.Button;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using TextBox = System.Windows.Controls.TextBox;
 
 // ReSharper disable UnusedMember.Global
@@ -193,6 +195,32 @@ public partial class MainWindow
         Show(); // 显示窗口
         WindowState = WindowState.Normal; // 设置窗口状态
         Activate(); // 激活窗口
+    }
+    private void OptionsButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button button && button.ContextMenu != null)
+        {
+            // 手动设置 ContextMenu 的位置
+            button.ContextMenu.PlacementTarget = button;
+            button.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+
+            // 显示或隐藏 ContextMenu
+            button.ContextMenu.IsOpen = !button.ContextMenu.IsOpen;
+        }
+    }
+    private void MenuItem_MouseEnter(object sender, MouseEventArgs e)
+    {
+        VisualStateManager.GoToState((FrameworkElement)sender, "MouseOver", true);
+    }
+
+    private void MenuItem_MouseLeave(object sender, MouseEventArgs e)
+    {
+        VisualStateManager.GoToState((FrameworkElement)sender, "Normal", true);
+    }
+
+    private void MenuItem_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+    {
+        VisualStateManager.GoToState((FrameworkElement)sender, "Pressed", true);
     }
 
     private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

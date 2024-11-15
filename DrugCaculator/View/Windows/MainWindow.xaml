@@ -6,6 +6,7 @@
                          xmlns:viewModels1="clr-namespace:DrugCalculator.ViewModels"
                          xmlns:components="clr-namespace:DrugCalculator.View.Components"
                          xmlns:converters="clr-namespace:DrugCalculator.Utilities.Converters"
+                         xmlns:behaviors="clr-namespace:DrugCalculator.Utilities.Behaviors"
                          ResizeMode="CanResize" WindowStyle="None" AllowsTransparency="True"
                          mc:Ignorable="d" Title="药物查询"
                          Background="Transparent" TitleBarVisibility="Collapsed"
@@ -116,8 +117,8 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
+
                 <TextBlock Text="{Binding Title, ElementName=Window}"
                            VerticalAlignment="Center" HorizontalAlignment="Center"
                            Margin="10,0,180,0"
@@ -125,21 +126,34 @@
                            FontWeight="DemiBold"
                            FontFamily="宋体"
                            FontSize="14" />
-                <Button Grid.Column="1" Content="&#xe668;" Width="40" ToolTip="日志"
-                        Command="{Binding LogsCommand}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                        Style="{DynamicResource TitleButton}" />
-                <Button Grid.Column="2" Content="&#xe966;" Width="40" ToolTip="设置"
-                        Command="{Binding SettingCommand}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                        Style="{DynamicResource TitleButton}" />
-                <Button Grid.Column="3" Content="&#xe95f;" Width="40"
+
+                <!-- 选项按钮 -->
+                <Button Grid.Column="1" Content="&#xe960;" Width="40" ToolTip="选项"
+                        Style="{DynamicResource TitleButton}" Click="OptionsButton_Click">
+                    <Button.ContextMenu>
+                        <ContextMenu x:Name="OptionsContextMenu">
+                            <!-- 日志菜单项 -->
+                            <MenuItem Header="日志" Icon="&#xe668;"
+                                      Command="{Binding LogsCommand}"/>
+
+                            <!-- 设置菜单项 -->
+                            <MenuItem Header="设置" Icon="&#xe966;"
+                                      Command="{Binding SettingCommand}"/>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
+
+                <!-- 最小化按钮 -->
+                <Button Grid.Column="2" Content="&#xe95f;" Width="40"
                         Click="MinimizeButton_Click" ToolTip="最小化窗口"
                         Style="{DynamicResource TitleButton}" />
-                <Button Grid.Column="4" Content="&#xe955;" Width="40"
+
+                <!-- 关闭按钮 -->
+                <Button Grid.Column="3" Content="&#xe955;" Width="40"
                         Click="CloseButton_Click" ToolTip="关闭窗口"
                         Style="{DynamicResource CloseButton}" />
             </Grid>
+
 
             <!-- 上方计算部分 -->
             <components:ShadowBorder CornerRadius="10" Padding="15" Margin="15,35,15,15"
