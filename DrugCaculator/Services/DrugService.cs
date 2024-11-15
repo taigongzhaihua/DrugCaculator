@@ -113,7 +113,20 @@ public class DrugService
         );
 
         // 更新现有的计算规则或插入新的规则
+        var existingRules = _dbManager.Query<DrugCalculationRule>("DrugCalculationRule", "WHERE DrugId = @DrugId", "DrugId", drug.Id).ToList();
+        var updatedRuleIds = drug.CalculationRules.Select(r => r.Id).ToHashSet();
+
+        // 删除多余的规则
+        foreach (var existingRule in existingRules)
+        {
+            if (!updatedRuleIds.Contains(existingRule.Id))
+            {
+                DeleteCalculationRule(existingRule.Id);
+            }
+        }
+
         foreach (var rule in drug.CalculationRules)
+        {
             if (rule.Id == 0)
             {
                 // 新的规则，插入到数据库中
@@ -125,6 +138,7 @@ public class DrugService
                 // 更新现有规则
                 UpdateCalculationRule(rule);
             }
+        }
     }
 
     // 更新计算规则
@@ -162,5 +176,11 @@ public class DrugService
             ("Frequency", rule.Frequency),
             ("Route", rule.Route)
         );
+    }
+
+    // 删除计算规则
+    public void DeleteCalculationRule(int id)
+    {
+        _dbManager.Delete("DrugCalculationRule", "WHERE Id = @Id", "Id", id);
     }
 }
