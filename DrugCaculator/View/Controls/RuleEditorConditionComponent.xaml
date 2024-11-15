@@ -5,18 +5,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:DrugCalculator.View.Controls" x:Class="DrugCalculator.View.Controls.RuleEditorConditionComponent"
              mc:Ignorable="d"
              Height="Auto" Width="Auto">
-    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left"
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ConditionRow, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"
                 >
 
         <ComboBox MinWidth="20" Style="{DynamicResource FlatComboBox}"
                   x:Name="ConditionTypeComboBox" SelectionChanged="OnConditionTypeChanged"
-                  SelectedItem="{Binding ConditionRow.ConditionType, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"
+                  SelectedItem="{Binding ConditionType}"
                   ItemsSource="{Binding ConditionTypeOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"
                   />
 
         <ComboBox MinWidth="20" Style="{DynamicResource FlatComboBox}"
                   x:Name="ComparisonComboBox" SelectionChanged="OnComparisonChanged"
-                  SelectedItem="{Binding ConditionRow.Comparison, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"
+                  SelectedItem="{Binding Comparison}"
                   ItemsSource="{Binding ComparisonOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"/>
 
         <!-- 单位部分 -->
@@ -29,7 +29,7 @@
         <!-- 下拉框切换部分 -->
         <ComboBox MinWidth="15" Style="{DynamicResource FlatComboBox}"
                   x:Name="UnitComboBox" SelectionChanged="OnUnitChanged"
-                  SelectedItem="{Binding ConditionRow.Unit, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"
+                  SelectedItem="{Binding Unit}"
                   ItemsSource="{Binding ConditionUnitOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"
                   />
 

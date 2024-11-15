@@ -7,7 +7,6 @@ namespace DrugCalculator.Services;
 
 public sealed class ConfigurationService
 {
-    private static readonly ConfigurationService _instance = new();
     private readonly string _configFilePath;
 
     // 私有构造函数，防止外部实例化
@@ -17,21 +16,21 @@ public sealed class ConfigurationService
     }
 
     // 公共静态属性来获取唯一实例
-    public static ConfigurationService Instance => _instance;
+    public static ConfigurationService Instance { get; } = new();
 
     // 读取配置文件
     public Dictionary<string, List<string>> LoadOptions()
     {
         var jsonContent = File.ReadAllText(_configFilePath);
         var options = JObject.Parse(jsonContent)["Options"];
-        return options?.ToObject<Dictionary<string, List<string>>>() ?? new Dictionary<string, List<string>>();
+        return options?.ToObject<Dictionary<string, List<string>>>() ?? [];
     }
 
     // 读取指定的配置项
     public List<string> GetOption(string key)
     {
         var options = LoadOptions();
-        return options.TryGetValue(key, out var option) ? option : new List<string>();
+        return options.TryGetValue(key, out var option) ? option : [];
     }
 
     // 修改指定的配置项
