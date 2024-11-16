@@ -4,78 +4,104 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace DrugCalculator.Services
+namespace DrugCalculator.Services;
+public class HotKeyService : IDisposable
 {
-    public class HotKeyService : IDisposable
+    private static HotKeyService _instance;
+    private static readonly object Lock = new();
+
+    private const int WmHotkey = 0x0312;
+
+    [DllImport("user32.dll")]
+    private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
+    [DllImport("user32.dll")]
+    private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+    private readonly Dictionary<int, Action> _hotKeyActions = [];
+    private readonly WindowInteropHelper _interopHelper;
+    private int _currentHotKeyId;
+    private bool _disposed;
+
+    // 私有构造函数，防止外部实例化
+    private HotKeyService(Window mainWindow)
     {
-        private static HotKeyService _instance;
-        private static readonly object Lock = new();
+        _interopHelper = new WindowInteropHelper(mainWindow);
+        ComponentDispatcher.ThreadPreprocessMessage += ThreadPreprocessMessageMethod;
+    }
 
-        private const int WmHotkey = 0x0312;
-
-        [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
-
-        [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-
-        private readonly Dictionary<int, Action> _hotKeyActions = new();
-        private readonly WindowInteropHelper _interopHelper;
-        private int _currentHotKeyId = 0;
-
-        // 私有构造函数，防止外部实例化
-        private HotKeyService(Window mainWindow)
+    // 获取唯一实例
+    public static HotKeyService Instance(Window mainWindow)
+    {
+        if (_instance != null) return _instance;
+        lock (Lock)
         {
-            _interopHelper = new WindowInteropHelper(mainWindow);
-            ComponentDispatcher.ThreadPreprocessMessage += ThreadPreprocessMessageMethod;
+            _instance ??= new HotKeyService(mainWindow);
+        }
+        return _instance;
+    }
+
+    public int RegisterHotKey(uint modifiers, uint key, Action action)
+    {
+        _currentHotKeyId++;
+        if (!RegisterHotKey(_interopHelper.Handle, _currentHotKeyId, modifiers, key))
+        {
+            throw new InvalidOperationException("Could not register hot key.");
         }
 
-        // 获取唯一实例
-        public static HotKeyService Instance(Window mainWindow)
-        {
-            if (_instance != null) return _instance;
-            lock (Lock)
-            {
-                _instance ??= new HotKeyService(mainWindow);
-            }
-            return _instance;
-        }
+        _hotKeyActions[_currentHotKeyId] = action;
+        return _currentHotKeyId;
+    }
 
-        public int RegisterHotKey(uint modifiers, uint key, Action action)
-        {
-            _currentHotKeyId++;
-            if (!RegisterHotKey(_interopHelper.Handle, _currentHotKeyId, modifiers, key))
-            {
-                throw new InvalidOperationException("Could not register hot key.");
-            }
+    public void UnregisterHotKey(int hotKeyId)
+    {
+        UnregisterHotKey(_interopHelper.Handle, hotKeyId);
+        _hotKeyActions.Remove(hotKeyId);
+    }
 
-            _hotKeyActions[_currentHotKeyId] = action;
-            return _currentHotKeyId;
-        }
+    private void ThreadPreprocessMessageMethod(ref MSG msg, ref bool handled)
+    {
+        if (msg.message != WmHotkey) return;
+        var hotKeyId = msg.wParam.ToInt32();
+        if (!_hotKeyActions.TryGetValue(hotKeyId, out var action)) return;
+        action?.Invoke();
+        handled = true;
+    }
 
-        public void UnregisterHotKey(int hotKeyId)
-        {
-            UnregisterHotKey(_interopHelper.Handle, hotKeyId);
-            _hotKeyActions.Remove(hotKeyId);
-        }
+    // 释放方法
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
-        private void ThreadPreprocessMessageMethod(ref MSG msg, ref bool handled)
-        {
-            if (msg.message != WmHotkey) return;
-            var hotKeyId = msg.wParam.ToInt32();
-            if (!_hotKeyActions.TryGetValue(hotKeyId, out var action)) return;
-            action?.Invoke();
-            handled = true;
-        }
+    // 真正的释放逻辑
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_disposed)
+            return;
 
-        public void Dispose()
+        if (disposing)
         {
+            // 释放托管资源
             foreach (var hotKeyId in _hotKeyActions.Keys)
             {
                 UnregisterHotKey(hotKeyId);
             }
             _hotKeyActions.Clear();
+
+            // 移除消息处理
             ComponentDispatcher.ThreadPreprocessMessage -= ThreadPreprocessMessageMethod;
         }
+
+        // 如果有非托管资源，需要在这里释放
+
+        _disposed = true;
+    }
+
+    // 析构函数
+    ~HotKeyService()
+    {
+        Dispose(false);
     }
 }

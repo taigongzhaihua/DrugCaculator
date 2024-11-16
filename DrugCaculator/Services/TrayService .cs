@@ -1,5 +1,4 @@
-﻿using DrugCalculator.View.Windows;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +10,8 @@ namespace DrugCalculator.Services
 {
     public class TrayService : IDisposable
     {
+        private bool _disposed = false;
+
         private static TrayService _instance;
         private static readonly object Lock = new();
 
@@ -61,7 +62,7 @@ namespace DrugCalculator.Services
             _trayContextMenu.Items.Add(exitMenuItem);
         }
 
-        private void NotifyIcon_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void NotifyIcon_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -83,15 +84,11 @@ namespace DrugCalculator.Services
             }
         }
 
-        private void ShowMainWindow()
+        private static void ShowMainWindow()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                if (Application.Current.MainWindow == null)
-                {
-                    Application.Current.MainWindow = new MainWindow();
-                }
-                Application.Current.MainWindow.Show();
+                Application.Current.MainWindow!.Show();
                 Application.Current.MainWindow.WindowState = WindowState.Normal;
                 Application.Current.MainWindow.Activate();
             });
@@ -109,12 +106,38 @@ namespace DrugCalculator.Services
             Application.Current.Shutdown();
         }
 
+        // Dispose 方法
         public void Dispose()
         {
-            if (_notifyIcon != null)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        // 真正的资源释放方法
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
             {
-                _notifyIcon.Dispose();
+                // 释放托管资源
+                if (_notifyIcon != null)
+                {
+                    _notifyIcon.Visible = false;
+                    _notifyIcon.Dispose();
+                    _notifyIcon = null;
+                }
             }
+
+            // 释放非托管资源（如果有）
+            _disposed = true;
+        }
+
+        // 析构函数（终结器）
+        ~TrayService()
+        {
+            Dispose(false);
         }
     }
 }
