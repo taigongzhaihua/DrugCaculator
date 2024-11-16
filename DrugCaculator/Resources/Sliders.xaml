@@ -33,7 +33,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RepeatButton">
-                    <Border Background="RoyalBlue" Height="4" />
+                    <Border Background="LightGray" Height="4" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -61,8 +61,8 @@
             同样的还有Slider.DecreaseSmall命令，移动1个单位距离-->
         <!-- <Setter Property="LargeChange" Value="10"/> -->
         <Setter Property="SmallChange" Value="1" />
-        <Setter Property="Background" Value="LightGray" />
-        <Setter Property="Foreground" Value="RoyalBlue" />
+        <Setter Property="Background" Value="RoyalBlue" />
+        <Setter Property="Foreground" Value="LightGray" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
     <Style x:Key="BeautifySliderStyle" TargetType="Slider" BasedOn="{StaticResource BaseSliderStyle}">

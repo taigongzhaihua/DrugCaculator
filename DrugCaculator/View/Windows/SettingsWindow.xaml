@@ -103,10 +103,9 @@
                         <StackPanel Grid.Column="1" Margin="0">
                             <!-- Slider 控件 -->
                             <Slider x:Name="LogLevelSlider" Minimum="0" Maximum="4" TickFrequency="1"
-                                    IsSnapToTickEnabled="True"
                                     Style="{DynamicResource BeautifySliderStyle}"
                                     Value="{Binding LogLevelValue, Mode=TwoWay}"
-                                    VerticalAlignment="Center" Margin="35,5" />
+                                    VerticalAlignment="Center" Margin="35,0" />
 
                             <!-- ItemsControl 用于显示刻度上的标签 -->
                             <ItemsControl ItemsSource="{Binding LogLevelOptions}">
@@ -118,7 +117,7 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding}" HorizontalAlignment="Center" 
-                                                   FontSize="14" FontWeight="Bold"
+                                                   FontSize="14" FontWeight="Bold" Foreground="RoyalBlue"
                                                    VerticalAlignment="Center" />
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

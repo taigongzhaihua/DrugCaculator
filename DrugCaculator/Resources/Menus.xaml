@@ -7,14 +7,14 @@
     <!-- 自定义 ContextMenu 的样式 -->
     <Style TargetType="{x:Type ContextMenu}">
         <Setter Property="BorderThickness" Value="0.5" />
-        <Setter Property="Padding" Value="5" />
+        <Setter Property="Padding" Value="3,5" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContextMenu">
                     <Border Background="White"
-                            BorderBrush="LightSlateGray"
+                            BorderBrush="MidnightBlue"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="5"
+                            CornerRadius="8"
                             Padding="{TemplateBinding Padding}">
                         <StackPanel>
                             <ItemsPresenter />
@@ -88,7 +88,7 @@
                                            Text="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
                                            FontFamily="{DynamicResource IconFont}"
                                            VerticalAlignment="Center"
-                                           FontSize="18"
+                                           FontSize="16"
                                            Margin="4"/>
                                 <!-- 菜单项内容 -->
                                 <TextBlock x:Name="MenuItemContent"
@@ -96,9 +96,8 @@
                                            FontSize="14"
                                            VerticalAlignment="Center"
                                            Margin="5,0"/>
-                        </StackPanel>
+                            </StackPanel>
                         </Border>
-                        
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
