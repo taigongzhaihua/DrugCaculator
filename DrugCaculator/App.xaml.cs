@@ -10,16 +10,17 @@ namespace DrugCalculator;
 
 public partial class App
 {
+    // 创建一个静态的命名互斥体，以确保只有一个应用程序实例在运行
     public static Mutex Mutex1 { get; private set; }
+    private const string MutexName = "DrugCalculator_SingleInstanceMutex"; // 互斥体名称
 
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    private const string MutexName = "DrugCalculator_SingleInstanceMutex";
-    private TrayService _trayService;
-    private HotKeyService _hotKeyService;
-
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger(); // 获取当前类的日志记录器
+    private TrayService _trayService; // 托盘服务
+    private HotKeyService _hotKeyService; // 热键注册服务
 
     protected override void OnStartup(StartupEventArgs e)
     {
+        base.OnStartup(e);
         LoggerService.SetLogger();
         Logger.Info("应用程序启动");
 
@@ -37,12 +38,9 @@ public partial class App
         // 创建管道服务端用于接收其他实例的消息
         Task.Run(PipeService.StartPipeServer);
 
-        base.OnStartup(e);
-
         // 实例化托盘服务
         _trayService = TrayService.Instance;
 
-        // 确保主窗口只创建一次
         // 使用 Dispatcher 延迟执行，以确保窗口创建完成后再执行
         Dispatcher.InvokeAsync(() =>
         {
