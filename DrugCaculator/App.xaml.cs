@@ -65,10 +65,7 @@ public partial class App
         // 注册热键以显示主窗口
         _hotKeyService.RegisterHotKey((uint)ModifierKeys.Control | (uint)ModifierKeys.Alt, (uint)System.Windows.Forms.Keys.H, () =>
         {
-            if (mainWindow.Visibility != Visibility.Visible)
-            {
-                mainWindow.Show();
-            }
+            mainWindow.Show();
             mainWindow.WindowState = WindowState.Normal;
             mainWindow.Activate();
         });
