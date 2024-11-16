@@ -10,10 +10,14 @@
     <ApplicationIcon>AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Resources\Images\**" />
+    <EmbeddedResource Remove="Resources\Images\**" />
+    <None Remove="Resources\Images\**" />
+    <Page Remove="Resources\Images\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="drugs.db" />
     <None Remove="Fonts\iconfont.ttf" />
-    <None Remove="Resources\Images\Icons\Exit.png" />
-    <None Remove="Resources\Images\Icons\OpenWindow.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AppIcon.ico" />
@@ -65,12 +69,6 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Fonts\iconfont.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Images\Icons\Exit.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Images\Icons\OpenWindow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
