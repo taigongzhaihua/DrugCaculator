@@ -4,7 +4,6 @@ using DrugCalculator.ViewModels;
 using NLog;
 using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -33,9 +32,9 @@ public partial class MainWindow
         InitializeComponent();
         Logger.Info("初始化 MainWindow 窗口");
         InitializeWindowSettings(); // 初始化窗口设置
-        RegisterHotKeys(); // 注册全局快捷键
-        InitializeNotifyIcon(); // 初始化托盘图标
-        InitializeContextMenu(); // 初始化右键菜单
+        // RegisterHotKeys(); // 注册全局快捷键
+        // InitializeNotifyIcon(); // 初始化托盘图标
+        // InitializeContextMenu(); // 初始化右键菜单
         Closing += MainWindow_Closing; // 订阅窗口关闭事件
         SubscribeViewModelEvents(); // 订阅 ViewModel 的 PropertyChanged 事件
     }
@@ -48,33 +47,33 @@ public partial class MainWindow
         WindowStartupLocation = WindowStartupLocation.CenterScreen;
     }
 
-    // 初始化托盘图标
-    private void InitializeNotifyIcon()
-    {
-        Logger.Info("初始化托盘图标");
-        // 初始化托盘图标并设置属性
-        _notifyIcon = new NotifyIcon
-        {
-            Icon = new Icon("AppIcon.ico"), // 使用指定的图标文件
-            Visible = true,
-            Text = @"药物查询"
-        };
-        // 双击托盘图标时显示窗口
-        _notifyIcon.DoubleClick += (_, _) => ShowWindow();
-    }
+    // // 初始化托盘图标
+    // private void InitializeNotifyIcon()
+    // {
+    //     Logger.Info("初始化托盘图标");
+    //     // 初始化托盘图标并设置属性
+    //     _notifyIcon = new NotifyIcon
+    //     {
+    //         Icon = new Icon("AppIcon.ico"), // 使用指定的图标文件
+    //         Visible = true,
+    //         Text = @"药物查询"
+    //     };
+    //     // 双击托盘图标时显示窗口
+    //     _notifyIcon.DoubleClick += (_, _) => ShowWindow();
+    // }
 
     // 初始化右键菜单
-    private void InitializeContextMenu()
-    {
-        Logger.Info("初始化托盘图标右键菜单");
-        var openIcon = Image.FromFile("./Resources/Images/Icons/OpenWindow.png"); // 打开图标
-        var exitIcon = Image.FromFile("./Resources/Images/Icons/Exit.png");  // 退出图标
-        // 初始化托盘图标的右键菜单
-        var contextMenuStrip = new ContextMenuStrip();
-        contextMenuStrip.Items.Add("打开", openIcon, (_, _) => ShowWindow()); // 显示窗口选项
-        contextMenuStrip.Items.Add("退出", exitIcon, (_, _) => ExitApplication()); // 退出应用程序选项
-        _notifyIcon.ContextMenuStrip = contextMenuStrip;
-    }
+    // private void InitializeContextMenu()
+    // {
+    //     Logger.Info("初始化托盘图标右键菜单");
+    //     var openIcon = Image.FromFile("./Resources/Images/Icons/OpenWindow.png"); // 打开图标
+    //     var exitIcon = Image.FromFile("./Resources/Images/Icons/Exit.png");  // 退出图标
+    //     // 初始化托盘图标的右键菜单
+    //     var contextMenuStrip = new ContextMenuStrip();
+    //     contextMenuStrip.Items.Add("打开", openIcon, (_, _) => ShowWindow()); // 显示窗口选项
+    //     contextMenuStrip.Items.Add("退出", exitIcon, (_, _) => ExitApplication()); // 退出应用程序选项
+    //     _notifyIcon.ContextMenuStrip = contextMenuStrip;
+    // }
 
     // 订阅 ViewModel 的 PropertyChanged 事件
     private void SubscribeViewModelEvents()
@@ -85,22 +84,22 @@ public partial class MainWindow
     }
 
     // 注册全局快捷键
-    private void RegisterHotKeys()
-    {
-        Logger.Info("注册全局快捷键");
-        var helper = new WindowInteropHelper(this);
-        HotKeyHelper.Register(helper.Handle, HotkeyId, ModWin, VkF2);
-        ComponentDispatcher.ThreadPreprocessMessage += ComponentDispatcher_ThreadPreprocessMessage;
-    }
+    // private void RegisterHotKeys()
+    // {
+    //     Logger.Info("注册全局快捷键");
+    //     var helper = new WindowInteropHelper(this);
+    //     HotKeyHelper.Register(helper.Handle, HotkeyId, ModWin, VkF2);
+    //     ComponentDispatcher.ThreadPreprocessMessage += ComponentDispatcher_ThreadPreprocessMessage;
+    // }
 
     // 处理热键消息
-    private void ComponentDispatcher_ThreadPreprocessMessage(ref MSG msg, ref bool handled)
-    {
-        if (msg.message != 0x0312 || msg.wParam.ToInt32() != HotkeyId) return; // 0x0312 为 WM_HOTKEY
-        Logger.Info("检测到全局快捷键，显示窗口");
-        ShowWindow(); // 显示窗口
-        handled = true;
-    }
+    // private void ComponentDispatcher_ThreadPreprocessMessage(ref MSG msg, ref bool handled)
+    // {
+    //     if (msg.message != 0x0312 || msg.wParam.ToInt32() != HotkeyId) return; // 0x0312 为 WM_HOTKEY
+    //     Logger.Info("检测到全局快捷键，显示窗口");
+    //     ShowWindow(); // 显示窗口
+    //     handled = true;
+    // }
 
     // 窗口关闭事件处理
     private void MainWindow_Closing(object sender, CancelEventArgs e)
@@ -165,7 +164,7 @@ public partial class MainWindow
     private void ExitApplication()
     {
         Logger.Info("退出应用程序");
-        _notifyIcon.Dispose(); // 释放托盘图标
+        // _notifyIcon.Dispose(); // 释放托盘图标
         Application.Current.Shutdown(); // 退出应用程序
     }
 
@@ -190,24 +189,15 @@ public partial class MainWindow
         base.OnClosed(e);
     }
 
-    private void ShowWindow()
-    {
-        Logger.Info("显示窗口");
-        Show(); // 显示窗口
-        WindowState = WindowState.Normal; // 设置窗口状态
-        Activate(); // 激活窗口
-    }
     private void OptionsButton_Click(object sender, RoutedEventArgs e)
     {
-        if (sender is Button { ContextMenu: not null } button)
-        {
-            // 手动设置 ContextMenu 的位置
-            button.ContextMenu.PlacementTarget = button;
-            button.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+        if (sender is not Button { ContextMenu: not null } button) return;
+        // 手动设置 ContextMenu 的位置
+        button.ContextMenu.PlacementTarget = button;
+        button.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
 
-            // 显示或隐藏 ContextMenu
-            button.ContextMenu.IsOpen = !button.ContextMenu.IsOpen;
-        }
+        // 显示或隐藏 ContextMenu
+        button.ContextMenu.IsOpen = !button.ContextMenu.IsOpen;
     }
 
     private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
