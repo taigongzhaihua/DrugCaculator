@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
@@ -41,7 +41,6 @@
     <PackageReference Include="NCalc.Core" />
     <PackageReference Include="NLog" />
     <PackageReference Include="NPinyin.Core" />
-    <PackageReference Include="System.Data.DataSetExtensions" />
     <PackageReference Include="System.Configuration.ConfigurationManager" />
   </ItemGroup>
   <ItemGroup>
@@ -85,5 +84,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ProjectExtensions><VisualStudio><UserProperties appoptions_1json__JsonSchema="https://cdn.jsdelivr.net/npm/tsup/schema.json" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties appoptions_1json__JsonSchema="https://cdn.jsdelivr.net/npm/tsup/schema.json" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

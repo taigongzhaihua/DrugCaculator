@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace DrugCalculator;
 
-public partial class App
+public partial class App : Application
 {
     // 创建一个静态的命名互斥体，以确保只有一个应用程序实例在运行
     public static Mutex Mutex1 { get; private set; }

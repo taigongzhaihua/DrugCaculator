@@ -29,7 +29,6 @@
     <PackageVersion Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.10" />
     <PackageVersion Include="Stub.System.Data.SQLite.Core.NetFramework" Version="1.0.119.0" />
     <PackageVersion Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
-    <PackageVersion Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageVersion Include="System.Data.SQLite" Version="1.0.119.0" />
     <PackageVersion Include="System.Data.SQLite.Core" Version="1.0.119.0" />
     <PackageVersion Include="System.Data.SQLite.EF6" Version="1.0.119.0" />
