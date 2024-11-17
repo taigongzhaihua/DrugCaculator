@@ -18,6 +18,7 @@ using System.Windows.Input;
 using Application = System.Windows.Application;
 using Button = System.Windows.Controls.Button;
 using MessageBox = System.Windows.MessageBox;
+#pragma warning disable CA1416
 
 namespace DrugCalculator.ViewModels;
 
@@ -192,7 +193,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         {
             Owner = Application.Current.MainWindow
         };
-        apiKeySetter.ShowDialog();
+        apiKeySetter.Show();
     }
 
     // 设置 API 密钥
@@ -275,7 +276,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             var generatedRules = await DeepSeekService.GenerateDrugCalculationRulesAsync(drug);
 
             // 将生成的计算规则存储在药物对象的 CalculationRules 中
-            if (generatedRules != null && generatedRules.Any())
+            if (generatedRules != null && generatedRules.Count != 0)
             {
                 drug.CalculationRules = new ObservableCollection<DrugCalculationRule>(generatedRules);
                 Console.WriteLine($@"共生成{drug.CalculationRules.Count}条规则");
@@ -341,8 +342,8 @@ public class MainWindowViewModel : INotifyPropertyChanged
         {
             // 筛选药物列表，支持中文查找和首字母查找
             var filteredDrugs = new ObservableCollection<Drug>(Drugs.Where(drug =>
-                drug.Name.ToLower().Contains(SearchText) ||
-                PinyinHelper.GetFirstLetter(drug).ToLower().Contains(SearchText.ToLower())).ToList());
+                drug.Name.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) ||
+                PinyinHelper.GetFirstLetter(drug).Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)).ToList());
             DrugsOnList = filteredDrugs;
         }
 
