@@ -16,8 +16,8 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10">
             <Label Content="过滤日志:" VerticalAlignment="Center" />
             <ComboBox Width="150" SelectedValue="{Binding SelectedFilter}"
-                      SelectedValuePath="Content">
-                <ComboBoxItem Content="全部" />
+                      SelectedValuePath="Content" Style="{DynamicResource UnderLineComboBox}">
+                <ComboBoxItem Content="全部" IsSelected="True"/>
                 <ComboBoxItem Content="INFO" />
                 <ComboBoxItem Content="WARN" />
                 <ComboBoxItem Content="ERROR" />
@@ -26,9 +26,101 @@
 
         <!-- 日志显示区域 -->
         <DataGrid ItemsSource="{Binding LogEntriesView}" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True"
-                  Margin="10">
+                  Margin="10"
+                  Background="Black"
+                  HeadersVisibility="Column">
+            <DataGrid.Resources>
+                <!-- 滚动条滑块的样式 -->
+                <Style x:Key="ScrollBarThumbStyle" TargetType="Thumb">
+                    <Setter Property="Width" Value="12"/>
+                    <Setter Property="Background" Value="SlateGray"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Thumb">
+                                <Border Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="0"/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <!-- 滚动条按钮的样式 -->
+                <Style x:Key="ScrollBarLineButtonStyle" TargetType="RepeatButton">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Width" Value="12"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="RepeatButton">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <Rectangle Fill="DarkSlateGray"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style TargetType="ScrollBar">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Width" Value="12"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ScrollBar">
+                                <Grid Background="{TemplateBinding Background}">
+                                    <Track x:Name="PART_Track" IsDirectionReversed="true">
+                                        <Track.DecreaseRepeatButton>
+                                            <RepeatButton Style="{StaticResource ScrollBarLineButtonStyle}" Command="ScrollBar.LineUpCommand" />
+                                        </Track.DecreaseRepeatButton>
+                                        <Track.IncreaseRepeatButton>
+                                            <RepeatButton Style="{StaticResource ScrollBarLineButtonStyle}" Command="ScrollBar.LineDownCommand" />
+                                        </Track.IncreaseRepeatButton>
+                                        <Track.Thumb>
+                                            <Thumb Style="{StaticResource ScrollBarThumbStyle}"/>
+                                        </Track.Thumb>
+                                    </Track>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <!-- 设置表头背景色 -->
+                    <Setter Property="Background" Value="Black"/>
+                    <!-- 设置表头前景色（文本颜色） -->
+                    <Setter Property="Foreground" Value="LightGoldenrodYellow"/>
+                    <!-- 设置表头字体大小 -->
+                    <Setter Property="FontSize" Value="14"/>
+                    <!-- 设置表头字体粗细 -->
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <!-- 设置文本对齐方式 -->
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <!-- 设置表头的高度 -->
+                    <Setter Property="Height" Value="40"/>
+                    <!-- 设置表头的边框 -->
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <!-- 默认背景色 -->
+                    <Setter Property="Background" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="0"></Setter>
+                    <!-- 修改选中单元格的背景色 -->
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="DarkSlateBlue"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="时间" Binding="{Binding Time}" Width="160">
+                <DataGridTextColumn Header="时间" Binding="{Binding Time}"
+                                    Width="160" >
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="FontFamily" Value="宋体" />
@@ -37,13 +129,15 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-
                 <DataGridTextColumn Header="级别" Binding="{Binding Level}" Width="50">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="FontFamily" Value="宋体" />
                             <Setter Property="FontWeight" Value="Black" />
                             <Style.Triggers>
+                                <DataTrigger Binding="{Binding Level}" Value="DEBUG">
+                                    <Setter Property="Foreground" Value="MediumAquamarine" />
+                                </DataTrigger>
                                 <DataTrigger Binding="{Binding Level}" Value="INFO">
                                     <Setter Property="Foreground" Value="DodgerBlue" />
                                 </DataTrigger>
@@ -51,27 +145,29 @@
                                     <Setter Property="Foreground" Value="Coral" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Level}" Value="ERROR">
-                                    <Setter Property="Foreground" Value="Brown" />
+                                    <Setter Property="Foreground" Value="IndianRed" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-
                 <DataGridTextColumn Header="消息" Binding="{Binding Message}" Width="*">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="FontFamily" Value="宋体" />
                             <Setter Property="FontWeight" Value="Bold" />
                             <Style.Triggers>
+                                <DataTrigger Binding="{Binding Level}" Value="DEBUG">
+                                    <Setter Property="Foreground" Value="Aquamarine" />
+                                </DataTrigger>
                                 <DataTrigger Binding="{Binding Level}" Value="INFO">
                                     <Setter Property="Foreground" Value="DeepSkyBlue" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Level}" Value="WARN">
-                                    <Setter Property="Foreground" Value="DarkOrange" />
+                                    <Setter Property="Foreground" Value="LightCoral" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Level}" Value="ERROR">
-                                    <Setter Property="Foreground" Value="IndianRed" />
+                                    <Setter Property="Foreground" Value="PaleVioletRed" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
