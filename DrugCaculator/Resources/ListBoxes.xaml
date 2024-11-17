@@ -83,7 +83,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
-                    <Border CornerRadius="4"
+                    <Border CornerRadius="5"
                             Padding="4"
                             Margin="5"
                             Background="White">
