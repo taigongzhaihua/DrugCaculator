@@ -6,7 +6,6 @@
                          xmlns:viewModels1="clr-namespace:DrugCalculator.ViewModels"
                          xmlns:components="clr-namespace:DrugCalculator.View.Components"
                          xmlns:converters="clr-namespace:DrugCalculator.Utilities.Converters"
-                         xmlns:behaviors="clr-namespace:DrugCalculator.Utilities.Behaviors"
                          ResizeMode="CanResize" WindowStyle="None" AllowsTransparency="True"
                          mc:Ignorable="d" Title="药物查询"
                          Background="Transparent" TitleBarVisibility="Collapsed"

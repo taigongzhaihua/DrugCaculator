@@ -1,4 +1,5 @@
 ﻿using DrugCalculator.Properties;
+using DrugCalculator.View.Components;
 using DrugCalculator.ViewModels;
 using NLog;
 using System;
@@ -16,7 +17,7 @@ using TextBox = System.Windows.Controls.TextBox;
 
 namespace DrugCalculator.View.Windows;
 
-public partial class MainWindow
+public partial class MainWindow : CustomDialog
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -196,7 +197,7 @@ public partial class MainWindow
     {
         Logger.Info("AgeTextBox 预览文本输入事件: " + e.Text);
         // 允许数字和一个小数点
-        var regex = new Regex(@"^[0-9]*");
+        var regex = AgeTextRegex();
         e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
     }
 
@@ -204,7 +205,7 @@ public partial class MainWindow
     {
         Logger.Info("WeightTextBox 预览文本输入事件: " + e.Text);
         // 允许数字和一个小数点
-        var regex = new Regex(@"^[0-9]*(?:\.[0-9]*)?$");
+        var regex = WeightTextRegex();
         e.Handled = !regex.IsMatch(((TextBox)sender).Text.Insert(((TextBox)sender).SelectionStart, e.Text));
     }
 
@@ -213,4 +214,9 @@ public partial class MainWindow
         Logger.Info("SearchTextBox 加载事件");
         InputLanguageManager.SetInputLanguage((TextBox)sender, new CultureInfo("en-US"));
     }
+
+    [GeneratedRegex(@"^[0-9]*")]
+    private static partial Regex AgeTextRegex();
+    [GeneratedRegex(@"^[0-9]*(?:\.[0-9]*)?$")]
+    private static partial Regex WeightTextRegex();
 }
