@@ -12,6 +12,7 @@ namespace DrugCalculator.View.Components;
 
 public class CustomDialog : Window
 {
+    #region 定义和封装依赖属性
     // 使用一个通用方法来注册依赖属性，减少代码冗余
     private static DependencyProperty RegisterDependencyProperty<T>(string propertyName, T defaultValue)
     {
@@ -119,6 +120,7 @@ public class CustomDialog : Window
         get => (Visibility)GetValue(TitleBarVisibilityProperty);
         set => SetValue(TitleBarVisibilityProperty, value);
     }
+    #endregion
 
     // 构造函数，初始化窗口的样式和行为
     public CustomDialog()
