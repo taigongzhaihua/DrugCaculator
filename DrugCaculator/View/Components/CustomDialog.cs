@@ -289,6 +289,10 @@ public class CustomDialog : Window
     {
         try
         {
+            if (WindowState is not WindowState.Normal)
+            {
+                WindowState = WindowState.Normal;
+            }
             DragMove();
         }
         catch (InvalidOperationException)
