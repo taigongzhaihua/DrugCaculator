@@ -19,9 +19,6 @@ public partial class CloseConfirmationDialog
         Logger.Info("初始化 CloseConfirmationDialog 窗口");
         InitializeDefaultSettings();
         Logger.Info("设置对话框的默认设置");
-        DialogHeight = 200;
-        // DialogWidth = 400;
-        Logger.Debug("设置对话框高度为 200");
     }
 
     // 初始化默认设置

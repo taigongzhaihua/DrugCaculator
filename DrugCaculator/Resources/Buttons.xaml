@@ -111,10 +111,9 @@
                     <Grid>
                         <Border x:Name="border"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="2">
-                            <Border.Effect>
-                                <DropShadowEffect Color="SteelBlue" BlurRadius="12" ShadowDepth="3" Opacity="0.5" />
-                            </Border.Effect>
+                                CornerRadius="4"
+                                BorderThickness="0.5"
+                                BorderBrush="DodgerBlue">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center" />
                         </Border>
@@ -168,11 +167,7 @@
                     <Grid>
                         <Border x:Name="border"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="2">
-                            <Border.Effect>
-                                <DropShadowEffect x:Name="Effect"
-                                                  Color="SteelBlue" BlurRadius="12" ShadowDepth="3" Opacity="0.5" />
-                            </Border.Effect>
+                                CornerRadius="4">
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center" />
                         </Border>
@@ -185,14 +180,14 @@
                                                         Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                                         Duration="0:0:0.3"
                                                         To="DodgerBlue" />
-                                        <DoubleAnimation Storyboard.TargetName="Effect"
-                                                         Storyboard.TargetProperty="BlurRadius"
-                                                         Duration="0:0:0.3"
-                                                         To="12" />
-                                        <DoubleAnimation Storyboard.TargetName="Effect"
-                                                         Storyboard.TargetProperty="ShadowDepth"
-                                                         Duration="0:0:0.3"
-                                                         To="3" />
+                                        <!-- <DoubleAnimation Storyboard.TargetName="Effect" -->
+                                        <!--                  Storyboard.TargetProperty="BlurRadius" -->
+                                        <!--                  Duration="0:0:0.3" -->
+                                        <!--                  To="12" /> -->
+                                        <!-- <DoubleAnimation Storyboard.TargetName="Effect" -->
+                                        <!--                  Storyboard.TargetProperty="ShadowDepth" -->
+                                        <!--                  Duration="0:0:0.3" -->
+                                        <!--                  To="3" /> -->
                                     </Storyboard>
                                 </VisualState>
 
@@ -203,14 +198,14 @@
                                                         Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                                         Duration="0:0:0.3"
                                                         To="RoyalBlue" />
-                                        <DoubleAnimation Storyboard.TargetName="Effect"
-                                                         Storyboard.TargetProperty="BlurRadius"
-                                                         Duration="0:0:0.3"
-                                                         To="12" />
-                                        <DoubleAnimation Storyboard.TargetName="Effect"
-                                                         Storyboard.TargetProperty="ShadowDepth"
-                                                         Duration="0:0:0.3"
-                                                         To="3" />
+                                        <!-- <DoubleAnimation Storyboard.TargetName="Effect" -->
+                                        <!--                  Storyboard.TargetProperty="BlurRadius" -->
+                                        <!--                  Duration="0:0:0.3" -->
+                                        <!--                  To="12" /> -->
+                                        <!-- <DoubleAnimation Storyboard.TargetName="Effect" -->
+                                        <!--                  Storyboard.TargetProperty="ShadowDepth" -->
+                                        <!--                  Duration="0:0:0.3" -->
+                                        <!--                  To="3" /> -->
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
@@ -219,15 +214,15 @@
                                         <ColorAnimation Storyboard.TargetName="border"
                                                         Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                                         Duration="0:0:0.3"
-                                                        To="SteelBlue" />
-                                        <DoubleAnimation Storyboard.TargetName="Effect"
-                                                         Storyboard.TargetProperty="BlurRadius"
-                                                         Duration="0:0:0.3"
-                                                         To="12" />
-                                        <DoubleAnimation Storyboard.TargetName="Effect"
-                                                         Storyboard.TargetProperty="ShadowDepth"
-                                                         Duration="0:0:0.3"
-                                                         To="3" />
+                                                        To="CornflowerBlue" />
+                                        <!-- <DoubleAnimation Storyboard.TargetName="Effect" -->
+                                        <!--                  Storyboard.TargetProperty="BlurRadius" -->
+                                        <!--                  Duration="0:0:0.3" -->
+                                        <!--                  To="12" /> -->
+                                        <!-- <DoubleAnimation Storyboard.TargetName="Effect" -->
+                                        <!--                  Storyboard.TargetProperty="ShadowDepth" -->
+                                        <!--                  Duration="0:0:0.3" -->
+                                        <!--                  To="3" /> -->
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
@@ -237,14 +232,14 @@
                                                         Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                                         Duration="0:0:0.3"
                                                         To="DarkGray" />
-                                        <DoubleAnimation Storyboard.TargetName="Effect"
-                                                         Storyboard.TargetProperty="BlurRadius"
-                                                         Duration="0:0:0.3"
-                                                         To="0" />
-                                        <DoubleAnimation Storyboard.TargetName="Effect"
-                                                         Storyboard.TargetProperty="ShadowDepth"
-                                                         Duration="0:0:0.3"
-                                                         To="0" />
+                                        <!-- <DoubleAnimation Storyboard.TargetName="Effect" -->
+                                        <!--                  Storyboard.TargetProperty="BlurRadius" -->
+                                        <!--                  Duration="0:0:0.3" -->
+                                        <!--                  To="0" /> -->
+                                        <!-- <DoubleAnimation Storyboard.TargetName="Effect" -->
+                                        <!--                  Storyboard.TargetProperty="ShadowDepth" -->
+                                        <!--                  Duration="0:0:0.3" -->
+                                        <!--                  To="0" /> -->
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>

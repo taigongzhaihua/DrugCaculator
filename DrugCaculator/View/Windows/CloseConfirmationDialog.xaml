@@ -2,10 +2,10 @@
                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                           xmlns:components1="clr-namespace:DrugCalculator.View.Components"
-                          Title="确认关闭" DialogHeight="200" DialogWidth="400"
+                          Title="确认关闭" DialogHeight="210" DialogWidth="400"
                           Visibility="Visible">
     <StackPanel Margin="10">
-        <TextBlock Text="您希望退出程序还是最小化到托盘？" Margin="10,0,0,10" />
+        <TextBlock Text="您希望退出程序还是最小化到托盘？" Margin="10,0,0,10" Foreground="MidnightBlue"/>
 
         <StackPanel Orientation="Vertical" Margin="40,0">
             <RadioButton x:Name="RbClose" Content="关闭程序" Margin="0,5" />
@@ -16,10 +16,10 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="BtnOk" Content="确定" Width="60" Height="26"
-                    Margin="5" Padding="10" Click="BtnOk_Click"
+                    Margin="0,5,10,20" Padding="10" Click="BtnOk_Click"
                     Style="{DynamicResource DarkButton}" />
             <Button x:Name="BtnCancel" Content="取消" Width="60" Height="26"
-                    Margin="5" Padding="10"
+                    Margin="0,5,10,20" Padding="10"
                     Click="BtnCancel_Click" Style="{DynamicResource LightButton}" />
         </StackPanel>
     </StackPanel>

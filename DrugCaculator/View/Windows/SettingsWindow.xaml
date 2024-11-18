@@ -5,14 +5,16 @@
                          xmlns:converters="clr-namespace:DrugCalculator.Utilities.Converters"
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                         xmlns:viewModels="clr-namespace:DrugCalculator.ViewModels" d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel}"
+                         xmlns:viewModels="clr-namespace:DrugCalculator.ViewModels"
+                         xmlns:controls="clr-namespace:DrugCalculator.View.Controls"
+                         d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel}"
                          mc:Ignorable="d"
                          Title="设置"
                          DialogWidth="550" DialogHeight="450"
                          DialogMinWidth="200" DialogMaxWidth="600"
                          DialogMinHeight="60" DialogMaxHeight="420"
                          TitleAlignment="Center"
-                         TitleColor="MidnightBlue" DialogBackgroundColor="GhostWhite">
+                         TitleColor="SteelBlue" DialogBackgroundColor="White" TitleBarBackground="White">
     <components:CustomDialog.Resources>
         <converters:IsCloseToBoolOrNullConverter x:Key="IsCloseToBoolOrNullConverter" />
     </components:CustomDialog.Resources>
@@ -29,7 +31,7 @@
                 </Grid.RowDefinitions>
 
                 <!-- 关闭选项区域 -->
-                <components:ShadowBorder Width="500"
+                <controls:ShadowBorder Width="500"
                                          Background="White"
                                          CornerRadius="15"
                                          Padding="15"
@@ -56,10 +58,10 @@
                                          IsChecked="{Binding IsCloseSetting, Converter={StaticResource IsCloseToBoolOrNullConverter}, ConverterParameter=Ask, Mode=TwoWay}" />
                         </StackPanel>
                     </Grid>
-                </components:ShadowBorder>
+                </controls:ShadowBorder>
 
                 <!-- ApiKey 设置区域 -->
-                <components:ShadowBorder Grid.Row="1" Width="500"
+                <controls:ShadowBorder Grid.Row="1" Width="500"
                                          Background="White"
                                          CornerRadius="15"
                                          Padding="15"
@@ -82,10 +84,10 @@
                                 Command="{Binding ConfigureApiKeyCommand}" 
                                 CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
                     </Grid>
-                </components:ShadowBorder>
+                </controls:ShadowBorder>
 
                 <!-- 日志级别设置 -->
-                <components:ShadowBorder Grid.Row="2" Width="500"
+                <controls:ShadowBorder Grid.Row="2" Width="500"
                                          Background="White"
                                          CornerRadius="15"
                                          Padding="15,5"
@@ -117,14 +119,14 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding}" HorizontalAlignment="Center" 
-                                                   FontSize="14" FontWeight="Bold" Foreground="RoyalBlue"
+                                                   Foreground="DodgerBlue"
                                                    VerticalAlignment="Center" />
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </StackPanel>
                     </Grid>
-                </components:ShadowBorder>
+                </controls:ShadowBorder>
             </Grid>
         </StackPanel>
     </Grid>

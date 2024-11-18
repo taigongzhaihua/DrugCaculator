@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 
-namespace DrugCalculator.View.Components;
+namespace DrugCalculator.View.Controls;
 
 public class ShadowBorder : Border
 {
@@ -12,12 +12,14 @@ public class ShadowBorder : Border
         // 设置默认的阴影效果
         Effect = new DropShadowEffect
         {
-            Color = Colors.SteelBlue,
+            Color = Colors.DodgerBlue,
             BlurRadius = 15,
-            ShadowDepth = 5,
-            Opacity = 0.5
+            ShadowDepth = 0,
+            Opacity = 0.2
         };
         Background = new SolidColorBrush(Colors.White);
+        BorderThickness = new Thickness(0.6);
+        BorderBrush = new SolidColorBrush(Colors.DeepSkyBlue);
     }
 
     // 可选：提供阴影相关的属性以便自定义

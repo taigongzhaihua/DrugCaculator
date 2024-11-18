@@ -1,5 +1,4 @@
 ﻿using DrugCalculator.Properties;
-using DrugCalculator.View.Components;
 using DrugCalculator.ViewModels;
 using NLog;
 using System;
@@ -17,7 +16,7 @@ using TextBox = System.Windows.Controls.TextBox;
 
 namespace DrugCalculator.View.Windows;
 
-public partial class MainWindow : CustomDialog
+public partial class MainWindow
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 

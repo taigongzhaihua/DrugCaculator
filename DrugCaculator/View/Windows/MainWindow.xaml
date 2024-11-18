@@ -6,6 +6,7 @@
                          xmlns:viewModels1="clr-namespace:DrugCalculator.ViewModels"
                          xmlns:components="clr-namespace:DrugCalculator.View.Components"
                          xmlns:converters="clr-namespace:DrugCalculator.Utilities.Converters"
+                         xmlns:controls="clr-namespace:DrugCalculator.View.Controls"
                          ResizeMode="CanResize" WindowStyle="None" AllowsTransparency="True"
                          mc:Ignorable="d" Title="药物查询"
                          Background="Transparent" TitleBarVisibility="Collapsed"
@@ -29,14 +30,14 @@
         <!-- 左侧：药物列表 -->
         <StackPanel Grid.Column="0"
                     Margin="10,15,10,10">
-            <components:ShadowBorder CornerRadius="15" Padding="15,5" Margin="10,10">
+            <controls:ShadowBorder CornerRadius="15" Padding="15,5" Margin="10,10">
                 <TextBox HorizontalAlignment="Center" x:Name="SearchTextBox"
                          Height="20" Margin="0" Width="230"
                          VerticalContentAlignment="Center"
                          Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
                          BorderThickness="0"
                          Loaded="SearchTextBox_Loaded" />
-            </components:ShadowBorder>
+            </controls:ShadowBorder>
 
             <ListBox Name="DrugList" HorizontalAlignment="Center" Margin="0" Width="265"
                      Style="{DynamicResource CustomListBoxStyle}"
@@ -121,7 +122,7 @@
                 <TextBlock Text="{Binding Title, ElementName=Window}"
                            VerticalAlignment="Center" HorizontalAlignment="Center"
                            Margin="10,0,180,0"
-                           Foreground="MidnightBlue"
+                           Foreground="SteelBlue"
                            FontWeight="DemiBold"
                            FontFamily="宋体"
                            FontSize="14" />
@@ -155,7 +156,7 @@
 
 
             <!-- 上方计算部分 -->
-            <components:ShadowBorder CornerRadius="10" Padding="15" Margin="15,35,15,15"
+            <controls:ShadowBorder CornerRadius="10" Padding="15" Margin="15,35,15,15"
                                      Width="{Binding ElementName=ResultBorder,Path=ActualWidth}">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -164,19 +165,19 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="体重:" FontSize="18" FontFamily="微软雅黑" FontWeight="Black"
-                                   Foreground="MidnightBlue" />
+                                   Foreground="SteelBlue" />
                         <TextBox Name="WeightTextBox" Style="{DynamicResource FlatTextBox}" Width="50"
                                  Text="{Binding Weight, Converter={StaticResource StringToDoubleConverter}, UpdateSourceTrigger=PropertyChanged}"
                                  PreviewTextInput="WeightTextBox_PreviewTextInput" KeyUp="WeightTextBox_KeyUp"
                                  Margin="10,0,0,0" FontFamily="../Fonts/#Source Han Serif SC" FontSize="18" />
                         <TextBlock Text=" kg" FontSize="18" FontFamily="../Fonts/#Source Han Serif SC"
-                                   Foreground="SlateBlue" />
+                                   Foreground="SteelBlue" />
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
                         <TextBlock Text="年龄:" FontSize="18" FontFamily="微软雅黑" FontWeight="Black"
-                                   Foreground="MidnightBlue" />
+                                   Foreground="SteelBlue" />
                         <TextBox Name="AgeTextBox" Style="{DynamicResource FlatTextBox}" Width="50"
                                  Margin="10,0,0,0"
                                  Text="{Binding Age, Converter={StaticResource StringToIntConverter}, UpdateSourceTrigger=PropertyChanged}"
@@ -184,17 +185,17 @@
                                  FontFamily="../Fonts/#Source Han Serif SC" FontSize="18" />
                         <ComboBox Name="AgeUnitComboBox" Style="{DynamicResource UnderLineComboBox}" MinWidth="20"
                                   Margin="5,0,0,0" SelectedValue="{Binding AgeUnit}" SelectedValuePath="Content"
-                                  KeyDown="AgeUnitComboBox_KeyDown" FontSize="18" Foreground="SlateBlue"
+                                  KeyDown="AgeUnitComboBox_KeyDown" FontSize="18" Foreground="SteelBlue"
                                   FontFamily="../Fonts/#Source Han Serif SC">
                             <ComboBoxItem Content="月" />
                             <ComboBoxItem Content="岁" IsSelected="True" />
                         </ComboBox>
                     </StackPanel>
                 </Grid>
-            </components:ShadowBorder>
+            </controls:ShadowBorder>
 
             <!-- 结果显示 -->
-            <components:ShadowBorder CornerRadius="10" Padding="15" Margin="30,15,30,15"
+            <controls:ShadowBorder CornerRadius="10" Padding="15" Margin="30,15,30,15"
                                      x:Name="ResultBorder">
                 <StackPanel Orientation="Vertical">
                     <Grid Margin="0,5">
@@ -205,7 +206,7 @@
                         <TextBox Name="NameTextBox" Grid.Column="0" IsReadOnly="True" HorizontalContentAlignment="Left"
                                  VerticalContentAlignment="Center" Text="{Binding SelectedDrug.Name,Mode=OneWay}"
                                  BorderThickness="0" Background="Transparent" FontFamily="微软雅黑" FontSize="18"
-                                 FontWeight="Bold" Foreground="#008EED" />
+                                 FontWeight="Bold" Foreground="DodgerBlue" />
                         <TextBox Name="SpecificationTextBox" Grid.Column="1" IsReadOnly="True"
                                  HorizontalContentAlignment="Right"
                                  VerticalContentAlignment="Center"
@@ -224,7 +225,7 @@
                         <TextBox IsReadOnly="True" Grid.Column="0" HorizontalContentAlignment="Right"
                                  VerticalContentAlignment="Center" Text="用法：" BorderThickness="0"
                                  Background="Transparent" FontFamily="微软雅黑" FontSize="16"
-                                 FontWeight="Black" Foreground="#008EED" />
+                                 FontWeight="Black" Foreground="DodgerBlue" />
                         <TextBox Name="DosageTextBox" Grid.Column="1" IsReadOnly="True"
                                  HorizontalContentAlignment="Left"
                                  VerticalContentAlignment="Center" Text="{Binding Dosage,Mode=OneWay}"
@@ -240,9 +241,9 @@
                                  FontWeight="Black" FontSize="16" FontFamily="仿宋" Foreground="LightSeaGreen" />
                     </Grid>
                 </StackPanel>
-            </components:ShadowBorder>
+            </controls:ShadowBorder>
 
-            <components:ShadowBorder CornerRadius="10" Padding="15" Margin="15"
+            <controls:ShadowBorder CornerRadius="10" Padding="15" Margin="15"
                                      Width="{Binding ElementName=ResultBorder,Path=ActualWidth}">
                 <StackPanel MaxWidth="650" HorizontalAlignment="Left" Margin="0,10">
                     <TextBlock Text="用法用量（说明书）:" FontWeight="Black" VerticalAlignment="Center" FontSize="18"
@@ -258,7 +259,7 @@
                              Foreground="DarkSlateGray" FontFamily="微软雅黑"
                              BorderThickness="0" Background="Transparent" IsReadOnly="True" />
                 </StackPanel>
-            </components:ShadowBorder>
+            </controls:ShadowBorder>
         </StackPanel>
     </Grid>
 

@@ -1,15 +1,166 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style TargetType="RadioButton">
+    <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="MidnightBlue" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <!-- 图标显示 -->
+                            <TextBlock x:Name="IconTextBlock"
+                                       FontFamily="../Fonts/#iconfont"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,5,0"
+                                       FontSize="16"
+                                       Text="&#xe619;" 
+                                       Foreground="AliceBlue"/>
+
+                            <!-- 显示RadioButton内容 -->
+                            <ContentPresenter x:Name="ContentPresenter"
+                                              VerticalAlignment="Center"
+                                              TextBlock.Foreground="{TemplateBinding Foreground}" />
+                        </StackPanel>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <!-- 未选中状态 -->
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <!-- 图标颜色 -->
+                                        <ColorAnimation Storyboard.TargetName="IconTextBlock"
+                                                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                        To="AliceBlue" Duration="0:0:0.3"/>
+
+                                        <!-- 文字颜色 -->
+                                        <ColorAnimation Storyboard.TargetName="ContentPresenter"
+                                                        Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
+                                                        To="MidnightBlue" Duration="0:0:0.3"/>
+                                    </Storyboard>
+                                </VisualState>
+
+                                <!-- 选中状态 -->
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <!-- 图标颜色 -->
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="IconTextBlock"
+                                                                       Storyboard.TargetProperty="Text">
+                                            <DiscreteObjectKeyFrame KeyTime="10%" Value="&#xe647;" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ColorAnimation Storyboard.TargetName="IconTextBlock"
+                                                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                        To="DodgerBlue" Duration="0:0:0.3"/>
+
+                                        <!-- 文字颜色 -->
+                                        <ColorAnimation Storyboard.TargetName="ContentPresenter"
+                                                        Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
+                                                        To="DodgerBlue" Duration="0:0:0.3"/>
+                                    </Storyboard>
+                                </VisualState>
+
+                                <!-- 鼠标悬停状态 -->
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <!-- 图标颜色 -->
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="IconTextBlock"
+                                                                       Storyboard.TargetProperty="Text">
+                                            <DiscreteObjectKeyFrame KeyTime="10%" Value="&#xe647;" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ColorAnimation Storyboard.TargetName="IconTextBlock"
+                                                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                                                        To="LightSkyBlue" Duration="0:0:0.3"/>
+
+                                        <!-- 文字颜色 -->
+                                        <ColorAnimation Storyboard.TargetName="ContentPresenter"
+                                                        Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
+                                                        To="RoyalBlue" Duration="0:0:0.3"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- 复选框样式 -->
+    <Style TargetType="{x:Type CheckBox}">
         <Setter Property="Foreground" Value="Teal" />
-        <Setter Property="FontWeight" Value="Bold" />
-        <Style.Triggers>
-            <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Foreground" Value="IndianRed" />
-            </Trigger>
-            <Trigger Property="IsChecked" Value="False">
-                <Setter Property="Foreground" Value="Teal" />
-            </Trigger>
-        </Style.Triggers>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <!-- 图标显示 -->
+                            <TextBlock x:Name="IconTextBlock"
+                                       FontFamily="../Fonts/#iconfont"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,5,0"
+                                       FontSize="16"
+                                       Text="&#xe602;"
+                                       Foreground="DodgerBlue"/>
+
+                            <!-- 显示CheckBox内容 -->
+                            <ContentPresenter x:Name="ContentPresenter"
+                                              VerticalAlignment="Center"
+                                              TextBlock.Foreground="{TemplateBinding Foreground}" />
+                        </StackPanel>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <!-- 未选中状态 -->
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <!-- 图标颜色 -->
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="IconTextBlock"
+                                                                       Storyboard.TargetProperty="Text">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="&#xe602;" />
+                                        </ObjectAnimationUsingKeyFrames>
+
+                                        <!-- 文字颜色 -->
+                                        <ColorAnimation Storyboard.TargetName="ContentPresenter"
+                                                        Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
+                                                        To="MidnightBlue" Duration="0:0:0.3"/>
+                                    </Storyboard>
+                                </VisualState>
+
+                                <!-- 选中状态 -->
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <!-- 图标显示切换 -->
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="IconTextBlock"
+                                                                       Storyboard.TargetProperty="Text">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="&#xe601;" />
+                                        </ObjectAnimationUsingKeyFrames>
+
+                                        <!-- 文字颜色 -->
+                                        <ColorAnimation Storyboard.TargetName="ContentPresenter"
+                                                        Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
+                                                        To="DodgerBlue" Duration="0:0:0.3"/>
+                                    </Storyboard>
+                                </VisualState>
+
+                                <!-- 鼠标悬停状态 -->
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <!-- 图标颜色变化 -->
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="IconTextBlock"
+                                                                       Storyboard.TargetProperty="Text">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="&#xe602;" />
+                                        </ObjectAnimationUsingKeyFrames>
+
+                                        <!-- 文字颜色变化 -->
+                                        <ColorAnimation Storyboard.TargetName="ContentPresenter"
+                                                        Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
+                                                        To="RoyalBlue" Duration="0:0:0.3"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

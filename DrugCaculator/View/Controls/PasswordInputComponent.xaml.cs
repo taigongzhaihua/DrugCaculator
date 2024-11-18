@@ -16,17 +16,24 @@ public partial class PasswordInputComponent
 
     private static void OnPasswordChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is PasswordInputComponent component)
-        {
-            component.PasswordBoxX.Password = (string)e.NewValue;
-            component.Password = (string)e.NewValue;
-        }
+        if (d is not PasswordInputComponent component) return;
+        component.PasswordBoxX.Password = (string)e.NewValue;
+        component.Password = (string)e.NewValue;
     }
 
     public string Password
     {
         get => (string)GetValue(PasswordProperty);
         set => SetValue(PasswordProperty, value);
+    }
+
+    public static readonly DependencyProperty IsFocusProperty = DependencyProperty.Register(
+        nameof(IsFocus), typeof(bool), typeof(PasswordInputComponent), new PropertyMetadata(default(bool)));
+
+    public bool IsFocus
+    {
+        get => (bool)GetValue(IsFocusProperty);
+        set => SetValue(IsFocusProperty, value);
     }
 
     public PasswordInputComponent()
