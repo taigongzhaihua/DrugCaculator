@@ -11,7 +11,7 @@
                          DialogMinWidth="200" DialogMaxWidth="500"
                          DialogMinHeight="60" DialogMaxHeight="60"
                          TitleBarVisibility="Collapsed"
-                         DialogBackgroundColor="GhostWhite">
+                         DialogBackgroundColor="White">
     <StackPanel Orientation="Horizontal"
                 HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBlock Text="ApiKey：" VerticalAlignment="Center"

@@ -25,6 +25,8 @@ public enum MsgBoxIcon
 
 public class CustomMessageBox : CustomDialog
 {
+    #region 依赖属性的定义与封装
+
     // 依赖属性定义
     public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(nameof(Message),
         typeof(string), typeof(CustomMessageBox), new PropertyMetadata(string.Empty));
@@ -72,6 +74,7 @@ public class CustomMessageBox : CustomDialog
         get => (string)GetValue(IconFontProperty);
         set => SetValue(IconFontProperty, value);
     }
+    #endregion
 
     private CustomMessageBox()
     {
@@ -120,6 +123,7 @@ public class CustomMessageBox : CustomDialog
         {
             Text = Message,
             MaxWidth = 220,
+            MaxHeight = 50,
             TextWrapping = TextWrapping.Wrap,
             VerticalAlignment = VerticalAlignment.Center,
             IsReadOnly = true,
@@ -149,7 +153,9 @@ public class CustomMessageBox : CustomDialog
         {
             Content = OkButtonText,
             Width = 60,
+            Height = 26,
             Margin = new Thickness(10, 10, 10, 30),
+            Padding = new Thickness(5),
             Style = (Style)Application.Current.FindResource("DarkButton")
         };
 
@@ -164,7 +170,14 @@ public class CustomMessageBox : CustomDialog
         // No按钮
         if (!string.IsNullOrEmpty(NoButtonText))
         {
-            var noButton = new Button { Content = NoButtonText, Width = 60, Margin = new Thickness(10, 10, 10, 30) };
+            var noButton = new Button
+            {
+                Content = NoButtonText,
+                Width = 60,
+                Height = 26,
+                Margin = new Thickness(10, 10, 10, 30),
+                Padding = new Thickness(5)
+            };
             noButton.Click += (_, _) =>
             {
                 DialogResult = false;
@@ -184,7 +197,14 @@ public class CustomMessageBox : CustomDialog
         if (!string.IsNullOrEmpty(CancelButtonText))
         {
             var cancelButton = new Button
-                { Content = CancelButtonText, Width = 60, Margin = new Thickness(10, 10, 10, 30) };
+            {
+                Content = CancelButtonText,
+                Width = 60,
+                Height = 26,
+                Margin = new Thickness(10, 10, 10, 30),
+                Padding = new Thickness(5)
+
+            };
             cancelButton.Click += (_, _) =>
             {
                 DialogResult = null;
@@ -342,6 +362,11 @@ public class CustomMessageBox : CustomDialog
                 messageBox.OkButtonText = "是";
                 messageBox.NoButtonText = "否";
                 messageBox.CancelButtonText = "取消";
+                break;
+            default:
+                messageBox.OkButtonText = null;
+                messageBox.NoButtonText = null;
+                messageBox.CancelButtonText = null;
                 break;
         }
     }

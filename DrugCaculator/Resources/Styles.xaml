@@ -29,6 +29,10 @@
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
                                         <!-- 图标颜色 -->
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="IconTextBlock"
+                                                                       Storyboard.TargetProperty="Text">
+                                            <DiscreteObjectKeyFrame KeyTime="90%" Value="&#xe619;" />
+                                        </ObjectAnimationUsingKeyFrames>
                                         <ColorAnimation Storyboard.TargetName="IconTextBlock"
                                                         Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
                                                         To="AliceBlue" Duration="0:0:0.3"/>
