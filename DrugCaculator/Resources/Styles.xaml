@@ -31,7 +31,7 @@
                                         <!-- 图标颜色 -->
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="IconTextBlock"
                                                                        Storyboard.TargetProperty="Text">
-                                            <DiscreteObjectKeyFrame KeyTime="90%" Value="&#xe619;" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.22" Value="&#xe619;" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ColorAnimation Storyboard.TargetName="IconTextBlock"
                                                         Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
@@ -50,7 +50,7 @@
                                         <!-- 图标颜色 -->
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="IconTextBlock"
                                                                        Storyboard.TargetProperty="Text">
-                                            <DiscreteObjectKeyFrame KeyTime="10%" Value="&#xe647;" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.08" Value="&#xe647;" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ColorAnimation Storyboard.TargetName="IconTextBlock"
                                                         Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
@@ -69,7 +69,7 @@
                                         <!-- 图标颜色 -->
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="IconTextBlock"
                                                                        Storyboard.TargetProperty="Text">
-                                            <DiscreteObjectKeyFrame KeyTime="10%" Value="&#xe647;" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.08" Value="&#xe647;" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ColorAnimation Storyboard.TargetName="IconTextBlock"
                                                         Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
