@@ -197,7 +197,7 @@
                                         <ColorAnimation Storyboard.TargetName="border"
                                                         Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                                         Duration="0:0:0.3"
-                                                        To="RoyalBlue" />
+                                                        To="CornflowerBlue" />
                                         <!-- <DoubleAnimation Storyboard.TargetName="Effect" -->
                                         <!--                  Storyboard.TargetProperty="BlurRadius" -->
                                         <!--                  Duration="0:0:0.3" -->
@@ -214,7 +214,7 @@
                                         <ColorAnimation Storyboard.TargetName="border"
                                                         Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
                                                         Duration="0:0:0.3"
-                                                        To="CornflowerBlue" />
+                                                        To="RoyalBlue" />
                                         <!-- <DoubleAnimation Storyboard.TargetName="Effect" -->
                                         <!--                  Storyboard.TargetProperty="BlurRadius" -->
                                         <!--                  Duration="0:0:0.3" -->
