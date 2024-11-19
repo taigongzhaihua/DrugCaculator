@@ -28,6 +28,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <!-- 关闭选项区域 -->
@@ -125,6 +126,27 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </StackPanel>
+                    </Grid>
+                </controls:ShadowBorder>
+
+                <!-- 设置开机自启 -->
+                <controls:ShadowBorder Grid.Row="3" Width="500"
+                                       Background="White"
+                                       CornerRadius="15"
+                                       Padding="15"
+                                       Margin="10"
+                                       VerticalAlignment="Center">
+                    <Grid VerticalAlignment="Center"
+                          Margin="0,0,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="开机启动"
+                                   FontSize="14" Foreground="MidnightBlue" FontWeight="Bold"
+                                   VerticalAlignment="Center" />
+                        <CheckBox Grid.Column="1" Content="开机启动" Margin="5" HorizontalAlignment="Right"
+                                  IsChecked="{Binding IsAutoStart, Mode=TwoWay}" />
                     </Grid>
                 </controls:ShadowBorder>
             </Grid>

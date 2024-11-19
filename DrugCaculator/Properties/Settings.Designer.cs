@@ -58,5 +58,17 @@ namespace DrugCalculator.Properties {
                 this["LogLevel"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsAutoStart {
+            get {
+                return ((bool)(this["IsAutoStart"]));
+            }
+            set {
+                this["IsAutoStart"] = value;
+            }
+        }
     }
 }

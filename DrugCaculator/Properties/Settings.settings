@@ -11,5 +11,8 @@
     <Setting Name="LogLevel" Type="System.String" Scope="User">
       <Value Profile="(Default)">Info</Value>
     </Setting>
+    <Setting Name="IsAutoStart" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

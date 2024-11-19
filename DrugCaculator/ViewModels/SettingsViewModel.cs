@@ -51,7 +51,24 @@ public class SettingsViewModel : INotifyPropertyChanged
             LoggerService.SetLogLevel(level);
         }
     }
-
+    private bool _isAutoStart;
+    public bool IsAutoStart
+    {
+        get => _isAutoStart;
+        set
+        {
+            SetProperty(ref _isAutoStart, value);
+            SaveSetting(ref value, "IsAutoStart");
+            if (value)
+            {
+                StartupService.SetStartup();
+            }
+            else
+            {
+                StartupService.RemoveStartup();
+            }
+        }
+    }
     // 配置 API 密钥的命令
     public ICommand ConfigureApiKeyCommand { get; set; }
     public List<string> LogLevelOptions { get; set; }
@@ -61,6 +78,7 @@ public class SettingsViewModel : INotifyPropertyChanged
     {
         Logger.Info("初始化 SettingsViewModel");
         LoadSetting(out _isCloseSetting, "IsClose");
+        LoadSetting(out _isAutoStart, "IsAutoStart");
         LogLevelOptions = ConfigurationService.GetOption("LogLevelOptions");
         LogLevelValue = LoggerService.GetSavedLogLevel().Ordinal;
         ConfigureApiKeyCommand = new RelayCommand(OpenApiKeyDialog);
@@ -76,7 +94,6 @@ public class SettingsViewModel : INotifyPropertyChanged
     // 保存设置
     private static void SaveSetting<T>(ref T property, string settingName)
     {
-        Logger.Info("保存 IsClose 设置到设置文件");
         Properties.Settings.Default[settingName] = property;
         Properties.Settings.Default.Save();
     }
