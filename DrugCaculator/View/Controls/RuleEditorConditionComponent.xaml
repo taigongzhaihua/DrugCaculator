@@ -1,37 +1,38 @@
-﻿<UserControl
+﻿<UserControl x:Class="DrugCalculator.View.Controls.RuleEditorConditionComponent"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:DrugCalculator.View.Controls" x:Class="DrugCalculator.View.Controls.RuleEditorConditionComponent"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:DrugCalculator.View.Controls"
              mc:Ignorable="d"
              Height="Auto" Width="Auto">
-    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" DataContext="{Binding ConditionRow, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"
-                >
 
+    <!-- 注：由于母控件中绑定传入的数据是 conditionRow ，所以这里的 DataContext 是 conditionRow ，绑定数据时，若不特别指明对象，将默认在conditionRow 中查找数据。 -->
+
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" >
+
+        <!-- 条件类型下拉框 -->
         <ComboBox MinWidth="20" Style="{DynamicResource FlatComboBox}"
                   x:Name="ConditionTypeComboBox" SelectionChanged="OnConditionTypeChanged"
                   SelectedItem="{Binding ConditionType}"
-                  ItemsSource="{Binding ConditionTypeOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"
-                  />
+                  ItemsSource="{Binding ConditionTypeOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"/>
 
+        <!-- 比较符号下拉框 -->
         <ComboBox MinWidth="20" Style="{DynamicResource FlatComboBox}"
                   x:Name="ComparisonComboBox" SelectionChanged="OnComparisonChanged"
                   SelectedItem="{Binding Comparison}"
                   ItemsSource="{Binding ComparisonOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"/>
-
-        <!-- 单位部分 -->
 
         <!-- 数值输入框 -->
         <TextBox MinWidth="20" Style="{DynamicResource FlatTextBox}"
                  x:Name="ValueTextBox" TextChanged="OnValueChanged"
                  Text="{Binding Value, Mode=TwoWay}" />
 
-        <!-- 下拉框切换部分 -->
+        <!-- 单位下拉框 -->
         <ComboBox MinWidth="15" Style="{DynamicResource FlatComboBox}"
                   x:Name="UnitComboBox" SelectionChanged="OnUnitChanged"
                   SelectedItem="{Binding Unit}"
-                  ItemsSource="{Binding ConditionUnitOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"
-                  />
+                  ItemsSource="{Binding ConditionUnitOptions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:RuleEditorConditionComponent}}}"/>
 
         <!-- 删除按钮 -->
         <Button Content="&#xE95E;" Style="{DynamicResource MinusButton}" x:Name="DeleteButton"
