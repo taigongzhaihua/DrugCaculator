@@ -44,4 +44,62 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style TargetType="ToggleButton" x:Key="ComboBoxToggleButton">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Grid>
+                        <Border x:Name="Border"
+                            Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="0">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="Border" 
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                        Duration="0:0:0.3" 
+                                                        To="Azure"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="Border" 
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                        Duration="0:0:0.3" 
+                                                        To="LightSkyBlue"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="Border" 
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                        Duration="0:0:0.3" 
+                                                        To="LightSkyBlue"/>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="Border" 
+                                                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                                        Duration="0:0:0.3" 
+                                                        To="Transparent"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

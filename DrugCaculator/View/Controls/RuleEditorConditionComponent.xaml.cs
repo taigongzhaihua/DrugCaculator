@@ -318,11 +318,13 @@ public partial class RuleEditorConditionComponent : INotifyPropertyChanged
             {
                 ConditionUnitOptions = ["岁", "月"]; // 年龄的单位为“岁”或“月”
                 UnitComboBox.SelectedItem = string.IsNullOrEmpty(ConditionRow.Unit) ? "岁" : ConditionRow.Unit; // 如果没有设置单位，默认为“岁”
+                UnitComboBox.IsEnabled = true; // 年龄需要单位，启用单位选择
             }
             else
             {
                 ConditionUnitOptions = ["Kg"]; // 其他条件类型默认为“Kg”
                 UnitComboBox.SelectedItem = "Kg";
+                UnitComboBox.IsEnabled = false; // 其他条件类型不需要单位，禁用单位选择
             }
         }
         catch (Exception ex)

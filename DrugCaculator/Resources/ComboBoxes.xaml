@@ -8,33 +8,36 @@
                     <Grid>
                         <!-- 下拉按钮 -->
                         <ToggleButton Name="ToggleButton"
-                                      Focusable="False"
-                                      IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                      ClickMode="Press"
-                                      Background="Transparent"
-                                      BorderThickness="0" />
+                                  Focusable="False"
+                                  IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                  ClickMode="Press"
+                                  Background="{TemplateBinding Background}"
+                                  BorderThickness="0" 
+                                  Style="{DynamicResource ComboBoxToggleButton}"/>
 
                         <!-- 内容显示区域 -->
                         <ContentPresenter Name="ContentSite"
-                                          IsHitTestVisible="False"
-                                          Content="{TemplateBinding SelectionBoxItem}"
-                                          ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                          Margin="2,5"
-                                          VerticalAlignment="Center"
-                                          HorizontalAlignment="Left" />
+                                      IsHitTestVisible="False"
+                                      Content="{TemplateBinding SelectionBoxItem}"
+                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                      Margin="2,5"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Left" 
+                                      TextBlock.Foreground="{TemplateBinding Foreground}"/>
 
                         <!-- 下拉列表部分 -->
                         <Popup Name="Popup"
-                               Placement="Bottom"
-                               IsOpen="{TemplateBinding IsDropDownOpen}"
-                               AllowsTransparency="True"
-                               Focusable="False"
-                               PopupAnimation="Slide">
-                            <Border BorderThickness="1" BorderBrush="Gray" Background="White">
+                           Placement="Bottom"
+                           IsOpen="{TemplateBinding IsDropDownOpen}"
+                           AllowsTransparency="True"
+                           Focusable="False"
+                           PopupAnimation="Slide">
+                            <Border BorderThickness="0.5" BorderBrush="Gray" CornerRadius="5"
+                                Background="White">
                                 <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
                                     <StackPanel IsItemsHost="True"
-                                                KeyboardNavigation.DirectionalNavigation="Contained" />
+                                            KeyboardNavigation.DirectionalNavigation="Contained" />
                                 </ScrollViewer>
                             </Border>
                         </Popup>
@@ -44,12 +47,22 @@
         </Setter>
 
         <!-- 设置其他样式属性 -->
-        <Setter Property="Foreground" Value="Green" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="4,8" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="FontFamily" Value="../Fonts/#iconfont" />
+
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="CadetBlue" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="True">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="Green" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
+
+
     <!-- 下划线下拉框 -->
     <Style x:Key="UnderLineComboBox" TargetType="ComboBox">
         <Setter Property="Template">
