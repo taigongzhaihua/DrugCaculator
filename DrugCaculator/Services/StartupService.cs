@@ -1,4 +1,5 @@
 ﻿using IWshRuntimeLibrary;
+using NLog;
 using System;
 using System.IO;
 using File = System.IO.File;
@@ -10,58 +11,32 @@ namespace DrugCalculator.Services
 {
     public class StartupService
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         // 静态公共方法：设置开机启动
         public static void SetStartup()
         {
             // 获取当前目录的路径
             var currentDirectory = Directory.GetCurrentDirectory();
 
-            // 定义 VBS 文件路径和快捷方式路径
-            var vbsFilePath = Path.Combine(currentDirectory, "StartApp.vbs");
+            // 定义程序路径和快捷方式路径
+            var targetPath = Path.Combine(currentDirectory, "DrugCalculator.exe");
             var shortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "DrugCalculator.lnk");
 
-            // 创建 VBS 文件
-            CreateVbsFile(vbsFilePath);
-
             // 创建快捷方式
-            CreateShortcut(shortcutPath, vbsFilePath);
-
-            Console.WriteLine(@"VBS 文件和快捷方式已成功创建到启动菜单。");
+            CreateShortcut(shortcutPath, targetPath);
+            Logger.Info("设置开机启动成功！");
         }
 
         // 静态公共方法：删除开机启动
         public static void RemoveStartup()
         {
-            // 获取当前目录的路径
-            var currentDirectory = Directory.GetCurrentDirectory();
-
-            // 定义 VBS 文件路径和快捷方式路径
-            var vbsFilePath = Path.Combine(currentDirectory, "StartApp.vbs");
+            // 定义快捷方式路径
             var shortcutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "DrugCalculator.lnk");
-
-            // 删除 VBS 文件
-            if (File.Exists(vbsFilePath))
-            {
-                File.Delete(vbsFilePath);
-                Console.WriteLine(@"VBS 文件已删除。");
-            }
 
             // 删除快捷方式
             if (!File.Exists(shortcutPath)) return;
             File.Delete(shortcutPath);
-            Console.WriteLine(@"快捷方式已删除。");
-        }
-
-        // 私有静态方法：创建 VBS 文件
-        private static void CreateVbsFile(string vbsFilePath)
-        {
-            // VBS 脚本内容，用于运行 DrugCalculator.exe 并隐藏窗口
-            const string vbsContent = "Set WshShell = CreateObject(\"WScript.Shell\")\n" +
-                                      "WshShell.Run \"\"\"DrugCalculator.exe\"\"\", 0, False";
-
-            // 将 VBS 内容写入文件
-            File.WriteAllText(vbsFilePath, vbsContent);
-            Console.WriteLine(@"VBS 文件已创建。");
+            Logger.Info("删除开机启动成功！");
         }
 
         // 私有静态方法：创建快捷方式
@@ -84,7 +59,7 @@ namespace DrugCalculator.Services
 
             // 保存快捷方式
             shortcut.Save();
-            Console.WriteLine(@"快捷方式已创建，并添加到启动菜单。");
+            Logger.Info("创建快捷方式成功！");
         }
     }
 }

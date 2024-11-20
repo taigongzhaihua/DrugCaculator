@@ -54,38 +54,50 @@ public class SettingsViewModel : INotifyPropertyChanged
     private bool _isAutoStart;
     public bool IsAutoStart
     {
-        get => _isAutoStart;
+        get
+        {
+            LoadSetting(ref _isAutoStart, "IsAutoStart");
+            return _isAutoStart;
+        }
         set
         {
             SetProperty(ref _isAutoStart, value);
             SaveSetting(ref value, "IsAutoStart");
-            if (value)
-            {
-                StartupService.SetStartup();
-            }
-            else
-            {
-                StartupService.RemoveStartup();
-            }
+            Logger.Info($"IsAutoStart 属性已更新为: {value}");
+
         }
     }
     // 配置 API 密钥的命令
     public ICommand ConfigureApiKeyCommand { get; set; }
     public List<string> LogLevelOptions { get; set; }
+    public ICommand SetAutoStartCommand { get; set; }
 
     // 构造函数
     public SettingsViewModel()
     {
         Logger.Info("初始化 SettingsViewModel");
-        LoadSetting(out _isCloseSetting, "IsClose");
-        LoadSetting(out _isAutoStart, "IsAutoStart");
+        LoadSetting(ref _isCloseSetting, "IsClose");
+        LoadSetting(ref _isAutoStart, "IsAutoStart");
         LogLevelOptions = ConfigurationService.GetOption("LogLevelOptions");
         LogLevelValue = LoggerService.GetSavedLogLevel().Ordinal;
         ConfigureApiKeyCommand = new RelayCommand(OpenApiKeyDialog);
+        SetAutoStartCommand = new RelayCommand(SetAutoStart);
+    }
+
+    private void SetAutoStart(object sender)
+    {
+        if (_isAutoStart)
+        {
+            StartupService.SetStartup();
+        }
+        else
+        {
+            StartupService.RemoveStartup();
+        }
     }
 
     // 加载设置
-    private static void LoadSetting<T>(out T property, string settingName)
+    private static void LoadSetting<T>(ref T property, string settingName)
     {
         Logger.Info("从设置中加载 IsClose 设置");
         property = (T)Properties.Settings.Default[settingName];
