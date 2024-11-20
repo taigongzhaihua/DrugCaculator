@@ -16,9 +16,9 @@ public class SettingsViewModel : INotifyPropertyChanged
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private static readonly ConfigurationService ConfigurationService = ConfigurationService.Instance;
+
     // 是否关闭设置的属性
     private string _isCloseSetting;
-
     public string IsCloseSetting
     {
         get => _isCloseSetting;
@@ -31,7 +31,6 @@ public class SettingsViewModel : INotifyPropertyChanged
     }
 
     private double _logLevelValue;
-
     public double LogLevelValue
     {
         get => _logLevelValue;
