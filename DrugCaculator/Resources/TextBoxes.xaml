@@ -21,4 +21,31 @@
         <Setter Property="FontFamily" Value="楷体" />
         <Setter Property="FontWeight" Value="Thin" />
     </Style>
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border Background="Transparent" BorderThickness="0">
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="False" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="#152736"/>
+    </Style>
+    <Style TargetType="{x:Type PasswordBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="PasswordBox">
+                    <Border Background="Transparent" BorderThickness="0">
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="False" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="#152736"/>
+    </Style>
+    <Style TargetType="{x:Type TextBlock}" x:Key="NormalStyle">
+        <Setter Property="Foreground" Value="#152736"/>
+    </Style>
 </ResourceDictionary>

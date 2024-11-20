@@ -76,7 +76,8 @@
                                       ClickMode="Release"
                                       Background="Transparent"
                                       BorderBrush="CadetBlue"
-                                      BorderThickness="0,0,0,1" />
+                                      BorderThickness="0,0,0,1" 
+                                      Style="{DynamicResource ComboBoxToggleButton}"/>
 
                         <!-- 内容显示区域 -->
                         <ContentPresenter Name="ContentSite"

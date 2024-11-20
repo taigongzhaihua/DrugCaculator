@@ -34,7 +34,8 @@
 
         <!-- 药物名称 -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,5">
-            <TextBlock Text="药物名称:" VerticalAlignment="Top" Width="80" FontWeight="Bold" Margin="0,5,0,0" FontSize="14" />
+            <TextBlock Text="药物名称:" VerticalAlignment="Top" Width="80" FontWeight="Bold" Margin="0,5,0,0" FontSize="14"
+                       Style="{DynamicResource NormalStyle}"/>
             <TextBox Text="{Binding Drug.Name, UpdateSourceTrigger=PropertyChanged}"
                      MinWidth="400" MaxWidth="400"
                      Style="{DynamicResource FlatTextBox}"
@@ -45,7 +46,8 @@
         </StackPanel>
         <!-- 规格 -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,5">
-            <TextBlock Text="规格:" VerticalAlignment="Top" Width="80" FontWeight="Bold" Margin="0,5,0,0" FontSize="14" />
+            <TextBlock Text="规格:" VerticalAlignment="Top" Width="80" FontWeight="Bold" Margin="0,5,0,0" FontSize="14"
+                       Style="{DynamicResource NormalStyle}"/>
             <TextBox Text="{Binding Drug.Specification, UpdateSourceTrigger=PropertyChanged}"
                      MinWidth="400" MaxWidth="400"
                      Style="{DynamicResource FlatTextBox}"
@@ -56,7 +58,8 @@
         </StackPanel>
         <!-- 用法 -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,5">
-            <TextBlock Text="用法:" VerticalAlignment="Top" Width="80" FontWeight="Bold" Margin="0,5,0,0" FontSize="14" />
+            <TextBlock Text="用法:" VerticalAlignment="Top" Width="80" FontWeight="Bold" Margin="0,5,0,0" FontSize="14"
+                       Style="{DynamicResource NormalStyle}"/>
             <TextBox Text="{Binding Drug.Usage, UpdateSourceTrigger=PropertyChanged}"
                      MinWidth="400" MaxWidth="400"
                      Style="{DynamicResource FlatTextBox}"
@@ -68,7 +71,8 @@
 
         <!-- 药物描述 -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,5">
-            <TextBlock Text="药物描述:" VerticalAlignment="Top" Width="80" FontWeight="Bold" Margin="0,5,0,0" FontSize="14" />
+            <TextBlock Text="药物描述:" VerticalAlignment="Top" Width="80" FontWeight="Bold" Margin="0,5,0,0" FontSize="14"
+                       Style="{DynamicResource NormalStyle}"/>
             <TextBox Text="{Binding Drug.Description, UpdateSourceTrigger=PropertyChanged}"
                      MinWidth="400" MaxWidth="400"
                      Style="{DynamicResource FlatTextBox}"
@@ -79,7 +83,9 @@
         </StackPanel>
 
         <!-- 计算规则列表 -->
-        <GroupBox x:Name="GroupBox" Header="计算规则" Grid.Row="4" Margin="0,10" FontWeight="Bold" FontSize="14">
+        <GroupBox x:Name="GroupBox" Header="计算规则" Grid.Row="4" Margin="0,10" FontWeight="Bold" FontSize="14"
+                  BorderThickness="0.8" 
+                  Foreground="#152736">
             <StackPanel>
                 <ListBox Name="RuleList"
                          Style="{DynamicResource EditorListBoxStyle}"

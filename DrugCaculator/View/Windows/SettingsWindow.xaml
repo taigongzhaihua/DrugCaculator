@@ -145,7 +145,7 @@
                         <TextBlock Text="开机启动"
                                    FontSize="14" Foreground="MidnightBlue" FontWeight="Bold"
                                    VerticalAlignment="Center" />
-                        <CheckBox Grid.Column="1" Content="开机启动" Margin="5" HorizontalAlignment="Right"
+                        <CheckBox Grid.Column="1" Content="开机启动药物查询" Margin="5" HorizontalAlignment="Right"
                                   IsChecked="{Binding IsAutoStart}"
                                   Command="{Binding SetAutoStartCommand}"/>
                     </Grid>

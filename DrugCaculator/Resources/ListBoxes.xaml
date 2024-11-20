@@ -185,11 +185,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
                     <Border CornerRadius="4"
-                            Padding="4"
-                            Margin="5"
+                            Padding="0"
+                            Margin="0"
                             Background="White"
                             BorderBrush="LightSlateGray"
-                            BorderThickness="0.5">
+                            BorderThickness="0">
                         <ScrollViewer Padding="0,10">
                             <ItemsPresenter />
                         </ScrollViewer>
@@ -204,7 +204,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
                     <Grid>
-                        <Border Name="ItemBorder" Margin="5,2" Padding="15,2"
+                        <Border Name="ItemBorder" Margin="5,2" Padding="5,2"
                                 CornerRadius="5"
                                 Background="{TemplateBinding Background}">
                             <ContentPresenter />

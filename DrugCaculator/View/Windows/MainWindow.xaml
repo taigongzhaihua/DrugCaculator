@@ -36,7 +36,9 @@
                          VerticalContentAlignment="Center"
                          Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
                          BorderThickness="0"
-                         Loaded="SearchTextBox_Loaded" />
+                         Loaded="SearchTextBox_Loaded" 
+                         Background="Transparent"
+                         />
             </controls:ShadowBorder>
 
             <ListBox Name="DrugList" HorizontalAlignment="Center" Margin="0" Width="265"

@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+// ReSharper disable RedundantAssignment
 
 namespace DrugCalculator.ViewModels;
 
