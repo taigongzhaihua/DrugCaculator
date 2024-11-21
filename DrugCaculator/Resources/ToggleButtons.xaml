@@ -103,9 +103,9 @@
         </Setter>
     </Style>
     <!-- 开关按钮 -->
-    <Color x:Key="OpenColor" >DodgerBlue</Color>
+    <Color x:Key="OpenColor" >DeepSkyBlue</Color>
     <Color x:Key="CloseColor">Coral</Color>
-    <Brush x:Key="OpenBrush">DodgerBlue</Brush>
+    <Brush x:Key="OpenBrush">DeepSkyBlue</Brush>
     <Brush x:Key="CloseBrush">Coral</Brush>
     <Style TargetType="ToggleButton" x:Key="Toggle">
         <Setter Property="Template">
@@ -115,30 +115,37 @@
                         <ContentPresenter HorizontalAlignment="Center" 
                                           VerticalAlignment="Center"/>
                         <Border x:Name="Border"
-                                Width="52" Height="26"
+                                Width="54" Height="26"
                                 CornerRadius="13"
-                                BorderThickness="1.5"
+                                BorderThickness="2"
                                 Background="{StaticResource CloseBrush}"
                                 BorderBrush="Azure">
                             <Border.Effect>
-                                <DropShadowEffect BlurRadius="15" ShadowDepth="0" x:Name="ShadowEffect"
-                                                  Color="{StaticResource CloseColor}" Opacity="0.5"/>
+                                <DropShadowEffect BlurRadius="6" ShadowDepth="0" x:Name="ShadowEffect"
+                                                  Color="{StaticResource CloseColor}" Opacity="0.4"/>
                             </Border.Effect>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Border Width="0" Background="Transparent" x:Name="OpenSpace"/>
                                 <TextBlock x:Name="OpenBlock" 
                                            Foreground="Azure" Text="开" 
                                            VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           FontSize="14" Width="0"/>
+                                           FontSize="14" FontWeight="Bold"
+                                           Width="0"/>
                                 <Border Width="{Binding ElementName=OpenSpace,Path=ActualWidth}" Background="Transparent"/>
                                 <Ellipse VerticalAlignment="Center" x:Name="Ellipse"
                                          Width="16" Height="16" Margin="3"
-                                         Fill="Azure"/>
+                                         Fill="Azure">
+                                    <Ellipse.Effect>
+                                        <DropShadowEffect BlurRadius="0" ShadowDepth="0" Color="White" Opacity="1"
+                                                          x:Name="EllipseShine"/>
+                                    </Ellipse.Effect>
+                                </Ellipse>
                                 <Border Width="7" Background="Transparent" x:Name="CloseSpace"/>
                                 <TextBlock x:Name="CloseBlock"
                                            Foreground="Azure" Text="关"
                                            VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           FontSize="14" Width="14"/>
+                                           FontSize="14" FontWeight="Bold"
+                                           Width="14"/>
                                 <Border Width="{Binding ElementName=CloseSpace,Path=ActualWidth}" Background="Transparent"/>
                             </StackPanel>
                         </Border>
@@ -218,6 +225,28 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
+                        <Grid.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="EllipseShine"
+                                                        Storyboard.TargetProperty="BlurRadius"
+                                                        Duration="0:0:0.3"
+                                                        To="10"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="EllipseShine"
+                                                         Storyboard.TargetProperty="BlurRadius"
+                                                         Duration="0:0:0.3"
+                                                         To="0"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Grid.Triggers>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
