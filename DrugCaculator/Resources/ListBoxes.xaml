@@ -87,8 +87,7 @@
                             Padding="4"
                             Margin="5"
                             Background="White"
-                            BorderThickness="0.6"
-                            BorderBrush="DeepSkyBlue">
+                            BorderThickness="0">
                         <Border.Effect>
                             <DropShadowEffect x:Name="Effect"
                                               Color="DodgerBlue" BlurRadius="15" ShadowDepth="0" Opacity="0.2" />

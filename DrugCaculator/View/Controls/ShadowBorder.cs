@@ -18,8 +18,8 @@ public class ShadowBorder : Border
             Opacity = 0.2
         };
         Background = new SolidColorBrush(Colors.White);
-        BorderThickness = new Thickness(0.6);
-        BorderBrush = new SolidColorBrush(Colors.DeepSkyBlue);
+        BorderThickness = new Thickness(0);
+        // BorderBrush = new SolidColorBrush(Colors.DeepSkyBlue);
     }
 
     // 可选：提供阴影相关的属性以便自定义

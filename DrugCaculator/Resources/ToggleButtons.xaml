@@ -103,10 +103,10 @@
         </Setter>
     </Style>
     <!-- 开关按钮 -->
-    <Color x:Key="OpenColor" >DeepSkyBlue</Color>
-    <Color x:Key="CloseColor">Coral</Color>
-    <Brush x:Key="OpenBrush">DeepSkyBlue</Brush>
-    <Brush x:Key="CloseBrush">Coral</Brush>
+    <Color x:Key="OpenColor" >LightSeaGreen</Color>
+    <Color x:Key="CloseColor">Salmon</Color>
+    <Brush x:Key="OpenBrush">LightSeaGreen</Brush>
+    <Brush x:Key="CloseBrush">Salmon</Brush>
     <Style TargetType="ToggleButton" x:Key="Toggle">
         <Setter Property="Template">
             <Setter.Value>
@@ -115,23 +115,22 @@
                         <ContentPresenter HorizontalAlignment="Center" 
                                           VerticalAlignment="Center"/>
                         <Border x:Name="Border"
-                                Width="54" Height="26"
-                                CornerRadius="13"
-                                BorderThickness="2"
+                                Width="50" Height="22"
+                                CornerRadius="11"
+                                BorderThickness="0"
                                 Background="{StaticResource CloseBrush}"
                                 BorderBrush="Azure">
                             <Border.Effect>
-                                <DropShadowEffect BlurRadius="6" ShadowDepth="0" x:Name="ShadowEffect"
-                                                  Color="{StaticResource CloseColor}" Opacity="0.4"/>
+                                <DropShadowEffect BlurRadius="26" ShadowDepth="0" x:Name="ShadowEffect"
+                                                  Color="{StaticResource CloseColor}" Opacity="0.2"/>
                             </Border.Effect>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Border Width="0" Background="Transparent" x:Name="OpenSpace"/>
+                                <!-- <Border Width="0" Background="Transparent" x:Name="OpenSpace"/> -->
                                 <TextBlock x:Name="OpenBlock" 
-                                           Foreground="Azure" Text="开" 
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           FontSize="14" FontWeight="Bold"
+                                           Foreground="Azure" Text="☰" FontFamily="黑体"
+                                           TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           FontSize="14"
                                            Width="0"/>
-                                <Border Width="{Binding ElementName=OpenSpace,Path=ActualWidth}" Background="Transparent"/>
                                 <Ellipse VerticalAlignment="Center" x:Name="Ellipse"
                                          Width="16" Height="16" Margin="3"
                                          Fill="Azure">
@@ -140,13 +139,11 @@
                                                           x:Name="EllipseShine"/>
                                     </Ellipse.Effect>
                                 </Ellipse>
-                                <Border Width="7" Background="Transparent" x:Name="CloseSpace"/>
                                 <TextBlock x:Name="CloseBlock"
-                                           Foreground="Azure" Text="关"
-                                           VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           FontSize="14" FontWeight="Bold"
-                                           Width="14"/>
-                                <Border Width="{Binding ElementName=CloseSpace,Path=ActualWidth}" Background="Transparent"/>
+                                           Foreground="Azure" Text="☷" FontFamily="黑体"
+                                           TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                           FontSize="14"
+                                           Width="28"/>
                             </StackPanel>
                         </Border>
                         <VisualStateManager.VisualStateGroups>
@@ -169,21 +166,21 @@
                                                         Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
                                                         Duration="0:0:0.1" BeginTime="0:0:0.25"
                                                         To="Azure"/>
-                                        <DoubleAnimation Storyboard.TargetName="CloseSpace"
-                                                         Storyboard.TargetProperty="Width"
-                                                         Duration="0:0:0.15" BeginTime="0:0:0.15"
-                                                         To="7"/>
+                                        <!-- <DoubleAnimation Storyboard.TargetName="CloseSpace" -->
+                                        <!--                  Storyboard.TargetProperty="Width" -->
+                                        <!--                  Duration="0:0:0.15" BeginTime="0:0:0.15" -->
+                                        <!--                  To="7"/> -->
                                         <DoubleAnimation Storyboard.TargetName="CloseBlock"
                                                          Storyboard.TargetProperty="Width"
-                                                         Duration="0:0:0.15"
-                                                         To="14"/>
-                                        <DoubleAnimation Storyboard.TargetName="OpenSpace"
-                                                         Storyboard.TargetProperty="Width"
-                                                         Duration="0:0:0.15"
-                                                         To="0"/>
+                                                         Duration="0:0:0.3"
+                                                         To="28"/>
+                                        <!-- <DoubleAnimation Storyboard.TargetName="OpenSpace" -->
+                                        <!--                  Storyboard.TargetProperty="Width" -->
+                                        <!--                  Duration="0:0:0.15" -->
+                                        <!--                  To="0"/> -->
                                         <DoubleAnimation Storyboard.TargetName="OpenBlock"
                                                          Storyboard.TargetProperty="Width"
-                                                         Duration="0:0:0.15" BeginTime="0:0:0.15"
+                                                         Duration="0:0:0.3"
                                                          To="0"/>
                                     </Storyboard>
                                 </VisualState>
@@ -205,21 +202,21 @@
                                                         Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
                                                         Duration="0:0:0.1"
                                                         To="Transparent"/>
-                                        <DoubleAnimation Storyboard.TargetName="OpenSpace"
-                                                         Storyboard.TargetProperty="Width"
-                                                         Duration="0:0:0.15"  BeginTime="0:0:0.15"
-                                                         To="7"/>
+                                        <!-- <DoubleAnimation Storyboard.TargetName="OpenSpace" -->
+                                        <!--                  Storyboard.TargetProperty="Width" -->
+                                        <!--                  Duration="0:0:0.15"  BeginTime="0:0:0.15" -->
+                                        <!--                  To="7"/> -->
                                         <DoubleAnimation Storyboard.TargetName="OpenBlock"
                                                          Storyboard.TargetProperty="Width"
-                                                         Duration="0:0:0.15"
-                                                         To="14"/>
-                                        <DoubleAnimation Storyboard.TargetName="CloseSpace"
-                                                         Storyboard.TargetProperty="Width"
-                                                         Duration="0:0:0.15"
-                                                         To="0"/>
+                                                         Duration="0:0:0.3"
+                                                         To="28"/>
+                                        <!-- <DoubleAnimation Storyboard.TargetName="CloseSpace" -->
+                                        <!--                  Storyboard.TargetProperty="Width" -->
+                                        <!--                  Duration="0:0:0.15" -->
+                                        <!--                  To="0"/> -->
                                         <DoubleAnimation Storyboard.TargetName="CloseBlock"
                                                          Storyboard.TargetProperty="Width"
-                                                         Duration="0:0:0.15"  BeginTime="0:0:0.15"
+                                                         Duration="0:0:0.3"
                                                          To="0"/>
                                     </Storyboard>
                                 </VisualState>

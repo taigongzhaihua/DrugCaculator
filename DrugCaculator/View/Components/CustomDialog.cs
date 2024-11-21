@@ -199,10 +199,10 @@ public class CustomDialog : Window
     {
         return CreateFrameworkElementFactory<Grid>((EffectProperty, new DropShadowEffect
         {
-            Color = Colors.SteelBlue,
-            BlurRadius = 15,
-            ShadowDepth = 5,
-            Opacity = 0.5
+            Color = Colors.DimGray,
+            BlurRadius = 30,
+            ShadowDepth = 0,
+            Opacity = 0.3
         }));
     }
 
