@@ -45,7 +45,8 @@ public class TrayService : IDisposable
         _notifyIcon = new NotifyIcon
         {
             Icon = new Icon("AppIcon.ico"),
-            Visible = true
+            Visible = true,
+            Text = @"药物查询"
         };
         _notifyIcon.MouseUp += NotifyIcon_MouseUp;
     }
