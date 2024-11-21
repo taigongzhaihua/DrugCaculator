@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:DrugCalculator.Utilities.Converters">
     <!-- 密码输入框是否显示明文按钮 -->
     <Style TargetType="ToggleButton" x:Key="ToggleVisibilityButton">
         <Setter Property="Template">
@@ -102,12 +103,17 @@
             </Setter.Value>
         </Setter>
     </Style>
+
     <!-- 开关按钮 -->
-    <Color x:Key="OpenColor" >LightSeaGreen</Color>
-    <Color x:Key="CloseColor">Salmon</Color>
-    <Brush x:Key="OpenBrush">LightSeaGreen</Brush>
-    <Brush x:Key="CloseBrush">Salmon</Brush>
     <Style TargetType="ToggleButton" x:Key="Toggle">
+        <Style.Resources>
+            <converters:BrushToColorConverter x:Key="BrushToColorConverter" />
+            <Color x:Key="OpenColor" >LightSeaGreen</Color>
+            <Color x:Key="CloseColor">Salmon</Color>
+            <Color x:Key="ForeColor">Azure</Color>
+            <SolidColorBrush x:Key="CloseBrush" Color="Salmon"/>
+            <SolidColorBrush x:Key="ForeBrush" Color="Azure"/>
+        </Style.Resources>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
@@ -119,30 +125,25 @@
                                 CornerRadius="11"
                                 BorderThickness="0"
                                 Background="{StaticResource CloseBrush}"
-                                BorderBrush="Azure">
+                                BorderBrush="{StaticResource ForeBrush}">
                             <Border.Effect>
                                 <DropShadowEffect BlurRadius="26" ShadowDepth="0" x:Name="ShadowEffect"
-                                                  Color="{StaticResource CloseColor}" Opacity="0.2"/>
+                                                  Color="{Binding ElementName=Border,Path=Background,Converter={StaticResource BrushToColorConverter}}"
+                                                  Opacity="0.25"/>
                             </Border.Effect>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <!-- <Border Width="0" Background="Transparent" x:Name="OpenSpace"/> -->
+                            <StackPanel Orientation="Horizontal" x:Name="StackPanel" HorizontalAlignment="Stretch">
                                 <TextBlock x:Name="OpenBlock" 
-                                           Foreground="Azure" Text="☰" FontFamily="黑体"
-                                           TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           FontSize="14"
+                                           Foreground="{StaticResource ForeBrush}" Text="☰" FontFamily="黑体"
+                                           TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                           FontSize="14" FontWeight="Black"
                                            Width="0"/>
                                 <Ellipse VerticalAlignment="Center" x:Name="Ellipse"
                                          Width="16" Height="16" Margin="3"
-                                         Fill="Azure">
-                                    <Ellipse.Effect>
-                                        <DropShadowEffect BlurRadius="0" ShadowDepth="0" Color="White" Opacity="1"
-                                                          x:Name="EllipseShine"/>
-                                    </Ellipse.Effect>
-                                </Ellipse>
+                                         Fill="{StaticResource ForeBrush}"/>
                                 <TextBlock x:Name="CloseBlock"
-                                           Foreground="Azure" Text="☷" FontFamily="黑体"
-                                           TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           FontSize="14"
+                                           Foreground="{StaticResource ForeBrush}" Text="☷" FontFamily="黑体"
+                                           TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                           FontSize="14" FontWeight="Black"
                                            Width="28"/>
                             </StackPanel>
                         </Border>
@@ -154,10 +155,6 @@
                                                         Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
                                                         Duration="0:0:0.3" 
                                                         To="{StaticResource CloseColor}"/>
-                                        <ColorAnimation Storyboard.TargetName="ShadowEffect" 
-                                                        Storyboard.TargetProperty="Color" 
-                                                        Duration="0:0:0.3" 
-                                                        To="{StaticResource CloseColor}"/>
                                         <ColorAnimation Storyboard.TargetName="OpenBlock" 
                                                         Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" 
                                                         Duration="0:0:0.1"
@@ -165,23 +162,19 @@
                                         <ColorAnimation Storyboard.TargetName="CloseBlock"
                                                         Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
                                                         Duration="0:0:0.1" BeginTime="0:0:0.25"
-                                                        To="Azure"/>
-                                        <!-- <DoubleAnimation Storyboard.TargetName="CloseSpace" -->
-                                        <!--                  Storyboard.TargetProperty="Width" -->
-                                        <!--                  Duration="0:0:0.15" BeginTime="0:0:0.15" -->
-                                        <!--                  To="7"/> -->
+                                                        To="{StaticResource ForeColor}"/>
                                         <DoubleAnimation Storyboard.TargetName="CloseBlock"
                                                          Storyboard.TargetProperty="Width"
                                                          Duration="0:0:0.3"
                                                          To="28"/>
-                                        <!-- <DoubleAnimation Storyboard.TargetName="OpenSpace" -->
-                                        <!--                  Storyboard.TargetProperty="Width" -->
-                                        <!--                  Duration="0:0:0.15" -->
-                                        <!--                  To="0"/> -->
                                         <DoubleAnimation Storyboard.TargetName="OpenBlock"
                                                          Storyboard.TargetProperty="Width"
                                                          Duration="0:0:0.3"
                                                          To="0"/>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="StackPanel"
+                                                                       Storyboard.TargetProperty="HorizontalAlignment">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static HorizontalAlignment.Right}" />
+                                        </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Checked">
@@ -190,34 +183,26 @@
                                                         Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
                                                         Duration="0:0:0.3" 
                                                         To="{StaticResource OpenColor}"/>
-                                        <ColorAnimation Storyboard.TargetName="ShadowEffect" 
-                                                        Storyboard.TargetProperty="Color" 
-                                                        Duration="0:0:0.3" 
-                                                        To="{StaticResource OpenColor}"/>
                                         <ColorAnimation Storyboard.TargetName="OpenBlock" 
                                                         Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" 
                                                         Duration="0:0:0.1" BeginTime="0:0:0.25"
-                                                        To="Azure"/>
+                                                        To="{StaticResource ForeColor}"/>
                                         <ColorAnimation Storyboard.TargetName="CloseBlock"
                                                         Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
                                                         Duration="0:0:0.1"
                                                         To="Transparent"/>
-                                        <!-- <DoubleAnimation Storyboard.TargetName="OpenSpace" -->
-                                        <!--                  Storyboard.TargetProperty="Width" -->
-                                        <!--                  Duration="0:0:0.15"  BeginTime="0:0:0.15" -->
-                                        <!--                  To="7"/> -->
                                         <DoubleAnimation Storyboard.TargetName="OpenBlock"
                                                          Storyboard.TargetProperty="Width"
                                                          Duration="0:0:0.3"
                                                          To="28"/>
-                                        <!-- <DoubleAnimation Storyboard.TargetName="CloseSpace" -->
-                                        <!--                  Storyboard.TargetProperty="Width" -->
-                                        <!--                  Duration="0:0:0.15" -->
-                                        <!--                  To="0"/> -->
                                         <DoubleAnimation Storyboard.TargetName="CloseBlock"
                                                          Storyboard.TargetProperty="Width"
                                                          Duration="0:0:0.3"
                                                          To="0"/>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="StackPanel"
+                                                                       Storyboard.TargetProperty="HorizontalAlignment">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static HorizontalAlignment.Left}" />
+                                        </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -226,20 +211,36 @@
                             <EventTrigger RoutedEvent="MouseEnter">
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="EllipseShine"
-                                                        Storyboard.TargetProperty="BlurRadius"
-                                                        Duration="0:0:0.3"
-                                                        To="10"/>
+                                        <DoubleAnimation Storyboard.TargetName="Ellipse"
+                                                        Storyboard.TargetProperty="Width"
+                                                        Duration="0:0:0.2"
+                                                        To="14"/>
+                                        <DoubleAnimation Storyboard.TargetName="Ellipse"
+                                                         Storyboard.TargetProperty="Height"
+                                                         Duration="0:0:0.2"
+                                                         To="14"/>
+                                        <ThicknessAnimation Storyboard.TargetName="Ellipse"
+                                                            Storyboard.TargetProperty="Margin"
+                                                            Duration="0:0:0.2"
+                                                            To="4"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
                             <EventTrigger RoutedEvent="MouseLeave">
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="EllipseShine"
-                                                         Storyboard.TargetProperty="BlurRadius"
-                                                         Duration="0:0:0.3"
-                                                         To="0"/>
+                                        <DoubleAnimation Storyboard.TargetName="Ellipse"
+                                                         Storyboard.TargetProperty="Width"
+                                                         Duration="0:0:0.2"
+                                                         To="16"/>
+                                        <DoubleAnimation Storyboard.TargetName="Ellipse"
+                                                         Storyboard.TargetProperty="Height"
+                                                         Duration="0:0:0.2"
+                                                         To="16"/>
+                                        <ThicknessAnimation Storyboard.TargetName="Ellipse"
+                                                            Storyboard.TargetProperty="Margin"
+                                                            Duration="0:0:0.2"
+                                                            To="3"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>

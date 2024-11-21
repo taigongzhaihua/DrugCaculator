@@ -74,7 +74,6 @@
                                       Focusable="False"
                                       IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                       ClickMode="Release"
-                                      Background="Transparent"
                                       BorderBrush="CadetBlue"
                                       BorderThickness="0,0,0,1" 
                                       Style="{DynamicResource ComboBoxToggleButton}"/>
