@@ -3,7 +3,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace DrugCalculator.Utilities.Behaviors;
-
+/// <summary>
+/// 
+/// </summary>
 public static class MenuItemBehaviors
 {
     public static bool GetAttachMouseEvents(DependencyObject obj)
