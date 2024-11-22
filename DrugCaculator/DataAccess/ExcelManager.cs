@@ -6,9 +6,9 @@ using System.Data;
 using System.IO;
 using System.Text;
 
-namespace DrugCalculator.Services;
+namespace DrugCalculator.DataAccess;
 
-public class ExcelService
+public class ExcelManager
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
