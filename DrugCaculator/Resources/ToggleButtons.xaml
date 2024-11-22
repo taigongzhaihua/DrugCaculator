@@ -118,6 +118,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid>
+
                         <ContentPresenter HorizontalAlignment="Center" 
                                           VerticalAlignment="Center"/>
                         <Border x:Name="Border"
@@ -171,6 +172,10 @@
                                                          Storyboard.TargetProperty="Width"
                                                          Duration="0:0:0.3"
                                                          To="0"/>
+                                        <ThicknessAnimation Storyboard.TargetName="Ellipse"
+                                                            Storyboard.TargetProperty="Margin"
+                                                            Duration="0"
+                                                            To="0,0,3,0"/>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="StackPanel"
                                                                        Storyboard.TargetProperty="HorizontalAlignment">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static HorizontalAlignment.Right}" />
@@ -199,6 +204,10 @@
                                                          Storyboard.TargetProperty="Width"
                                                          Duration="0:0:0.3"
                                                          To="0"/>
+                                        <ThicknessAnimation Storyboard.TargetName="Ellipse"
+                                                            Storyboard.TargetProperty="Margin"
+                                                            Duration="0"
+                                                            To="3,0,0,0"/>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="StackPanel"
                                                                        Storyboard.TargetProperty="HorizontalAlignment">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static HorizontalAlignment.Left}" />
@@ -207,47 +216,84 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Grid.Triggers>
-                            <EventTrigger RoutedEvent="MouseEnter">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Ellipse"
-                                                        Storyboard.TargetProperty="Width"
-                                                        Duration="0:0:0.2"
-                                                        To="14"/>
-                                        <DoubleAnimation Storyboard.TargetName="Ellipse"
-                                                         Storyboard.TargetProperty="Height"
-                                                         Duration="0:0:0.2"
-                                                         To="14"/>
-                                        <ThicknessAnimation Storyboard.TargetName="Ellipse"
-                                                            Storyboard.TargetProperty="Margin"
-                                                            Duration="0:0:0.2"
-                                                            To="4"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                            <EventTrigger RoutedEvent="MouseLeave">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Ellipse"
-                                                         Storyboard.TargetProperty="Width"
-                                                         Duration="0:0:0.2"
-                                                         To="16"/>
-                                        <DoubleAnimation Storyboard.TargetName="Ellipse"
-                                                         Storyboard.TargetProperty="Height"
-                                                         Duration="0:0:0.2"
-                                                         To="16"/>
-                                        <ThicknessAnimation Storyboard.TargetName="Ellipse"
-                                                            Storyboard.TargetProperty="Margin"
-                                                            Duration="0:0:0.2"
-                                                            To="3"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </Grid.Triggers>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="PreviewMouseDown">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="Ellipse"
+                                                     Storyboard.TargetProperty="Width"
+                                                     Duration="0:0:0.1"
+                                                     To="19"/>
+                                    <DoubleAnimation Storyboard.TargetName="Ellipse"
+                                                     Storyboard.TargetProperty="Height"
+                                                     Duration="0:0:0.1"
+                                                     To="12"/>
+                                    <ThicknessAnimation Storyboard.TargetName="Ellipse"
+                                                        Storyboard.TargetProperty="Margin"
+                                                        Duration="0:0:0.1"
+                                                        To="0"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="PreviewMouseUp">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="Ellipse"
+                                                     Storyboard.TargetProperty="Width"
+                                                     Duration="0:0:0.2" BeginTime="0:0:0.2"
+                                                     To="14"/>
+                                    <DoubleAnimation Storyboard.TargetName="Ellipse"
+                                                     Storyboard.TargetProperty="Height"
+                                                     Duration="0:0:0.2" BeginTime="0:0:0.2"
+                                                     To="14"/>
+                                    <ThicknessAnimation Storyboard.TargetName="Ellipse"
+                                                        Storyboard.TargetProperty="Margin"
+                                                        Duration="0:0:0.2" BeginTime="0:0:0.2"
+                                                        To="4"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard x:Name="mouseenter">
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="Ellipse"
+                                         Storyboard.TargetProperty="Width"
+                                         Duration="0:0:0.2"
+                                         To="14"/>
+                                    <DoubleAnimation Storyboard.TargetName="Ellipse"
+                                         Storyboard.TargetProperty="Height"
+                                         Duration="0:0:0.2"
+                                         To="14"/>
+                                    <ThicknessAnimation Storyboard.TargetName="Ellipse"
+                                            Storyboard.TargetProperty="Margin"
+                                            Duration="0:0:0.2"
+                                            To="4"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard x:Name="mouseleave">
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="Ellipse"
+                                         Storyboard.TargetProperty="Width"
+                                         Duration="0:0:0.2"
+                                         To="16"/>
+                                    <DoubleAnimation Storyboard.TargetName="Ellipse"
+                                         Storyboard.TargetProperty="Height"
+                                         Duration="0:0:0.2"
+                                         To="16"/>
+                                    <ThicknessAnimation Storyboard.TargetName="Ellipse"
+                                            Storyboard.TargetProperty="Margin"
+                                            Duration="0:0:0.2"
+                                            To="3"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+
     </Style>
 </ResourceDictionary>

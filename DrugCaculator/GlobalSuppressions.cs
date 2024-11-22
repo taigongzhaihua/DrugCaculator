@@ -23,3 +23,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>", Scope = "member", Target = "~M:DrugCalculator.Services.TrayService.CreateNotifyIcon")]
 [assembly: SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>", Scope = "member", Target = "~M:DrugCalculator.Services.TrayService.NotifyIcon_MouseUp(System.Object,System.Windows.Forms.MouseEventArgs)")]
 [assembly: SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>", Scope = "member", Target = "~M:DrugCalculator.Services.TrayService.Dispose(System.Boolean)")]
+[assembly: SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>", Scope = "member", Target = "~M:DrugCalculator.App.MainWindow_Loaded(System.Object,System.Windows.RoutedEventArgs)")]

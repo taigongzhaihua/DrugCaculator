@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace DrugCalculator;
 
-public partial class App : Application
+public partial class App
 {
     // 创建一个静态的命名互斥体，以确保只有一个应用程序实例在运行
     public static Mutex Mutex1 { get; private set; }
@@ -63,12 +63,18 @@ public partial class App : Application
         _hotKeyService = HotKeyService.Instance(mainWindow);
 
         // 注册热键以显示主窗口
-        _hotKeyService.RegisterHotKey((uint)ModifierKeys.Control | (uint)ModifierKeys.Alt, (uint)System.Windows.Forms.Keys.H, () =>
-        {
-            mainWindow.Show();
-            mainWindow.WindowState = WindowState.Normal;
-            mainWindow.Activate();
-        });
+        const System.Windows.Forms.Keys h = System.Windows.Forms.Keys.H;
+        const ModifierKeys m = ModifierKeys.Control | ModifierKeys.Alt;
+        _ = _hotKeyService.RegisterHotKey(
+            modifiers: (uint)m,
+            key: (uint)h,
+            action: () =>
+            {
+                mainWindow.Show();
+                mainWindow.WindowState = WindowState.Normal;
+                mainWindow.Activate();
+            }
+            );
     }
 
     protected override void OnExit(ExitEventArgs e)
