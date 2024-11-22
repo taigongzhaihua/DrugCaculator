@@ -1,6 +1,6 @@
 ﻿using DrugCalculator.DataAccess;
 using DrugCalculator.Models;
-using System;
+using NLog;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -11,7 +11,7 @@ namespace DrugCalculator.Services;
 public class DrugService
 {
     private readonly DbManager _dbManager;
-
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     public DrugService()
     {
         const string connectionString = "Data Source=|DataDirectory|\\drugs.db;Version=3;";
@@ -79,7 +79,7 @@ public class DrugService
     {
         if (dataTable == null || dataTable.Rows.Count == 0)
         {
-            Console.WriteLine(@"DataTable is empty. No records to insert.");
+            Logger.Warn(@"DataTable is empty. No records to insert.");
             return;
         }
 
@@ -117,12 +117,9 @@ public class DrugService
         var updatedRuleIds = drug.CalculationRules.Select(r => r.Id).ToHashSet();
 
         // 删除多余的规则
-        foreach (var existingRule in existingRules)
+        foreach (var existingRule in existingRules.Where(existingRule => !updatedRuleIds.Contains(existingRule.Id)))
         {
-            if (!updatedRuleIds.Contains(existingRule.Id))
-            {
-                DeleteCalculationRule(existingRule.Id);
-            }
+            DeleteCalculationRule(existingRule.Id);
         }
 
         foreach (var rule in drug.CalculationRules)
