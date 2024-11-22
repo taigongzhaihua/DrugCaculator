@@ -1,4 +1,5 @@
-﻿using DrugCalculator.Models;
+﻿using DrugCalculator.DataAccess;
+using DrugCalculator.Models;
 using DrugCalculator.Services;
 using DrugCalculator.Utilities.Commands;
 using DrugCalculator.Utilities.Helpers;
@@ -239,7 +240,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         try
         {
             // 创建 ExcelService 实例并读取 Excel 文件到 DataTable
-            var dataTable = ExcelService.Read(filePath);
+            var dataTable = ExcelManager.Read(filePath);
 
             // 调用 DrugService.AddDrugsFromTable 方法，将数据导入数据库
             DrugService.AddDrugsFromTable(dataTable);
