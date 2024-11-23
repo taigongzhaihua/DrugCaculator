@@ -60,7 +60,7 @@ public partial class App
         mainWindow.Loaded -= MainWindow_Loaded;
 
         // 初始化热键服务
-        _hotKeyService = HotKeyService.Instance(mainWindow);
+        _hotKeyService = HotKeyService.Instance;
 
         // 注册热键以显示主窗口
         const System.Windows.Forms.Keys h = System.Windows.Forms.Keys.H;

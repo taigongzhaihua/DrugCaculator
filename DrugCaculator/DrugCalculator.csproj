@@ -8,6 +8,7 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <LangVersion>latest</LangVersion>
     <ApplicationIcon>AppIcon.ico</ApplicationIcon>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Resources\Images\**" />

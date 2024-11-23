@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,163 +7,215 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using Application = System.Windows.Application;
 
-namespace DrugCalculator.Services;
-
-public class TrayService : IDisposable
+namespace DrugCalculator.Services
 {
-    private bool _disposed;
-
-    private static TrayService _instance;
-    private static readonly object Lock = new();
-
-    private NotifyIcon _notifyIcon;
-    private ContextMenu _trayContextMenu;
-
-    // 私有构造函数，防止外部实例化
-    private TrayService()
+    /// <summary>
+    /// 托盘服务，用于管理应用程序的托盘图标和上下文菜单。
+    /// </summary>
+    public class TrayService : IDisposable
     {
-        CreateNotifyIcon();
-        CreateContextMenu();
-    }
+        // Lazy 单例实现
+        private static readonly Lazy<TrayService> LazyInstance = new(() => new TrayService());
 
-    // 获取唯一实例
-    public static TrayService Instance
-    {
-        get
+        /// <summary>
+        /// 获取 TrayService 的唯一实例。
+        /// </summary>
+        public static TrayService Instance => LazyInstance.Value;
+
+        private NotifyIcon _notifyIcon; // 托盘图标
+        private ContextMenu _trayContextMenu; // 上下文菜单
+        private bool _disposed; // 是否已释放资源
+
+        /// <summary>
+        /// 私有构造函数，防止外部直接实例化。
+        /// </summary>
+        private TrayService()
         {
-            if (_instance != null) return _instance;
-            lock (Lock)
-            {
-                _instance ??= new TrayService();
-            }
-            return _instance;
+            CreateNotifyIcon();
         }
-    }
 
-    // 创建托盘图标
-    private void CreateNotifyIcon()
-    {
-        _notifyIcon = new NotifyIcon
+        /// <summary>
+        /// 创建托盘图标。
+        /// </summary>
+        private void CreateNotifyIcon()
         {
-            Icon = new Icon("AppIcon.ico"),
-            Visible = true,
-            Text = @"药物查询"
-        };
-        _notifyIcon.MouseUp += NotifyIcon_MouseUp;
-    }
-
-    // 创建上下文菜单
-    private void CreateContextMenu()
-    {
-        _trayContextMenu = new ContextMenu();
-        var openMenuItem = new MenuItem { Header = "打开", Icon = "\ue69b" };
-        openMenuItem.Click += Open_Click;
-
-        var exitMenuItem = new MenuItem { Header = "退出", Icon = "\ue600" };
-        exitMenuItem.Click += Exit_Click;
-
-        _trayContextMenu.Items.Add(openMenuItem);
-        _trayContextMenu.Items.Add(exitMenuItem);
-    }
-
-    // 托盘图标鼠标事件处理
-    private void NotifyIcon_MouseUp(object sender, MouseEventArgs e)
-    {
-        switch (e.Button)
-        {
-            case MouseButtons.Right:
-                ShowContextMenu();
-                break;
-            case MouseButtons.Left:
-                ShowMainWindow();
-                break;
-            case MouseButtons.None:
-            case MouseButtons.Middle:
-            case MouseButtons.XButton1:
-            case MouseButtons.XButton2:
-            default:
-                break;
+            _notifyIcon = new NotifyIcon
+            {
+                Icon = LoadIcon("AppIcon.ico"), // 动态加载图标
+                Visible = true,
+                Text = @"药物查询" // 鼠标悬停文本
+            };
+            _notifyIcon.MouseUp += NotifyIcon_MouseUp;
         }
-    }
 
-    // 显示托盘上下文菜单
-    private void ShowContextMenu()
-    {
-        if (_trayContextMenu == null) return;
-        _trayContextMenu.IsOpen = !_trayContextMenu.IsOpen;
-        _trayContextMenu.Placement = PlacementMode.MousePoint;
-        _trayContextMenu.PlacementTarget = null;
-    }
-
-    // 显示主窗口
-    private static void ShowMainWindow()
-    {
-        Application.Current.Dispatcher.Invoke(() =>
+        /// <summary>
+        /// 加载托盘图标。
+        /// </summary>
+        /// <param name="iconPath">图标文件路径。</param>
+        /// <returns>加载的图标。</returns>
+        private static Icon LoadIcon(string iconPath)
         {
-            Application.Current.MainWindow!.Show();
-            Application.Current.MainWindow.WindowState = WindowState.Normal;
-            Application.Current.MainWindow.Activate();
-        });
-    }
-
-    // 打开菜单项点击事件
-    private static void Open_Click(object sender, RoutedEventArgs e)
-    {
-        ShowMainWindow();
-    }
-
-    // 退出菜单项点击事件
-    private void Exit_Click(object sender, RoutedEventArgs e)
-    {
-        Dispose(); // 调用 Dispose() 方法释放资源
-        Application.Current.Shutdown();
-    }
-
-    // Dispose 方法
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    // 真正的资源释放方法
-    protected virtual void Dispose(bool disposing)
-    {
-        if (_disposed)
-            return;
-
-        if (disposing)
-        {
-            // 释放托管资源
-            if (_notifyIcon != null)
+            try
             {
-                _notifyIcon.MouseUp -= NotifyIcon_MouseUp; // 取消事件订阅
-                _notifyIcon.Visible = false;
-                _notifyIcon.Dispose();
-                _notifyIcon = null;
+                return new Icon(iconPath);
             }
-
-            if (_trayContextMenu != null)
+            catch (Exception)
             {
-                // 取消上下文菜单项的事件订阅
-                foreach (var item in _trayContextMenu.Items)
+                // 提供一个默认图标，防止图标文件丢失导致异常
+                return SystemIcons.Application;
+            }
+        }
+
+        /// <summary>
+        /// 托盘图标鼠标事件处理。
+        /// </summary>
+        private void NotifyIcon_MouseUp(object sender, MouseEventArgs e)
+        {
+            switch (e.Button)
+            {
+                case MouseButtons.Right:
+                    ShowContextMenu();
+                    break;
+                case MouseButtons.Left:
+                    ShowMainWindow();
+                    break;
+                case MouseButtons.None:
+                    break;
+                case MouseButtons.Middle:
+                    break;
+                case MouseButtons.XButton1:
+                    break;
+                case MouseButtons.XButton2:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        /// <summary>
+        /// 显示托盘上下文菜单。
+        /// </summary>
+        private void ShowContextMenu()
+        {
+            if (_trayContextMenu == null)
+                CreateContextMenu();
+
+            if (_trayContextMenu == null) return;
+
+            _trayContextMenu.IsOpen = !_trayContextMenu.IsOpen;
+            _trayContextMenu.Placement = PlacementMode.MousePoint;
+            _trayContextMenu.PlacementTarget = null;
+        }
+
+        /// <summary>
+        /// 创建托盘上下文菜单。
+        /// </summary>
+        private void CreateContextMenu()
+        {
+            _trayContextMenu = new ContextMenu();
+
+            var menuItems = GetMenuItems();
+            foreach (var item in menuItems)
+            {
+                _trayContextMenu.Items.Add(item);
+            }
+        }
+
+        /// <summary>
+        /// 动态获取菜单项。
+        /// </summary>
+        /// <returns>菜单项集合。</returns>
+        private IEnumerable<MenuItem> GetMenuItems()
+        {
+            yield return CreateMenuItem("打开", "\ue69b", (_, _) => ShowMainWindow());
+            yield return CreateMenuItem("退出", "\ue600", (_, _) => ExitApplication());
+        }
+
+        /// <summary>
+        /// 创建菜单项。
+        /// </summary>
+        /// <param name="header">菜单项文本。</param>
+        /// <param name="icon">菜单项图标（字符串表示）。</param>
+        /// <param name="clickHandler">点击事件处理程序。</param>
+        /// <returns>创建的菜单项。</returns>
+        private static MenuItem CreateMenuItem(string header, string icon, RoutedEventHandler clickHandler)
+        {
+            var menuItem = new MenuItem { Header = header, Icon = icon };
+            menuItem.Click += clickHandler;
+            return menuItem;
+        }
+
+        /// <summary>
+        /// 显示主窗口。
+        /// </summary>
+        private static void ShowMainWindow()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var mainWindow = Application.Current.MainWindow;
+                if (mainWindow == null) return;
+
+                mainWindow.Show();
+                mainWindow.WindowState = WindowState.Normal;
+                mainWindow.Activate();
+            });
+        }
+
+        /// <summary>
+        /// 退出应用程序。
+        /// </summary>
+        private void ExitApplication()
+        {
+            Dispose(); // 释放资源
+            Application.Current.Shutdown(); // 关闭应用程序
+        }
+
+        /// <summary>
+        /// 释放资源。
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// 实现资源释放逻辑。
+        /// </summary>
+        /// <param name="disposing">是否释放托管资源。</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+
+            if (disposing)
+            {
+                // 释放托盘图标
+                if (_notifyIcon != null)
                 {
-                    if (item is not MenuItem menuItem) continue;
-                    menuItem.Click -= Open_Click;
-                    menuItem.Click -= Exit_Click;
+                    _notifyIcon.MouseUp -= NotifyIcon_MouseUp; // 取消托盘图标的事件订阅
+                    _notifyIcon.Visible = false; // 隐藏托盘图标
+                    _notifyIcon.Dispose();
+                    _notifyIcon = null;
                 }
-                _trayContextMenu = null; // 释放上下文菜单
+
+                // 释放上下文菜单
+                if (_trayContextMenu != null)
+                {
+                    _trayContextMenu.Items.Clear();
+                    _trayContextMenu = null;
+                }
             }
+
+            _disposed = true;
         }
 
-        // 释放非托管资源（如果有）
 
-        _disposed = true;
-    }
-
-    // 析构函数（终结器）
-    ~TrayService()
-    {
-        Dispose(false);
+        /// <summary>
+        /// 析构函数，确保资源被释放。
+        /// </summary>
+        ~TrayService()
+        {
+            Dispose(false);
+        }
     }
 }
