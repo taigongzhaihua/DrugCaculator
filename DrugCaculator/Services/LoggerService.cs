@@ -41,7 +41,7 @@ namespace DrugCalculator.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"日志服务初始化失败: {ex.Message}");
+                Console.WriteLine($@"日志服务初始化失败: {ex.Message}");
             }
         }
 

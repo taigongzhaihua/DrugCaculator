@@ -19,363 +19,434 @@ using System.Windows.Input;
 using Application = System.Windows.Application;
 using Button = System.Windows.Controls.Button;
 using MessageBox = System.Windows.MessageBox;
+
 #pragma warning disable CA1416
 
-namespace DrugCalculator.ViewModels;
-
-public class MainWindowViewModel : INotifyPropertyChanged
+namespace DrugCalculator.ViewModels
 {
-    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    public ObservableCollection<Drug> DrugsOnList { get; set; }
-    private ObservableCollection<Drug> Drugs { get; }
-    public DrugService DrugService { get; set; }
-    public ICommand AddDrugCommand { get; set; }
-    public ICommand EditDrugCommand { get; set; }
-    public ICommand DeleteDrugCommand { get; set; }
-    public ICommand AddDrugsFromExcelCommand { get; set; }
-    public ICommand AiGenerateRuleCommand { get; set; }
-    public ICommand AiGenerateAllRulesCommand { get; set; }
-    public ICommand SettingCommand { get; set; }
-    public ICommand SetApiKeyCommand { get; set; }
-    public ICommand LogsCommand { get; set; }
-    private string _dosage;
-
-    public string Dosage
+    /// <summary>
+    /// 主窗口的视图模型，负责管理药物数据、用户交互逻辑和命令绑定。
+    /// 实现了 INotifyPropertyChanged 接口以支持数据绑定。
+    /// </summary>
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
-        get => _dosage;
-        set
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+        /// <summary>
+        /// 当前显示在界面上的药物列表。
+        /// </summary>
+        public ObservableCollection<Drug> DrugsOnList { get; set; }
+
+        /// <summary>
+        /// 从数据库加载的完整药物列表。
+        /// </summary>
+        private ObservableCollection<Drug> Drugs { get; }
+
+        /// <summary>
+        /// 药物服务对象，用于操作药物数据。
+        /// </summary>
+        public DrugService DrugService { get; set; }
+
+        // 定义所有命令，用于绑定到界面按钮
+        public ICommand AddDrugCommand { get; set; }
+        public ICommand EditDrugCommand { get; set; }
+        public ICommand DeleteDrugCommand { get; set; }
+        public ICommand AddDrugsFromExcelCommand { get; set; }
+        public ICommand AiGenerateRuleCommand { get; set; }
+        public ICommand AiGenerateAllRulesCommand { get; set; }
+        public ICommand SettingCommand { get; set; }
+        public ICommand SetApiKeyCommand { get; set; }
+        public ICommand LogsCommand { get; set; }
+
+        private string _dosage;
+
+        /// <summary>
+        /// 当前计算出的剂量，展示在界面上。
+        /// </summary>
+        public string Dosage
         {
-            _dosage = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private Drug _selectedDrug;
-
-    public Drug SelectedDrug
-    {
-        get => _selectedDrug;
-        set
-        {
-            _selectedDrug = value;
-            CalculateDosage();
-            OnPropertyChanged();
-            OnPropertyChanged(nameof(IsDrugSelected));
-        }
-    }
-
-    public bool IsDrugSelected => SelectedDrug != null;
-
-    private double _weight;
-
-    public double Weight
-    {
-        get => _weight;
-        set
-        {
-            _weight = value;
-            OnPropertyChanged();
-            CalculateDosage();
-        }
-    }
-
-    private int _age;
-
-    public int Age
-    {
-        get => _age;
-        set
-        {
-            _age = value;
-            OnPropertyChanged();
-            CalculateDosage();
-        }
-    }
-
-    private bool _isChild = true;
-
-    public bool IsChild
-    {
-        get => _isChild;
-        set
-        {
-            _isChild = value;
-            OnPropertyChanged();
-            OnPropertyChanged(nameof(IsAdult));
-        }
-    }
-
-    public bool IsAdult => !IsChild;
-    private string _searchText;
-
-    public string SearchText
-    {
-        get => _searchText;
-        set
-        {
-            _searchText = value;
-            OnPropertyChanged();
-            SearchDrug();
-        }
-    }
-
-    private string _ageUnit;
-
-    public string AgeUnit
-    {
-        get => _ageUnit;
-        set
-        {
-            _ageUnit = value;
-            OnPropertyChanged();
-            CalculateDosage();
-        }
-    }
-
-    private CalculationResult _result;
-
-    public CalculationResult Result
-    {
-        get => _result;
-        set
-        {
-            _result = value;
-            OnPropertyChanged();
-            Dosage = Result.Dosage switch
+            get => _dosage;
+            set
             {
-                0 => "不可使用",
-                -1 => "遵医嘱",
-                _ => Result.Dosage + Result.Unit
+                _dosage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Drug _selectedDrug;
+
+        /// <summary>
+        /// 当前选中的药物。
+        /// </summary>
+        public Drug SelectedDrug
+        {
+            get => _selectedDrug;
+            set
+            {
+                _selectedDrug = value;
+                CalculateDosage(); // 当选中药物变化时重新计算剂量
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsDrugSelected));
+            }
+        }
+
+        /// <summary>
+        /// 指示是否有选中的药物。
+        /// </summary>
+        public bool IsDrugSelected => SelectedDrug != null;
+
+        private double _weight;
+
+        /// <summary>
+        /// 当前用户输入的体重。
+        /// </summary>
+        public double Weight
+        {
+            get => _weight;
+            set
+            {
+                _weight = value;
+                OnPropertyChanged();
+                CalculateDosage(); // 当体重变化时重新计算剂量
+            }
+        }
+
+        private int _age;
+
+        /// <summary>
+        /// 当前用户输入的年龄。
+        /// </summary>
+        public int Age
+        {
+            get => _age;
+            set
+            {
+                _age = value;
+                OnPropertyChanged();
+                CalculateDosage(); // 当年龄变化时重新计算剂量
+            }
+        }
+
+        private bool _isChild = true;
+
+        /// <summary>
+        /// 指示用户是否为儿童。
+        /// </summary>
+        public bool IsChild
+        {
+            get => _isChild;
+            set
+            {
+                _isChild = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsAdult));
+            }
+        }
+
+        /// <summary>
+        /// 指示用户是否为成人。
+        /// </summary>
+        public bool IsAdult => !IsChild;
+
+        private string _searchText;
+
+        /// <summary>
+        /// 用户输入的搜索文本，用于筛选药物列表。
+        /// </summary>
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged();
+                SearchDrug(); // 当搜索文本变化时更新药物列表
+            }
+        }
+
+        private string _ageUnit;
+
+        /// <summary>
+        /// 当前用户输入的年龄单位（岁或月）。
+        /// </summary>
+        public string AgeUnit
+        {
+            get => _ageUnit;
+            set
+            {
+                _ageUnit = value;
+                OnPropertyChanged();
+                CalculateDosage(); // 当年龄单位变化时重新计算剂量
+            }
+        }
+
+        private CalculationResult _result;
+
+        /// <summary>
+        /// 当前的计算结果。
+        /// </summary>
+        public CalculationResult Result
+        {
+            get => _result;
+            set
+            {
+                _result = value;
+                OnPropertyChanged();
+                Dosage = Result.Dosage switch
+                {
+                    0 => "不可使用",
+                    -1 => "遵医嘱",
+                    _ => Result.Dosage + Result.Unit
+                };
+                OnPropertyChanged(nameof(Dosage));
+            }
+        }
+
+        /// <summary>
+        /// 构造函数，初始化视图模型并加载数据。
+        /// </summary>
+        public MainWindowViewModel()
+        {
+            DrugService = new DrugService();
+            Drugs = [];
+
+            LoadDrugs(); // 加载药物数据
+            InitCommands(); // 初始化命令
+        }
+
+        /// <summary>
+        /// 从数据库加载药物列表。
+        /// </summary>
+        private void LoadDrugs()
+        {
+            Drugs.Clear();
+            var drugList = DrugService.GetAllDrugs(); // 获取药物列表
+            var sortedDrugList = drugList.ToList().OrderBy(PinyinHelper.GetPinyin); // 按拼音排序
+            foreach (var drug in sortedDrugList) Drugs.Add(drug);
+            DrugsOnList = new ObservableCollection<Drug>(Drugs); // 初始化 DrugsOnList
+        }
+
+        /// <summary>
+        /// 初始化命令。
+        /// </summary>
+        private void InitCommands()
+        {
+            AddDrugCommand = new RelayCommand(AddDrug);
+            EditDrugCommand = new RelayCommand(EditDrug);
+            DeleteDrugCommand = new RelayCommand(DeleteDrug);
+            AddDrugsFromExcelCommand = new RelayCommand(AddDrugsFromExcel);
+            AiGenerateRuleCommand = new RelayCommand(GenerateRule);
+            AiGenerateAllRulesCommand = new RelayCommand(GenerateAndSaveCalculationRulesForAllDrugsAsync);
+            SetApiKeyCommand = new RelayCommand(SetApiKey);
+            SettingCommand = new RelayCommand(SettingsOpen);
+            LogsCommand = new RelayCommand(ShowLogs);
+        }
+
+        /// <summary>
+        /// 展示日志窗口。
+        /// </summary>
+        private static void ShowLogs(object sender)
+        {
+            var logViewer = new LogViewer
+            {
+                Owner = Application.Current.MainWindow
+            };
+            logViewer.Show();
+        }
+
+        /// <summary>
+        /// 设置 API 密钥。
+        /// </summary>
+        private static void SetApiKey(object sender)
+        {
+            var apiKeySetter = new ApiKeySetter
+            {
+                Owner = Window.GetWindow((sender as Button)!)
+            };
+            apiKeySetter.ShowDialog();
+        }
+
+        /// <summary>
+        /// 打开设置窗口。
+        /// </summary>
+        private static void SettingsOpen(object sender)
+        {
+            var settings = new SettingsWindow
+            {
+                Owner = Application.Current.MainWindow
+            };
+            settings.ShowDialog();
+        }
+
+        /// <summary>
+        /// 生成规则。
+        /// </summary>
+        private async void GenerateRule(object sender)
+        {
+            await GenerateAndSaveCalculationRulesAsync(SelectedDrug);
+        }
+
+        /// <summary>
+        /// 从 Excel 文件导入药物。
+        /// </summary>
+        public void AddDrugsFromExcel(object sender)
+        {
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = @"Excel Files|*.xls;*.xlsx",
+                Title = @"选择一个 Excel 文件"
             };
 
-            OnPropertyChanged(nameof(Dosage));
+            if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+            var filePath = openFileDialog.FileName;
+
+            try
+            {
+                var dataTable = ExcelManager.Read(filePath);
+                DrugService.AddDrugsFromTable(dataTable);
+                Logger.Info("成功导入药品数据");
+                CustomMessageBox.Show("数据导入成功", "成功", MsgBoxButtons.Ok, MsgBoxIcon.Success);
+                LoadDrugs();
+                SearchDrug();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"导入药品数据时出错：{ex.Message}", ex);
+                CustomMessageBox.Show($"导入药品数据时出错：{ex.Message}", "错误", MsgBoxButtons.Ok, MsgBoxIcon.Error);
+            }
         }
-    }
 
-
-    // 构造函数
-    public MainWindowViewModel()
-    {
-        DrugService = new DrugService();
-        Drugs = [];
-
-        LoadDrugs(); // 数据，从数据库中加载
-        InitCommands(); // 初始化命令
-    }
-
-    // 加载药物数据
-    private void LoadDrugs()
-    {
-        Drugs.Clear();
-        var drugList = DrugService.GetAllDrugs();
-        var sortedDrugList = drugList.ToList().OrderBy(PinyinHelper.GetPinyin);
-        foreach (var drug in sortedDrugList) Drugs.Add(drug);
-        // 初始化 DrugsOnList 列表
-        DrugsOnList = new ObservableCollection<Drug>(Drugs);
-    }
-
-    // 初始化命令
-    private void InitCommands()
-    {
-        AddDrugCommand = new RelayCommand(AddDrug); // 创建新药物
-        EditDrugCommand = new RelayCommand(EditDrug); // 编辑药物
-        DeleteDrugCommand = new RelayCommand(DeleteDrug); // 删除药物
-        AddDrugsFromExcelCommand = new RelayCommand(AddDrugsFromExcel); // 从 Excel 导入药物
-        AiGenerateRuleCommand = new RelayCommand(GenerateRule); // 生成规则
-        AiGenerateAllRulesCommand = new RelayCommand(GenerateAndSaveCalculationRulesForAllDrugsAsync); // 生成所有规则
-        SetApiKeyCommand = new RelayCommand(SetApiKey); // 设置 API 密钥
-        SettingCommand = new RelayCommand(SettingsOpen); // 打开设置窗口
-        LogsCommand = new RelayCommand(ShowLogs);
-    }
-
-    private static void ShowLogs(object sender)
-    {
-        var apiKeySetter = new LogViewer
+        /// <summary>
+        /// 为所有药物生成计算规则。
+        /// </summary>
+        private async void GenerateAndSaveCalculationRulesForAllDrugsAsync(object sender)
         {
-            Owner = Application.Current.MainWindow
-        };
-        apiKeySetter.Show();
-    }
+            foreach (var drug in Drugs)
+            {
+                await GenerateAndSaveCalculationRulesAsync(drug);
+            }
 
-    // 设置 API 密钥
-    private static void SetApiKey(object sender)
-    {
-        var apiKeySetter = new ApiKeySetter
+            MessageBox.Show("所有药物规则生成完毕！");
+        }
+
+        /// <summary>
+        /// 为指定药物生成和保存计算规则。
+        /// </summary>
+        private async Task GenerateAndSaveCalculationRulesAsync(Drug drug)
         {
-            Owner = Window.GetWindow((sender as Button)!)
-        };
-        apiKeySetter.ShowDialog();
-    }
+            try
+            {
+                var generatedRules = await DeepSeekService.GenerateDrugCalculationRulesAsync(drug);
 
-    // 打开设置窗口
-    private static void SettingsOpen(object sender)
-    {
-        var settings = new SettingsWindow
+                if (generatedRules != null && generatedRules.Count != 0)
+                {
+                    drug.CalculationRules = new ObservableCollection<DrugCalculationRule>(generatedRules);
+                    DrugService.UpdateDrug(drug);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"生成和保存计算规则时发生错误：{ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
+        /// 删除选中的药物。
+        /// </summary>
+        private void DeleteDrug(object parameter)
         {
-            Owner = Application.Current.MainWindow
-        };
-        settings.ShowDialog();
-    }
+            var result = CustomMessageBox.Show(Window.GetWindow((parameter as Button)!),
+                $"是否删除“{SelectedDrug.Name}”？",
+                "是否删除？",
+                MsgBoxButtons.YesNo,
+                MsgBoxIcon.Information);
 
-
-    // 生成规则
-    private async void GenerateRule(object sender)
-    {
-        await GenerateAndSaveCalculationRulesAsync(SelectedDrug);
-    }
-
-    // 从 Excel 导入药物
-    public void AddDrugsFromExcel(object sender)
-    {
-        // 创建文件选择对话框
-        var openFileDialog = new OpenFileDialog
-        {
-            Filter = @"Excel Files|*.xls;*.xlsx",
-            Title = @"选择一个 Excel 文件"
-        };
-
-        // 如果用户选择了文件
-        if (openFileDialog.ShowDialog() != DialogResult.OK) return;
-        var filePath = openFileDialog.FileName;
-        try
-        {
-            // 创建 ExcelService 实例并读取 Excel 文件到 DataTable
-            var dataTable = ExcelManager.Read(filePath);
-
-            // 调用 DrugService.AddDrugsFromTable 方法，将数据导入数据库
-            DrugService.AddDrugsFromTable(dataTable);
-            Logger.Info("成功导入药品数据");
-            CustomMessageBox.Show(@"数据导入成功", "成功", MsgBoxButtons.Ok, MsgBoxIcon.Success);
-            LoadDrugs(); // 更新药物列表
+            if (result != MessageBoxResult.Yes) return;
+            DrugService.DeleteDrug(SelectedDrug.Id);
+            MessageBox.Show("删除成功！");
+            LoadDrugs();
             SearchDrug();
         }
-        catch (Exception ex)
+
+        /// <summary>
+        /// 添加新药物。
+        /// </summary>
+        private void AddDrug(object parameter)
         {
-            Logger.Error($@"导入药品数据时出错：{ex.Message}", ex);
-            CustomMessageBox.Show($@"导入药品数据时出错：{ex.Message}", "错误", MsgBoxButtons.Ok, MsgBoxIcon.Error);
-        }
-    }
-
-    private async void GenerateAndSaveCalculationRulesForAllDrugsAsync(object sender)
-    {
-        foreach (var drug in Drugs)
-        {
-            Console.WriteLine($@"正在生成【{drug.Name}】规则");
-            await GenerateAndSaveCalculationRulesAsync(drug);
-            Console.WriteLine($@"【{drug.Name}】生成完毕！");
-        }
-
-        Console.WriteLine(@"所有药物规则生成完毕！");
-        MessageBox.Show(@"所有药物规则生成完毕！");
-    }
-
-    private async Task GenerateAndSaveCalculationRulesAsync(Drug drug)
-    {
-        try
-        {
-            // 使用 DeepSeekService 生成药物的计算规则
-            var generatedRules = await DeepSeekService.GenerateDrugCalculationRulesAsync(drug);
-
-            // 将生成的计算规则存储在药物对象的 CalculationRules 中
-            if (generatedRules != null && generatedRules.Count != 0)
+            var drugEditor = new DrugEditor(null, DrugService)
             {
-                drug.CalculationRules = new ObservableCollection<DrugCalculationRule>(generatedRules);
-                Console.WriteLine($@"共生成{drug.CalculationRules.Count}条规则");
-                // 将更新后的药物对象存入数据库
-                DrugService.UpdateDrug(drug);
+                Owner = Window.GetWindow((parameter as Button)!)
+            };
+            drugEditor.ShowDialog();
+            LoadDrugs();
+            SearchDrug();
+        }
+
+        /// <summary>
+        /// 编辑选中的药物。
+        /// </summary>
+        private void EditDrug(object parameter)
+        {
+            var drugEditor = new DrugEditor(SelectedDrug, DrugService)
+            {
+                Owner = Window.GetWindow((parameter as Button)!)
+            };
+            drugEditor.ShowDialog();
+            LoadDrugs();
+            SearchDrug();
+        }
+
+        /// <summary>
+        /// 根据用户输入的搜索文本筛选药物列表。
+        /// </summary>
+        private void SearchDrug()
+        {
+            if (string.IsNullOrWhiteSpace(SearchText))
+            {
+                DrugsOnList = Drugs;
             }
             else
             {
-                Console.WriteLine(@"未生成任何计算规则。");
+                var filteredDrugs = new ObservableCollection<Drug>(Drugs.Where(drug =>
+                    drug.Name.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) ||
+                    PinyinHelper.GetFirstLetter(drug).Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)));
+                DrugsOnList = filteredDrugs;
             }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($@"生成和保存计算规则时发生错误: {ex.Message}");
-        }
-    }
 
-    private void DeleteDrug(object parameter)
-    {
-        var result = CustomMessageBox.Show(Window.GetWindow((parameter as Button)!),
-            $"是否删除“{SelectedDrug.Name}”？",
-            "是否删除？",
-            MsgBoxButtons.YesNo,
-            MsgBoxIcon.Information);
-
-        if (result != MessageBoxResult.Yes) return;
-        DrugService.DeleteDrug(SelectedDrug.Id);
-        MessageBox.Show(@"删除成功！");
-        LoadDrugs(); // 更新药物列表
-        SearchDrug();
-    }
-
-    private void AddDrug(object parameter)
-    {
-        var drugEditor = new DrugEditor(null, DrugService)
-        {
-            Owner = Window.GetWindow((parameter as Button)!)
-        }; // 创建 DrugEditor 实例
-        drugEditor.ShowDialog();
-        LoadDrugs(); // 更新药物列表
-        SearchDrug();
-    }
-
-    private void EditDrug(object parameter)
-    {
-        var drugEditor = new DrugEditor(SelectedDrug, DrugService)
-        {
-            Owner = Window.GetWindow((parameter as Button)!)
-        };
-        drugEditor.ShowDialog();
-        LoadDrugs(); // 更新药物列表
-        SearchDrug();
-    }
-
-    private void SearchDrug()
-    {
-        if (string.IsNullOrWhiteSpace(SearchText))
-        {
-            // 如果搜索框为空，则显示全部药物
-            DrugsOnList = Drugs;
-        }
-        else
-        {
-            // 筛选药物列表，支持中文查找和首字母查找
-            var filteredDrugs = new ObservableCollection<Drug>(Drugs.Where(drug =>
-                drug.Name.Contains(SearchText, StringComparison.CurrentCultureIgnoreCase) ||
-                PinyinHelper.GetFirstLetter(drug).Contains(SearchText, StringComparison.CurrentCultureIgnoreCase)).ToList());
-            DrugsOnList = filteredDrugs;
+            OnPropertyChanged(nameof(DrugsOnList));
         }
 
-        OnPropertyChanged(nameof(DrugsOnList));
-    }
-
-    public void CalculateDosage()
-    {
-        // 实现计算剂量逻辑
-        if (SelectedDrug == null || !(Weight > 0)) return;
-        // 假设实现剂量计算
-        var drug = SelectedDrug;
-        if (drug == null) return;
-        var rules = drug.CalculationRules;
-        var unit = AgeUnit switch
+        /// <summary>
+        /// 根据当前药物、体重和年龄计算剂量。
+        /// </summary>
+        public void CalculateDosage()
         {
-            "岁" => "year",
-            "月" => "month",
-            _ => "year"
-        };
-        var jsonResult = CalculateService.CalculateRules(rules, Age, unit, Weight);
+            if (SelectedDrug == null || Weight <= 0) return;
 
-        // 反序列化 JSON 字符串
-        Result = JsonConvert.DeserializeObject<CalculationResult>(jsonResult);
-        OnPropertyChanged(nameof(Result));
-    }
+            var unit = AgeUnit switch
+            {
+                "岁" => "year",
+                "月" => "month",
+                _ => "year"
+            };
+            var jsonResult = CalculateService.CalculateRules(SelectedDrug.CalculationRules, Age, unit, Weight);
 
-    public event PropertyChangedEventHandler PropertyChanged;
+            Result = JsonConvert.DeserializeObject<CalculationResult>(jsonResult);
+            OnPropertyChanged(nameof(Result));
+        }
 
-    protected void OnPropertyChanged([CallerMemberName] string name = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        /// <summary>
+        /// 属性变化通知事件，当绑定的属性值发生变化时触发。
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// 通知绑定系统某个属性值已发生变化。
+        /// </summary>
+        /// <param name="name">发生变化的属性名称。</param>
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
     }
 }
