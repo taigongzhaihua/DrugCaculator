@@ -31,8 +31,10 @@ namespace DrugCalculator.Services
         // 数据库管理器实例，用于操作数据库
         private static readonly DbManager DbManager = new(ConnectionString);
 
-        // 静态构造函数，初始化服务时确保数据库和目录存在
+        // 静态构造函数，初始化服务时确保数据库和目录存在。
+        // 如果发生异常，整个服务将无法正常工作。
         static EncryptionService()
+
         {
             try
             {
@@ -48,6 +50,8 @@ namespace DrugCalculator.Services
 
         /// <summary>
         /// 确保数据库和目录存在，如果不存在则创建。
+        /// 数据库存储在用户的 ApplicationData 路径下，确保对不同用户独立存储。
+        /// 数据库表 KeyTable 包含密钥名称和加密密钥，设计为保证密钥的唯一性。
         /// </summary>
         private static void EnsureDatabase()
         {
@@ -92,9 +96,12 @@ namespace DrugCalculator.Services
 
         /// <summary>
         /// 检查指定目录是否具有写入权限。
+        /// 如果目录无法写入，可能是用户权限不足或目录被保护。
+        /// 推荐检查用户权限或确保应用在合适的环境下运行。
         /// </summary>
         /// <param name="path">目标目录路径。</param>
         /// <returns>如果具有写入权限返回 true，否则返回 false。</returns>
+
         private static bool HasWritePermission(string path)
         {
             try
@@ -113,10 +120,14 @@ namespace DrugCalculator.Services
 
         /// <summary>
         /// 加密给定的明文并保存加密密钥到数据库。
+        /// 加密密钥和初始向量使用 Windows 数据保护 API（ProtectedData）加密，
+        /// 只能在当前用户环境下解密。
+        /// 加密后的密文以 Base64 格式返回。
         /// </summary>
         /// <param name="plainText">需要加密的明文。</param>
         /// <param name="keyName">密钥的名称，用于标识存储的密钥。</param>
         /// <returns>加密后的密文（Base64 编码）。</returns>
+
         public static string Encrypt(string plainText, string keyName)
         {
             try
@@ -153,10 +164,13 @@ namespace DrugCalculator.Services
 
         /// <summary>
         /// 解密给定的密文。
+        /// 密钥和初始向量从数据库中读取，并使用 Windows 数据保护 API 解密。
+        /// 解密后的明文直接返回。
         /// </summary>
         /// <param name="encryptedText">需要解密的密文（Base64 编码）。</param>
         /// <param name="keyName">密钥的名称，用于标识存储的密钥。</param>
         /// <returns>解密后的明文。</returns>
+
         public static string Decrypt(string encryptedText, string keyName)
         {
             try
@@ -195,7 +209,12 @@ namespace DrugCalculator.Services
 
         /// <summary>
         /// 将加密密钥和初始向量保存到数据库。
+        /// 如果密钥名称已存在，则使用 ON CONFLICT 更新现有记录。
         /// </summary>
+        /// <param name="keyName">密钥的名称。</param>
+        /// <param name="protectedKey">加密后的密钥。</param>
+        /// <param name="protectedIv">加密后的初始向量。</param>
+
         private static void SaveKeyToDatabase(string keyName, byte[] protectedKey, byte[] protectedIv)
         {
             try
@@ -224,7 +243,11 @@ namespace DrugCalculator.Services
 
         /// <summary>
         /// 从数据库中获取加密的密钥和初始向量。
+        /// 如果未找到密钥，返回 null；否则返回加密后的密钥和初始向量。
         /// </summary>
+        /// <param name="keyName">密钥的名称。</param>
+        /// <returns>加密后的密钥和初始向量。</returns>
+
         private static (byte[] protectedKey, byte[] protectedIv) GetKeyFromDatabase(string keyName)
         {
             try
